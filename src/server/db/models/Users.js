@@ -2,5 +2,15 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const User = db.define('user', {
-    name: Sequelize.STRING
+    name: {
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false
+    },
+    room: {
+        type: Sequelize.STRING,
+        allowNull: false
+    }
 })
+
+module.exports = User;
