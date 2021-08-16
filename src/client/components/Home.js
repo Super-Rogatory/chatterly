@@ -7,63 +7,73 @@ class Home extends React.Component {
 		this.state = {
 			name: '',
 			room: '',
-            inputError: false
+			nameError: false,
+			roomError: false,
 		};
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.canSubmit = this.canSubmit.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.canSubmit = this.canSubmit.bind(this);
 	}
-    handleChange(e) {
-        this.setState({
-            [e.target.name] : e.target.value
-        })
-    }
-    handleSubmit(e) {
-        e.preventDefault();
-        console.log(this.state);
-    }
-    canSubmit(e) {
-        const { name, room } = this.state;
-        if(!name || !room) {
-            e.preventDefault();
-            this.setState({ inputError: true });
-        }
-    }
-    componentWillUnmount(){
-        this.setState({ inputError: false });
-    }
+	handleChange(e) {
+		this.setState({
+			[e.target.name]: e.target.value,
+		});
+	}
+	handleSubmit(e) {
+		e.preventDefault();
+		console.log(this.state);
+	}
+	canSubmit(e) {
+		const { name, room } = this.state;
+		if (!name || !room) {
+			e.preventDefault();
+			if (room) this.setState({ nameError: true, roomError: false });
+			else if (name) this.setState({ roomError: true, nameError: false });
+			else this.setState({ nameError: true, roomError: true });
+		}
+	}
+	componentWillUnmount() {
+		this.setState({ inputError: false });
+	}
 	render() {
 		return (
 			<div className="ui container">
 				<div className="ui segment">
 					<div className="ui centered header">Chatterly</div>
-					<form className="ui form" onSubmit={this.handleSubmit}>
-						<div className={`field ${this.state.inputError && 'error'}`}>
+					<form className="ui attached form" onSubmit={this.handleSubmit}>
+						<div className={`field ${this.state.nameError ? 'error' : ''}`}>
 							<label>What is your name?</label>
 							<input
 								placeholder="Enter Name"
-                                name="name"
+								name="name"
 								type="text"
-                                value={this.state.name}
+								value={this.state.name}
 								onChange={this.handleChange}
-                                required
+								required
 							/>
 						</div>
-						<div className={`field ${this.state.inputError && 'error'}`}>
+						<div className={`field ${this.state.roomError ? 'error' : ''}`}>
 							<label>Which room do you intend to join?</label>
 							<input
 								placeholder="Enter Room"
-                                name="room"
+								name="room"
 								type="text"
-                                value={this.state.room}
+								value={this.state.room}
 								onChange={this.handleChange}
-                                required
+								required
 							/>
 						</div>
-						<Link to='/chat' onClick={this.canSubmit}>
-							<button type="submit" className="ui button">Submit</button>
+						<Link to="/chat" onClick={this.canSubmit}>
+							<button type="submit" className="ui button">
+								Submit
+							</button>
 						</Link>
 					</form>
+					{(this.state.nameError || this.state.roomError) && (
+						<div className="ui bottom warning message">
+							Don't forget to enter both name and room.
+						</div>
+					)}
 				</div>
 			</div>
 		);
