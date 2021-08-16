@@ -17,3 +17,21 @@ export const _createUser = (user) => {
         payload: user
     }
 }
+export const _deleteUser = (id) => {
+    return {
+        type: types.DELETE_USER,
+        id
+    }
+}
+export const _getUser = (user) => {
+    return {
+        type: types.GET_USER,
+        payload: user
+    }
+}
+export const _getUsersInRoom = (users) => {
+    return {
+        type: types.GET_USERS_IN_ROOM,
+        payload: users
+    }
+}

@@ -1,12 +1,13 @@
 import { combineReducers } from "redux";
 import { nameReducer } from './name';
 import { roomReducer } from './room';
-import { usersReducer } from "./users";
+import { usersInRoom, usersReducer } from "./users";
 
 const combinedReducer = combineReducers({
     name: nameReducer,
     room: roomReducer,
-    users: usersReducer
+    users: usersReducer,
+    usersInRoom: usersInRoom
 });
 
 export default combinedReducer;
