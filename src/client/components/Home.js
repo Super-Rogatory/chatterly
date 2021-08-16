@@ -7,34 +7,63 @@ class Home extends React.Component {
 		this.state = {
 			name: '',
 			room: '',
+            inputError: false
 		};
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.canSubmit = this.canSubmit.bind(this);
 	}
+    handleChange(e) {
+        this.setState({
+            [e.target.name] : e.target.value
+        })
+    }
+    handleSubmit(e) {
+        e.preventDefault();
+        console.log(this.state);
+    }
+    canSubmit(e) {
+        const { name, room } = this.state;
+        if(!name || !room) {
+            e.preventDefault();
+            this.setState({ inputError: true });
+        }
+    }
+    componentWillUnmount(){
+        this.setState({ inputError: false });
+    }
 	render() {
 		return (
 			<div className="ui container">
 				<div className="ui segment">
-					<div className="ui centered header">Join</div>
-					<div className="ui form">
-						<div className="field">
-							<label>Some Stuff</label>
+					<div className="ui centered header">Chatterly</div>
+					<form className="ui form" onSubmit={this.handleSubmit}>
+						<div className={`field ${this.state.inputError && 'error'}`}>
+							<label>What is your name?</label>
 							<input
-								placeholder=""
+								placeholder="Enter Name"
+                                name="name"
 								type="text"
-								onChange={() => console.log('change')}
+                                value={this.state.name}
+								onChange={this.handleChange}
+                                required
 							/>
 						</div>
-						<div className="field">
-							<label>Some More Stuff</label>
+						<div className={`field ${this.state.inputError && 'error'}`}>
+							<label>Which room do you intend to join?</label>
 							<input
-								placeholder=""
+								placeholder="Enter Room"
+                                name="room"
 								type="text"
-								onChange={() => console.log('change')}
+                                value={this.state.room}
+								onChange={this.handleChange}
+                                required
 							/>
 						</div>
-						<Link>
+						<Link to='/chat' onClick={this.canSubmit}>
 							<button type="submit" className="ui button">Submit</button>
 						</Link>
-					</div>
+					</form>
 				</div>
 			</div>
 		);
