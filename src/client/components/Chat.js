@@ -11,12 +11,13 @@ class Chat extends React.Component {
         this.state = {
             name: '',
             room: '',
-            ENDPOINT: 'localhost:8080'
+            ENDPOINT: 'localhost:8080',
         }
     }
     componentDidMount() {
         const { stateName, stateRoom } = this.props;
-        this.setState({ name: stateName, room: stateRoom });    
+        this.setState({ name: stateName, room: stateRoom });
+
     }
     componentDidUpdate() {
         const { name, room, ENDPOINT } = this.state;
