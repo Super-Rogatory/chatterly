@@ -8,6 +8,7 @@
 	font-style: normal;
 }
 * {
+    font-family: 'stampwriter' !important;
 }
 body {
 	background-color: rgb(29, 24, 24);

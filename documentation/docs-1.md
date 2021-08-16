@@ -31,3 +31,33 @@ io.on('connection', (socket) => {
 - ## io.on is an event that is fired upon a new connection. We can register when clients join and when they leave with this information.
 - ## the socket parameter is a server side socket.
 - ## Most of our code WILL BE INSIDE the io.on callback, as that function is what has access to the socket.
+
+- ## Allow Origins Error Requires. On server-side.
+```
+const io = socket(server, {
+	cors: {
+		origin: '*',
+	},
+});
+```
+
+- ## We can emit events from the client side socket, given a name, it will match with the server side socket on specified name.
+
+- ##**EXAMPLE. Client side**
+```
+clientSocket.emit('join', { name, room })
+```
+
+- ##**EXAMPLE. Server side**
+```
+io.on('connection', (socket) => {
+	console.log('we have a new connection');
+
+	socket.on('join', ({ name, room }) => {
+		console.log(name, room);
+	})
+	socket.on('disconnect', () => {
+		console.log('user has left');
+	});
+});
+```
