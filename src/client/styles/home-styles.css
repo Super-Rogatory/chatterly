@@ -8,8 +8,12 @@
 	font-style: normal;
 }
 * {
-
 }
 body {
-	background-color: blanchedalmond;
+	background-color: rgb(29, 24, 24);
+}
+
+#vertical-container {
+	height: 100vh;
+	width: 100%;
 }

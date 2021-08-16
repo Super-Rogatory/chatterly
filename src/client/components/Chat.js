@@ -1,12 +1,18 @@
 import React from 'react'
+import { connect } from 'react-redux';
 
 class Chat extends React.Component {
     render() {
         return (
             <div>
-                HI
+                <div class="ui feed">
+                </div>
             </div>
         )
     }
 }
-export default Chat;
+const mapState = (state) => ({
+    name: state.name,
+    room: state.room
+})
+export default connect(mapState, null)(Chat);

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { setRoom, setName } from '../../store/effects/thunks';
+import { connect } from 'react-redux';
 
 class Home extends React.Component {
 	constructor() {
@@ -25,54 +27,71 @@ class Home extends React.Component {
 			if (room) this.setState({ nameError: true, roomError: false });
 			else if (name) this.setState({ roomError: true, nameError: false });
 			else this.setState({ nameError: true, roomError: true });
+		} else {
+			this.props.setName(name);
+			this.props.setRoom(room);
 		}
-        else {
-            console.log({name, room});
-        }
 	}
 	componentWillUnmount() {
 		this.setState({ inputError: false });
 	}
 	render() {
+		const { name, room, nameError, roomError } = this.state;
 		return (
-			<div className="ui container">
-				<div className="ui segment">
-					<div className="ui centered header">Chatterly</div>
-					<form className="ui attached form" >
-						<div className={`field ${this.state.nameError ? 'error' : ''}`}>
-							<label>What is your name?</label>
-							<input
-								placeholder="Enter Name"
-								name="name"
-								type="text"
-								value={this.state.name}
-								onChange={this.handleChange}
-							/>
+			<div id="vertical-container" className="ui grid middle aligned">
+				<div className="row">
+					<div className="column" align="middle">
+						<div className="ui container">
+							<div className="ui purple segment">
+								<div className="ui centered large header">Join Chatterly</div>
+								<form className="ui attached form">
+									<div className={`field ${nameError ? 'error' : ''}`}>
+										<label>Enter a name</label>
+										<input
+											placeholder="Enter Name"
+											name="name"
+											type="text"
+											value={name}
+											onChange={this.handleChange}
+										/>
+									</div>
+									<div className={`field ${roomError ? 'error' : ''}`}>
+										<label>Join a room!</label>
+										<input
+											placeholder="Enter Room"
+											name="room"
+											type="text"
+											value={room}
+											onChange={this.handleChange}
+										/>
+									</div>
+									<Link to="/chat" onClick={this.handleSubmit}>
+										<button type="submit" className="ui blue fluid button">
+											Sign In
+										</button>
+									</Link>
+								</form>
+								{(nameError || roomError) && (
+									<div className="ui bottom warning message">
+										Don't forget to enter both name and room.
+									</div>
+								)}
+							</div>
 						</div>
-						<div className={`field ${this.state.roomError ? 'error' : ''}`}>
-							<label>Which room do you intend to join?</label>
-							<input
-								placeholder="Enter Room"
-								name="room"
-								type="text"
-								value={this.state.room}
-								onChange={this.handleChange}
-							/>
-						</div>
-						<Link to="/chat" onClick={this.handleSubmit}>
-							<button type="submit" className="ui button">
-								Submit
-							</button>
-						</Link>
-					</form>
-					{(this.state.nameError || this.state.roomError) && (
-						<div className="ui bottom warning message">
-							Don't forget to enter both name and room.
-						</div>
-					)}
+					</div>
 				</div>
 			</div>
 		);
 	}
 }
-export default Home;
+const mapDispatch = (dispatch) => ({
+	setRoom: (room) => dispatch(setRoom(room)),
+	setName: (name) => dispatch(setName(name)),
+});
+
+const mapState = (state) => ({
+	name: state.name,
+	room: state.room,
+});
+
+export default connect(mapState, mapDispatch)(Home);
