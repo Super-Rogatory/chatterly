@@ -12,7 +12,6 @@ class Home extends React.Component {
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.canSubmit = this.canSubmit.bind(this);
 	}
 	handleChange(e) {
 		this.setState({
@@ -20,10 +19,6 @@ class Home extends React.Component {
 		});
 	}
 	handleSubmit(e) {
-		e.preventDefault();
-		console.log(this.state);
-	}
-	canSubmit(e) {
 		const { name, room } = this.state;
 		if (!name || !room) {
 			e.preventDefault();
@@ -31,6 +26,9 @@ class Home extends React.Component {
 			else if (name) this.setState({ roomError: true, nameError: false });
 			else this.setState({ nameError: true, roomError: true });
 		}
+        else {
+            console.log({name, room});
+        }
 	}
 	componentWillUnmount() {
 		this.setState({ inputError: false });
@@ -40,7 +38,7 @@ class Home extends React.Component {
 			<div className="ui container">
 				<div className="ui segment">
 					<div className="ui centered header">Chatterly</div>
-					<form className="ui attached form" onSubmit={this.handleSubmit}>
+					<form className="ui attached form" >
 						<div className={`field ${this.state.nameError ? 'error' : ''}`}>
 							<label>What is your name?</label>
 							<input
@@ -49,7 +47,6 @@ class Home extends React.Component {
 								type="text"
 								value={this.state.name}
 								onChange={this.handleChange}
-								required
 							/>
 						</div>
 						<div className={`field ${this.state.roomError ? 'error' : ''}`}>
@@ -60,10 +57,9 @@ class Home extends React.Component {
 								type="text"
 								value={this.state.room}
 								onChange={this.handleChange}
-								required
 							/>
 						</div>
-						<Link to="/chat" onClick={this.canSubmit}>
+						<Link to="/chat" onClick={this.handleSubmit}>
 							<button type="submit" className="ui button">
 								Submit
 							</button>
