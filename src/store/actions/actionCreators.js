@@ -11,3 +11,9 @@ export const _setRoom = (room) => {
         payload: room
     }
 }
+export const _createUser = (user) => {
+    return {
+        type: types.CREATE_USER,
+        payload: user
+    }
+}
