@@ -61,3 +61,18 @@ io.on('connection', (socket) => {
 	});
 });
 ```
+
+- ## Another Example
+- ## Server side
+```
+	socket.on('disconnect', () => {
+		console.log('user has left');
+	});
+```
+- ## Client side. This is in our useEffect hook, functionality to be utilized when unmounting.
+```
+    return () => {
+        clientSocket.emit('disconnect');
+        clientSocket.off();
+    }
+```

@@ -12,10 +12,15 @@ function Chat({ name, room }) {
         clientSocket = io(ENDPOINT);
 
         clientSocket.emit('join', { name, room })
-        
+
+        return () => {
+            clientSocket.emit('disconnect');
+            
+            clientSocket.off();
+        }
     }, [ENDPOINT, name, room])
     return(
-        <h1>Hi</h1>
+        <h1>Chat</h1>
     )
 
 }
