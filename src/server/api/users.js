@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const User = require('../db/models/Users');
 
-router.get('/', (req, res, next) => {
-	res.send({ msg: 'Server UP!' });
+router.get('/', async (req, res, next) => {
+    const users = await User.findAll();
+	res.send(users);
 });
 router.get('/:id', async (req, res, next) => {
     try {

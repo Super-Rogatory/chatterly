@@ -1,41 +1,53 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
 import { setRoom, setName, createUser } from '../../store/effects/thunks';
 
 let clientSocket;
 
-function Chat({ name, room, users }) {
-    const ENDPOINT = 'localhost:8080';
-    useEffect(() => {
-        clientSocket = io(ENDPOINT);
-
-        clientSocket.emit('join', { name, room })
-
-        return () => {
-            clientSocket.emit('disconnect');
-
-            clientSocket.off();
+class Chat extends React.Component {
+    constructor(){
+        super();
+        this.state = {
+            name: '',
+            room: '',
+            ENDPOINT: 'localhost:8080'
         }
-    }, [ENDPOINT, name, room])
-    return(
-        <div>
-           {users.length > 0 && users.map((user, index) => <div key={index}>user.name</div>)} 
-        </div>
-        
-    )
+    }
+    componentDidMount() {
+        const { stateName, stateRoom } = this.props;
+        this.setState({ name: stateName, room: stateRoom });    
+    }
+    componentDidUpdate() {
+        const { name, room, ENDPOINT } = this.state;
+        clientSocket = io(ENDPOINT);
+        clientSocket.emit('join', { name, room })
+    }
+    componentWillUnmount() {
+        clientSocket.emit('disconnect');
 
+        clientSocket.off();
+    }
+    render() {
+        const { name, room } = this.state;
+        return (
+            <div>
+                <button onClick={() => this.props.createUser(name, room)}>+</button>
+            </div>
+        )
+    }
 }
+
 const mapDispatch = (dispatch) => ({
 	setRoom: (room) => dispatch(setRoom(room)),
 	setName: (name) => dispatch(setName(name)),
-    createUser: (user) => dispatch(createUser(user))
+    createUser: (name, room) => dispatch(createUser(name, room))
 });
 
 
 const mapState = (state) => ({
-	name: state.name,
-	room: state.room,
+	stateName: state.name,
+	stateRoom: state.room,
     users: state.users
 });
 
