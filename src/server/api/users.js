@@ -26,7 +26,7 @@ router.post('/', async (req, res, next) => {
 })
 router.delete('/:id', async (req, res, next) => {
     try {
-        const user = await User.findByPk(req.param.id);
+        const user = await User.findByPk(req.params.id);
         if(!user) res.status(404).send('failed to find user');
         await user.destroy();
         res.send(user);
