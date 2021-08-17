@@ -4,6 +4,7 @@ import { setRoom, setName } from '../../store/effects/thunks';
 import { connect } from 'react-redux';
 
 class Home extends React.Component {
+	// keeping track of name, room, and whether or not the input fields for name and room are false (handling the error in a boolean)
 	constructor() {
 		super();
 		this.state = {
@@ -21,6 +22,7 @@ class Home extends React.Component {
 		});
 	}
 	handleSubmit(e) {
+		// handles erroneous input, if inputs check out - we can call setName and setRoom which will set name and room in the redux store
 		const { name, room } = this.state;
 		if (!name || !room) {
 			e.preventDefault();

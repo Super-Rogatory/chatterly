@@ -6,6 +6,7 @@ import { setRoom, setName, createUser } from '../../store/effects/thunks';
 let clientSocket;
 
 class Chat extends React.Component {
+	// constructor serves to keep track of the name, room, and the address to reference the server
     constructor(){
         super();
         this.state = {
@@ -15,21 +16,25 @@ class Chat extends React.Component {
         }
     }
     componentDidMount() {
+		// setting data from redux to the current state.
         const { stateName, stateRoom } = this.props;
         this.setState({ name: stateName, room: stateRoom });
-
     }
-    componentDidUpdate() {
+    componentDidUpdate(prevProps, prevState) {
+		// if prevState's properties change somehow, perform some action.
         const { name, room, ENDPOINT } = this.state;
-        clientSocket = io(ENDPOINT);
-        clientSocket.emit('join', { name, room })
-    }
-    componentWillUnmount() {
-        clientSocket.emit('disconnect');
+		if(prevState.name !== this.state.name || prevState.room !== this.state.room) {
+			clientSocket = io(ENDPOINT);
+			clientSocket.emit('join', { name, room })			
+		}
 
+    }
+    componentDidUnmount() {
+        clientSocket.emit('disconnect');
         clientSocket.off();
     }
     render() {
+		// testing of thunks here.
         const { name, room } = this.state;
         return (
             <div>
