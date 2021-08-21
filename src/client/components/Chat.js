@@ -1,7 +1,7 @@
 import React from 'react';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
-import { createUser, getUser, getUsers, getUsersInRoom } from '../../store/effects/thunks';
+import { addMessage, createUser, fetchMessages, getUser, getUsers, getUsersInRoom } from '../../store/effects/thunks';
 
 let clientSocket;
 
@@ -14,7 +14,9 @@ class Chat extends React.Component {
             room: '',
             ENDPOINT: 'localhost:8080',
             user: {},
-            users: []
+            users: [],
+            message: '',
+            messages: []
         }
     }
     async componentDidMount() {
@@ -32,9 +34,10 @@ class Chat extends React.Component {
             this.setState({ users });
         } else {
             // using information from the Redux store, we can create a new user. If user does not exist when we try to getItem, setItem in localStorage and db.
+            // name and room is set in the Home component.
             const user = await createUser(nameFromStore, roomFromStore);
             window.localStorage.setItem('user', JSON.stringify({ name: nameFromStore, room: roomFromStore }));
-            this.setState({ name: nameFromStore, room: roomFromStore, user });            
+            this.setState({ name: user.name, room: user.room, user });            
         }
 
         // we will modify the id to carry the socket.id
@@ -42,12 +45,18 @@ class Chat extends React.Component {
     }
     componentDidUpdate(prevProps, prevState) {
 		// if prevState's properties change somehow, perform some action.
-        const { name, room, ENDPOINT } = this.state;
-		if(prevState.name !== this.state.name || prevState.room !== this.state.room) {
+        const { name, room, user, ENDPOINT, message, messages } = this.state;
+		if(prevState.name !== name || prevState.room !== room) {
 			clientSocket = io(ENDPOINT);
-			clientSocket.emit('join', { name, room })			
-		}
+			clientSocket.emit('join', user, () => {
 
+            });		
+		}
+        // if(prevState.messages !== messages) {
+        //     clientSocket.on('message', (message) => {
+        //         this.props.addMessage(message);
+        //     })
+        // }
     }
     componentWillUnmount() {
         clientSocket.emit('disconnect');
@@ -55,13 +64,11 @@ class Chat extends React.Component {
     }
 
     render() {
-		// testing of thunks here.
-        // const { name, room, user } = this.state;
-        // console.log(this.props.users);
-        // console.log(this.props.usersInRoom);
+        const message = {message: 'This is to test our thunks'};
         return (
             <div>
-                Hi
+                <button onClick={() => this.props.addMessage(message)}>+</button>
+                <button onClick={() => this.props.fetchMessages()}>fetch</button>
             </div>
         )
     }
@@ -71,7 +78,9 @@ const mapDispatch = (dispatch) => ({
     createUser: (name, room) => dispatch(createUser(name, room)),
     getUsersInRoom: (room) => dispatch(getUsersInRoom(room)),
     getUsers: () => dispatch(getUsers()),
-    getUser: (id) => dispatch(getUser(id))
+    getUser: (id) => dispatch(getUser(id)),
+    addMessage: (message) => dispatch(addMessage(message)),
+    fetchMessages: () => dispatch(fetchMessages())
 });
 
 

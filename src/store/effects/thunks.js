@@ -1,4 +1,4 @@
-import { _setName, _setRoom, _createUser, _deleteUser, _getUser, _getUsers, _getUsersInRoom } from "../actions/actionCreators";
+import { _setName, _setRoom, _createUser, _deleteUser, _getUser, _getUsers, _getMessages, _getUsersInRoom, _addMessage } from "../actions/actionCreators";
 import axios from "axios";
 
 export const setName = (name) => {
@@ -69,3 +69,21 @@ export const getUsersInRoom = (room) => {
         }
     }
 }
+
+// -----------------------------------------------------------------------------------------------------------------------------------------------//
+export const addMessage = (message) => {
+    return async (dispatch) => {
+        const { data } = await axios.post('http://localhost:8080/api/messages', message);
+        dispatch(_addMessage(data));
+        return data;
+    }
+}
+
+export const fetchMessages = () => {
+    return async (dispatch) => {
+        const { data: messages } = await axios.get('http://localhost:8080/api/messages');
+        dispatch(_getMessages(messages));
+        return messages;
+    }
+}
+

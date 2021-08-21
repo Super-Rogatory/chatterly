@@ -41,3 +41,15 @@ export const _getUsersInRoom = (users) => {
         usersInRoom: users
     }
 }
+export const _addMessage = (message) => {
+    return {
+        type: types.ADD_MESSAGE,
+        message
+    }
+}
+export const _getMessages = (messages) => {
+    return {
+        type: types.FETCH_MESSAGES,
+        messages
+    }
+}

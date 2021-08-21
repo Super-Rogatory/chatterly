@@ -76,8 +76,3 @@ io.on('connection', (socket) => {
         clientSocket.off();
     }
 ```
-
-
-Does it work?
-- getUser works.
-- getUsers works
