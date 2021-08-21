@@ -3,8 +3,14 @@ const router = express.Router();
 const User = require('../db/models/Users');
 
 router.get('/', async (req, res, next) => {
-    const users = await User.findAll();
-	res.send(users);
+    try {
+        const users = await User.findAll();
+        if(!users) res.status(404).send('no users in the db');
+        res.send(users);        
+    } catch (err) {
+        next(err);
+    }
+
 });
 router.get('/:id', async (req, res, next) => {
     try {

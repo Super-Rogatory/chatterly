@@ -25,13 +25,19 @@ export const _deleteUser = (id) => {
 }
 export const _getUser = (user) => {
     return {
-        type: types.SET_USER,
+        type: types.GET_USER,
         user
+    }
+}
+export const _getUsers = (users) => {
+    return {
+        type: types.FETCH_USERS,
+        users
     }
 }
 export const _getUsersInRoom = (users) => {
     return {
-        type: types.SET_USERS_IN_ROOM,
-        users
+        type: types.FETCH_USERS_IN_ROOM,
+        usersInRoom: users
     }
 }

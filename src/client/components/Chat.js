@@ -1,7 +1,7 @@
 import React from 'react';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
-import { createUser, getUsersInRoom } from '../../store/effects/thunks';
+import { createUser, getUser, getUsers, getUsersInRoom } from '../../store/effects/thunks';
 
 let clientSocket;
 
@@ -56,9 +56,9 @@ class Chat extends React.Component {
 
     render() {
 		// testing of thunks here.
-        const { name, room, user } = this.state;
-        console.log(this.props.users);
-        console.log(this.props.usersInRoom);
+        // const { name, room, user } = this.state;
+        // console.log(this.props.users);
+        // console.log(this.props.usersInRoom);
         return (
             <div>
                 Hi
@@ -69,15 +69,15 @@ class Chat extends React.Component {
 
 const mapDispatch = (dispatch) => ({
     createUser: (name, room) => dispatch(createUser(name, room)),
-    getUsersInRoom: (room) => dispatch(getUsersInRoom(room))
+    getUsersInRoom: (room) => dispatch(getUsersInRoom(room)),
+    getUsers: () => dispatch(getUsers()),
+    getUser: (id) => dispatch(getUser(id))
 });
 
 
 const mapState = (state) => ({
 	nameFromStore: state.name,
 	roomFromStore: state.room,
-    users: state.users,
-    usersInRoom: state.usersInRoom
 });
 
 export default connect(mapState, mapDispatch)(Chat);

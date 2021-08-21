@@ -1,4 +1,4 @@
-import { _setName, _setRoom, _createUser, _deleteUser, _getUser, _getUsersInRoom } from "../actions/actionCreators";
+import { _setName, _setRoom, _createUser, _deleteUser, _getUser, _getUsers, _getUsersInRoom } from "../actions/actionCreators";
 import axios from "axios";
 
 export const setName = (name) => {
@@ -12,7 +12,6 @@ export const setRoom = (room) => {
         dispatch(_setRoom(room));
     }
 }
-
 export const createUser = ( name, room ) => {
     name = name.trim().toLowerCase();
     room = room.trim().toLowerCase();
@@ -36,17 +35,29 @@ export const deleteUser = (id) => {
         }
     }
 }
+
 export const getUser = (id) => {
     return async (dispatch) => {
         try {
             const { data: user } = await axios.get(`http://localhost:8080/api/users/${id}`);
             dispatch(_getUser(user));
+            return user;
         } catch (err) {
             console.log(err);
         }
     }
 }
-
+export const getUsers = () => {
+    return async (dispatch) => {
+        try {
+            const { data: users } = await axios.get('http://localhost:8080/api/users');
+            dispatch(_getUsers(users));
+            return users;
+        } catch (err) {
+            
+        }
+    }
+}
 export const getUsersInRoom = (room) => {
     return async (dispatch) => {
         try {
