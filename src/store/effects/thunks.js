@@ -20,6 +20,7 @@ export const createUser = ( name, room ) => {
         try {
             const { data: user } = await axios.post('http://localhost:8080/api/users', { name , room });
             dispatch(_createUser(user));
+            return user;
         } catch (err) {
             console.log(err);
         }

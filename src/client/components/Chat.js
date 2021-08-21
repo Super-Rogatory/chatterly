@@ -13,12 +13,17 @@ class Chat extends React.Component {
             name: '',
             room: '',
             ENDPOINT: 'localhost:8080',
+            user: {},
         }
     }
-    componentDidMount() {
+    async componentDidMount() {
 		// setting data from redux to the current state.
-        const { stateName, stateRoom } = this.props;
-        this.setState({ name: stateName, room: stateRoom });
+        const { nameFromStore, roomFromStore, createUser } = this.props;
+        // keep in mind, if name argument is empty, we will get a validation error
+        const user = await createUser(nameFromStore, roomFromStore);
+        // we will modify the id to carry the socket.id
+        
+        this.setState({ name: nameFromStore, room: roomFromStore, user });
     }
     componentDidUpdate(prevProps, prevState) {
 		// if prevState's properties change somehow, perform some action.
@@ -33,12 +38,14 @@ class Chat extends React.Component {
         clientSocket.emit('disconnect');
         clientSocket.off();
     }
+
     render() {
 		// testing of thunks here.
-        const { name, room } = this.state;
+        const { name, room, user } = this.state;
+        console.log(user);
         return (
             <div>
-                <button onClick={() => this.props.createUser(name, room)}>+</button>
+                Hi
             </div>
         )
     }
@@ -52,8 +59,8 @@ const mapDispatch = (dispatch) => ({
 
 
 const mapState = (state) => ({
-	stateName: state.name,
-	stateRoom: state.room,
+	nameFromStore: state.name,
+	roomFromStore: state.room,
     users: state.users
 });
 
