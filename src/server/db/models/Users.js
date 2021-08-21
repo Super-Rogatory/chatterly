@@ -5,11 +5,17 @@ const User = db.define('user', {
     name: {
         type: Sequelize.STRING,
         unique: true,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     },
     room: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     }
 })
 

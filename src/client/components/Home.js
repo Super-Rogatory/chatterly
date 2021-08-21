@@ -16,6 +16,10 @@ class Home extends React.Component {
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
+	componentDidMount() {
+		// clears localStorage when component renders
+		window.localStorage.clear();
+	}
 	handleChange(e) {
 		this.setState({
 			[e.target.name]: e.target.value,
