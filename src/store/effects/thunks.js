@@ -52,8 +52,9 @@ export const getUsersInRoom = (room) => {
         try {
             const { data: users } = await axios.get(`http://localhost:8080/api/users/room/${room}`);
             dispatch(_getUsersInRoom(users));
+            return users;
         } catch (err) {
-            
+            console.log(err);
         }
     }
 }

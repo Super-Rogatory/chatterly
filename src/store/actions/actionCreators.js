@@ -25,13 +25,13 @@ export const _deleteUser = (id) => {
 }
 export const _getUser = (user) => {
     return {
-        type: types.GET_USER,
-        payload: user
+        type: types.SET_USER,
+        user
     }
 }
 export const _getUsersInRoom = (users) => {
     return {
-        type: types.GET_USERS_IN_ROOM,
-        payload: users
+        type: types.SET_USERS_IN_ROOM,
+        users
     }
 }
