@@ -18,6 +18,8 @@ class Chat extends React.Component {
             message: '',
             messages: []
         }
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
     }
     async componentDidMount() {
         // before anything, check to see if user object exists in localStorage and get information from Redux store
@@ -52,23 +54,44 @@ class Chat extends React.Component {
 
             });		
 		}
-        // if(prevState.messages !== messages) {
-        //     clientSocket.on('message', (message) => {
-        //         this.props.addMessage(message);
-        //     })
-        // }
+        if(prevState.messages !== messages) {
+            this.props.fetchMessages()
+            .then((messages) => console.log(messages));
+            // clientSocket.on('message', (message) => {
+                
+            // })
+        }
     }
     componentWillUnmount() {
         clientSocket.emit('disconnect');
         clientSocket.off();
     }
 
+    handleChange(e) {
+
+    }
+    handleSubmit(e) {
+
+    }
     render() {
-        const message = {message: 'This is to test our thunks'};
+        // message is in an object because our server expects information in a JSON object
+        // handled by the implementation of our thunk, we provided a JSON object to the backend (well, axios did)
+        // const message = {message: 'This is to test our thunks'};
+        const { handleChange, handleSubmit } = this;
+        const { message } = this.state;
         return (
-            <div>
-                <button onClick={() => this.props.addMessage(message)}>+</button>
-                <button onClick={() => this.props.fetchMessages()}>fetch</button>
+            <div id="vertical-container" className="ui grid middle aligned">
+                <div className="row">
+                    <div className="column" align="middle">
+                        <div className="ui container">
+                            {/* Need to flesh out the content */}
+                            <form onSubmit={handleSubmit}>
+                                <input name='message' value={message} placeholder="Send a message!" onChange={handleChange} />
+                                <button type="submit">Send</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }
@@ -79,7 +102,7 @@ const mapDispatch = (dispatch) => ({
     getUsersInRoom: (room) => dispatch(getUsersInRoom(room)),
     getUsers: () => dispatch(getUsers()),
     getUser: (id) => dispatch(getUser(id)),
-    addMessage: (message) => dispatch(addMessage(message)),
+    addMessage: (messageObject) => dispatch(addMessage(messageObject)),
     fetchMessages: () => dispatch(fetchMessages())
 });
 

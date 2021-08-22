@@ -13,6 +13,7 @@ router.get('/', async (req, res, next) => {
 })
 router.post('/', async (req, res, next) => {
     try {
+        console.log(req.body);
         const message = await Message.create({ text: req.body.message });
         if(!message) res.status(404).send('unable to create message');
         res.send(message);

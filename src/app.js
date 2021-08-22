@@ -4,11 +4,11 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const server = http.createServer(app);
-const db = require('../src/server/db/db');
+const db = require('../src/server/db/index').db; // need to actually run the index, that's where the associations lie.
 const PORT = process.env.PORT || 8080;
 
 // syncing the db
-db.sync({ force: true})
+db.sync({ force: true })
 .then(() => console.log('Database is synced'))
 .catch(() => console.log('Error syncing the db'));
 
