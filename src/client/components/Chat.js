@@ -24,21 +24,23 @@ class Chat extends React.Component {
     async componentDidMount() {
         // before anything, check to see if user object exists in localStorage and get information from Redux store
         const loggedInUser = window.localStorage.getItem('user');
-        const { nameFromStore, roomFromStore, createUser, getUsersInRoom } = this.props;
+        const { nameFromStore, roomFromStore, createUser, getUsersInRoom, getUser } = this.props;
 
         // if user is already logged in, on refresh, set the state with the user object from localStorage and fetch users in the room
         if(loggedInUser) {
             // note. if the user is already logged in, we cannot rely on logic from lines 30+. And our Redux store will not persist. We can set this up from the db, or localStorage
             const user = JSON.parse(loggedInUser);
             const room = user.room;
+            // once we parsed the loggedInUser, we can use the id to fetch the user from the db and continue as normal
+            const dbUser = await getUser(user.id);
             // should return the users in the room
             const users = await getUsersInRoom(room);
-            this.setState({ users });
+            this.setState({ user: dbUser, users });
         } else {
             // using information from the Redux store, we can create a new user. If user does not exist when we try to getItem, setItem in localStorage and db.
             // name and room is set in the Home component.
             const user = await createUser(nameFromStore, roomFromStore);
-            window.localStorage.setItem('user', JSON.stringify({ name: nameFromStore, room: roomFromStore }));
+            window.localStorage.setItem('user', JSON.stringify({ id: user.id, name: nameFromStore, room: roomFromStore }));
             this.setState({ name: user.name, room: user.room, user });            
         }
 
@@ -68,15 +70,20 @@ class Chat extends React.Component {
     }
 
     handleChange(e) {
-
+        // the name of our input is message. computed property name syntax
+        this.setState({ 
+            [e.target.name] : e.target.value
+        })
     }
     handleSubmit(e) {
-
+        // passing this user along to addMessage so that our backend can take care of the association via Sequelize magic methods
+        e.preventDefault();
+        const { user, message } = this.state;
+        this.props.addMessage(message, user);
+        // our thunk will turn message into an object via shorthand notation. ( {message:message, user: user} ) 
+        // we provided a JSON object to the backend (well, axios did) as our server expects information in a JSON object
     }
     render() {
-        // message is in an object because our server expects information in a JSON object
-        // handled by the implementation of our thunk, we provided a JSON object to the backend (well, axios did)
-        // const message = {message: 'This is to test our thunks'};
         const { handleChange, handleSubmit } = this;
         const { message } = this.state;
         return (
@@ -102,7 +109,7 @@ const mapDispatch = (dispatch) => ({
     getUsersInRoom: (room) => dispatch(getUsersInRoom(room)),
     getUsers: () => dispatch(getUsers()),
     getUser: (id) => dispatch(getUser(id)),
-    addMessage: (messageObject) => dispatch(addMessage(messageObject)),
+    addMessage: (message, user) => dispatch(addMessage(message, user)),
     fetchMessages: () => dispatch(fetchMessages())
 });
 

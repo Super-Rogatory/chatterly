@@ -71,9 +71,9 @@ export const getUsersInRoom = (room) => {
 }
 
 // -----------------------------------------------------------------------------------------------------------------------------------------------//
-export const addMessage = (message) => {
+export const addMessage = (message, user) => {
     return async (dispatch) => {
-        const { data } = await axios.post('http://localhost:8080/api/messages', message);
+        const { data } = await axios.post('http://localhost:8080/api/messages', { message, user });
         dispatch(_addMessage(data));
         return data;
     }
