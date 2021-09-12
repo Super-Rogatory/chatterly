@@ -33,18 +33,25 @@ class Chat extends React.Component {
 		clientSocket = io(this.state.ENDPOINT);
 
 		// initialize chatbot to start!
-		clientSocket.once('message', async ({ user: name, room, text: message }) => {
-			try {
-				// needed to create a chatBot in the database with respect to the room of the main user
-				const chatBot = await this.props.createUser(name, room);
-				if (chatBot) console.log('chatbot has been created');
-				const chatBotInitMessage = await this.props.addMessage(message, chatBot);
-				if (chatBotInitMessage) console.log('successfully handled getting message event from the server');
-				this.setState({
-					messages: [...this.state.messages, chatBotInitMessage],
-				});
-			} catch (err) {
-				console.log('failed to initialize chatbot');
+		clientSocket.on('initializeChatbot', async ({ user: name, room, text: message }) => {
+			if (loggedInUser) {
+				// if there is a logged in user on refresh, then chatbot has already been created.
+				// potentially dangerous assumption?
+				const messages = await this.props.fetchMessages();
+				console.log(messages);
+			} else {
+				try {
+					// needed to create a chatBot in the database with respect to the room of the main user
+					const chatBot = await this.props.createUser(name, room);
+					if (chatBot) console.log('chatbot has been created');
+					const chatBotInitMessage = await this.props.addMessage(message, chatBot);
+					if (chatBotInitMessage) console.log('successfully handled getting message event from the server');
+					this.setState({
+						messages: [...this.state.messages, chatBotInitMessage],
+					});
+				} catch (err) {
+					console.log('failed to initialize chatbot');
+				}
 			}
 		});
 
@@ -57,7 +64,7 @@ class Chat extends React.Component {
 			const dbUser = await getUser(user.id);
 			// should return the users in the room
 			const users = await getUsersInRoom(room);
-			this.setState({ user: dbUser, users });
+			this.setState({ user: dbUser, users, name: user.name, room: user.room });
 		} else {
 			// using information from the Redux store, we can create a new user. If user does not exist when we try to getItem, setItem in localStorage and db.
 			// name and room is set in the Home component.
@@ -72,7 +79,7 @@ class Chat extends React.Component {
 
 	async componentDidUpdate(prevProps, prevState) {
 		// if prevState's properties change somehow, perform some action.
-		const { name, room, user, ENDPOINT, message, messages } = this.state;
+		const { name, room, user, message, messages } = this.state;
 		if (prevState.name !== name || prevState.room !== room) {
 			clientSocket.emit('join', user, () => {});
 		}
@@ -96,6 +103,7 @@ class Chat extends React.Component {
 			});
 		}
 	}
+
 	componentWillUnmount() {
 		clientSocket.emit('disconnect');
 		clientSocket.off();
@@ -114,14 +122,17 @@ class Chat extends React.Component {
 		const { user, message } = this.state;
 		const msgObjectFromThunk = await this.props.addMessage(message, user);
 		this.setState({
-			messages: [...this.state.messages, msgObjectFromThunk.text],
+			message: '',
+			messages: [...this.state.messages, msgObjectFromThunk],
 		});
+		// if I use this.state.message, I may have to place the setState elsewhere.
 		// note that userId is null on post but is satisfied on the get route for messages.
 		// our thunk will turn message into an object via shorthand notation. ( {message:message, user: user} )
 		// we provided a JSON object to the backend (well, axios did) as our server expects information in a JSON object
 	}
 
 	async handleEnter(e) {
+		// may consider handling the case of pointer click. and then adding a new case.
 		if (e.key === 'Enter') {
 			console.log('enter');
 			await this.handleSubmit(e);
@@ -137,7 +148,6 @@ class Chat extends React.Component {
 			// recall that we have an event listener on the server side
 			clientSocket.emit('sendMessage', { user: this.state.user, message: this.state.message });
 			// reset the message value (being tracked on input) to empty string.
-			this.setState({ message: '' });
 		}
 	}
 
