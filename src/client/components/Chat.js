@@ -20,6 +20,7 @@ class Chat extends React.Component {
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleClick = this.handleClick.bind(this);
 		this.handleEnter = this.handleEnter.bind(this);
 		this.sendMessageToRoom = this.sendMessageToRoom.bind(this);
 	}
@@ -77,7 +78,7 @@ class Chat extends React.Component {
 		// create the chatbot user
 	}
 
-	async componentDidUpdate(prevProps, prevState) {
+	componentDidUpdate(prevProps, prevState) {
 		// if prevState's properties change somehow, perform some action.
 		const { name, room, user, message, messages } = this.state;
 		if (prevState.name !== name || prevState.room !== room) {
@@ -89,17 +90,9 @@ class Chat extends React.Component {
 		if (prevState.messages !== messages) {
 			// the handleSubmit method is crucial. It allowed us to make a change to local state, which can then be conditionally checked for changes.
 			// handles initializing chatBot and other messages. chatBot becomes a record in the db
-			clientSocket.on('message', async ({ user: name, room, text: message }) => {
-				console.log('alive again');
-				// this.props
-				// 	.createUser(name, room)
-				// 	.then(() => console.log('chatbot has been created'))
-				// 	.catch(() => console.log('failed to initialize chatbot'));
-				// this.props
-				// 	.addMessage(message, user)
-				// 	.then(() => console.log('successfully handled getting message event from the server'))
-				// 	.catch(() => console.log('error'));
-				// turns initialized bot status to true after first update.
+			clientSocket.on('message', ({ user, text }) => {
+				console.log('user information -> ' + user);
+				console.log('text object -> ' + text);
 			});
 		}
 	}
@@ -117,18 +110,21 @@ class Chat extends React.Component {
 	}
 
 	async handleSubmit(e) {
-		// passing this user along to addMessage so that our backend can take care of the association via Sequelize magic methods
 		e.preventDefault();
+		// passing this user along to addMessage so that our backend can take care of the association via Sequelize magic methods
 		const { user, message } = this.state;
 		const msgObjectFromThunk = await this.props.addMessage(message, user);
 		this.setState({
-			message: '',
 			messages: [...this.state.messages, msgObjectFromThunk],
 		});
-		// if I use this.state.message, I may have to place the setState elsewhere.
 		// note that userId is null on post but is satisfied on the get route for messages.
 		// our thunk will turn message into an object via shorthand notation. ( {message:message, user: user} )
 		// we provided a JSON object to the backend (well, axios did) as our server expects information in a JSON object
+	}
+
+	async handleClick(e) {
+		await this.handleSubmit(e);
+		this.sendMessageToRoom(e);
 	}
 
 	async handleEnter(e) {
@@ -141,19 +137,20 @@ class Chat extends React.Component {
 	}
 
 	sendMessageToRoom(e) {
+		e.preventDefault();
 		// recall that handleChange is going to be manipulating this.state.message
 		// we can actually check if this.state.message has input. we can also 'clear' the input box be setting the message string to '' in this method
-		e.preventDefault();
 		if (this.state.message) {
 			// recall that we have an event listener on the server side
 			clientSocket.emit('sendMessage', { user: this.state.user, message: this.state.message });
 			// reset the message value (being tracked on input) to empty string.
+			this.setState({ message: '' });
 		}
 	}
 
 	render() {
 		console.log(this.state.messages);
-		const { handleChange, handleSubmit, handleEnter } = this;
+		const { handleChange, handleClick, handleEnter } = this;
 		const { message } = this.state;
 		return (
 			<div id="vertical-container" className="ui grid middle aligned">
@@ -161,7 +158,7 @@ class Chat extends React.Component {
 					<div className="column" align="middle">
 						<div className="ui container">
 							{/* Need to flesh out the content */}
-							<form onSubmit={handleSubmit}>
+							<form onSubmit={handleClick}>
 								<input
 									name="message"
 									value={message}
