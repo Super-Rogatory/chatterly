@@ -9,8 +9,8 @@ const PORT = process.env.PORT || 8080;
 
 // syncing the db
 db.sync({ force: true })
-.then(() => console.log('Database is synced'))
-.catch(() => console.log('Error syncing the db'));
+	.then(() => console.log('Database is synced'))
+	.catch(() => console.log('Error syncing the db'));
 
 // cross origin middleware
 app.use(cors());
@@ -32,25 +32,22 @@ io.on('connection', (socket) => {
 	socket.on('join', ({ id, name, room }, cb) => {
 		// a valid id, name, and room indicates successful creation of a user in the front-end.
 		console.log(id, name, room);
-		
+
 		// emitting an event from the back-end to the front-end
-		socket.emit('message', { user: 'ChatBot', text: `${name}, welcome to the room ${room}`});
-		
-		socket.broadcast.to(room).emit('message', { user: 'ChatBot', text: `${name}, has joined!`});
-		
+		socket.emit('message', { user: 'ChatBot', room, text: `${name}, welcome to the room ${room}` });
+
+		socket.broadcast.to(room).emit('message', { user: 'ChatBot', text: `${name}, has joined!` });
+
 		socket.join(room);
 
 		// callback will include some sort of functionality at the end.
 		cb();
-
-	})
+	});
 	// waiting for an emitted event from the front-end
-	socket.on('sendMessage', ({ user, message }, cb) => {
+	socket.on('sendMessage', ({ user, message }) => {
 		// We can emit a message to the room relative to user object from front-end call
 		io.to(user.room).emit('message', { userName: user.name, text: message });
-
-		cb();
-	})
+	});
 	socket.on('disconnect', () => {
 		console.log('user has left');
 	});

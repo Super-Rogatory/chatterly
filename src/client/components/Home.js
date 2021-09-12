@@ -20,11 +20,13 @@ class Home extends React.Component {
 		// clears localStorage when component renders
 		window.localStorage.clear();
 	}
+
 	handleChange(e) {
 		this.setState({
 			[e.target.name]: e.target.value,
 		});
 	}
+
 	handleSubmit(e) {
 		// handles erroneous input, if inputs check out - we can call setName and setRoom which will set name and room in the redux store
 		const { name, room } = this.state;
@@ -38,9 +40,11 @@ class Home extends React.Component {
 			this.props.setRoom(room);
 		}
 	}
+
 	componentWillUnmount() {
 		this.setState({ inputError: false });
 	}
+
 	render() {
 		const { name, room, nameError, roomError } = this.state;
 		return (
@@ -53,23 +57,11 @@ class Home extends React.Component {
 								<form className="ui attached form">
 									<div className={`field ${nameError ? 'error' : ''}`}>
 										<label>Enter a name</label>
-										<input
-											placeholder="Enter Name"
-											name="name"
-											type="text"
-											value={name}
-											onChange={this.handleChange}
-										/>
+										<input placeholder="Enter Name" name="name" type="text" value={name} onChange={this.handleChange} />
 									</div>
 									<div className={`field ${roomError ? 'error' : ''}`}>
 										<label>Join a room!</label>
-										<input
-											placeholder="Enter Room"
-											name="room"
-											type="text"
-											value={room}
-											onChange={this.handleChange}
-										/>
+										<input placeholder="Enter Room" name="room" type="text" value={room} onChange={this.handleChange} />
 									</div>
 									<Link to="/chat" onClick={this.handleSubmit}>
 										<button type="submit" className="ui blue fluid button">
@@ -78,9 +70,7 @@ class Home extends React.Component {
 									</Link>
 								</form>
 								{(nameError || roomError) && (
-									<div className="ui bottom warning message">
-										Don't forget to enter both name and room.
-									</div>
+									<div className="ui bottom warning message">Don't forget to enter both name and room.</div>
 								)}
 							</div>
 						</div>
