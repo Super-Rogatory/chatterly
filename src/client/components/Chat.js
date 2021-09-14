@@ -1,7 +1,15 @@
 import React from 'react';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
-import { addMessage, createUser, fetchMessages, getUser, getUsers, getUsersInRoom } from '../../store/effects/thunks';
+import {
+	addMessage,
+	createUser,
+	fetchMessages,
+	getUser,
+	getUsers,
+	getUsersInRoom,
+	initializeChatbot,
+} from '../../store/effects/thunks';
 
 let clientSocket;
 
@@ -17,6 +25,7 @@ class Chat extends React.Component {
 			users: [],
 			message: '',
 			messages: [],
+			chatBot: {},
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -36,19 +45,22 @@ class Chat extends React.Component {
 		// initialize chatbot to start!
 		clientSocket.on('initializeChatbot', async ({ user: name, room, text: message }) => {
 			if (loggedInUser) {
-				// if there is a logged in user on refresh, then chatbot has already been created.
-				// potentially dangerous assumption?
+				// on refresh initialize chatbot again
+				await this.props.initializeChatbot(message);
 				const messages = await this.props.fetchMessages();
 				console.log(messages);
 			} else {
 				try {
-					// needed to create a chatBot in the database with respect to the room of the main user
-					const chatBot = await this.props.createUser(name, room);
-					if (chatBot) console.log('chatbot has been created');
-					const chatBotInitMessage = await this.props.addMessage(message, chatBot);
-					if (chatBotInitMessage) console.log('successfully handled getting message event from the server');
+					// save chatbot message from socket to server
+					await this.props.initializeChatbot(message);
 					this.setState({
-						messages: [...this.state.messages, chatBotInitMessage],
+						// chatBot: {
+						// 	isChatBot: true,
+						// 	name,
+						// 	room,
+						// 	message,
+						// },
+						messages: [...this.state.messages, message],
 					});
 				} catch (err) {
 					console.log('failed to initialize chatbot');
@@ -183,6 +195,7 @@ const mapDispatch = (dispatch) => ({
 	getUser: (id) => dispatch(getUser(id)),
 	addMessage: (message, user) => dispatch(addMessage(message, user)),
 	fetchMessages: () => dispatch(fetchMessages()),
+	initializeChatbot: (message) => dispatch(initializeChatbot(message)),
 });
 
 const mapState = (state) => ({

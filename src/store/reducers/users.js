@@ -1,13 +1,14 @@
 import * as types from '../actions/actionTypes';
 
 export const userReducer = (state = {}, action) => {
-	switch(action.type) {
+	switch (action.type) {
 		case types.GET_USER:
 			return action.user;
 		default:
 			return state;
 	}
-}
+};
+
 export const usersReducer = (state = [], action) => {
 	switch (action.type) {
 		case types.CREATE_USER:
@@ -20,11 +21,12 @@ export const usersReducer = (state = [], action) => {
 			return state;
 	}
 };
+
 export const usersInRoom = (state = [], action) => {
-	switch(action.type) {
+	switch (action.type) {
 		case types.FETCH_USERS_IN_ROOM:
 			return action.usersInRoom;
 		default:
 			return state;
 	}
-}
+};
