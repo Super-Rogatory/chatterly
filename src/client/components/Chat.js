@@ -10,6 +10,7 @@ import {
 	getUsersInRoom,
 	initializeChatbot,
 } from '../../store/effects/thunks';
+import ChatHeader from './ChatHeader';
 
 let clientSocket;
 
@@ -161,7 +162,7 @@ class Chat extends React.Component {
 	}
 
 	render() {
-		console.log(this.state.messages);
+		// console.log(this.state.messages);
 		const { handleChange, handleClick, handleEnter } = this;
 		const { message } = this.state;
 		return (
@@ -169,8 +170,9 @@ class Chat extends React.Component {
 				<div className="row">
 					<div className="column" align="middle">
 						<div className="ui container">
+							<ChatHeader />
 							{/* Need to flesh out the content */}
-							<form onSubmit={handleClick}>
+							{/* <form onSubmit={handleClick}>
 								<input
 									name="message"
 									value={message}
@@ -179,7 +181,7 @@ class Chat extends React.Component {
 									onKeyPress={handleEnter}
 								/>
 								<button type="submit">Send</button>
-							</form>
+							</form> */}
 						</div>
 					</div>
 				</div>
