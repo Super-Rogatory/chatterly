@@ -170,18 +170,20 @@ class Chat extends React.Component {
 				<div className="row">
 					<div className="column" align="middle">
 						<div className="ui container">
-							<ChatHeader />
-							{/* Need to flesh out the content */}
-							{/* <form onSubmit={handleClick}>
-								<input
-									name="message"
-									value={message}
-									placeholder="Send a message!"
-									onChange={handleChange}
-									onKeyPress={handleEnter}
-								/>
-								<button type="submit">Send</button>
-							</form> */}
+							<div className="white-background-container">
+								<ChatHeader room={this.state.room} />
+								{/* Need to flesh out the content */}
+								{/* <form onSubmit={handleClick}>
+									<input
+										name="message"
+										value={message}
+										placeholder="Send a message!"
+										onChange={handleChange}
+										onKeyPress={handleEnter}
+									/>
+									<button type="submit">Send</button>
+								</form> */}
+							</div>
 						</div>
 					</div>
 				</div>
