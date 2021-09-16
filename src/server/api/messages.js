@@ -11,11 +11,24 @@ router.get('/', async (req, res, next) => {
 		next(err);
 	}
 });
+router.get('/:room', async (req, res, next) => {
+	try {
+		const messages = await Message.findAll({
+			where: {
+				room: req.params.room,
+			},
+		});
+		if (!messages) res.status(404).send('no messages found!');
+		res.send(messages);
+	} catch (err) {
+		next(err);
+	}
+});
 router.post('/', async (req, res, next) => {
 	if (req.body.user) {
 		try {
 			// our original user object could not use magic methods, so we made another user based on that id and became a wizard then.
-			const message = await Message.create({ text: req.body.message });
+			const message = await Message.create({ text: req.body.message, room: req.body.user.room });
 			if (!message) res.status(404).send('unable to create message');
 			const user = await User.findByPk(req.body.user.id);
 			await user.addMessage(message);

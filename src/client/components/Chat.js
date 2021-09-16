@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import {
 	addMessage,
 	createUser,
-	fetchMessages,
 	getUser,
 	getUsers,
 	getUsersInRoom,
@@ -12,6 +11,7 @@ import {
 } from '../../store/effects/thunks';
 import ChatHeader from './ChatHeader';
 import Input from './Input';
+import MessageList from './MessageList';
 
 let clientSocket;
 
@@ -25,15 +25,7 @@ class Chat extends React.Component {
 			ENDPOINT: 'localhost:8080',
 			user: {},
 			users: [],
-			message: '',
-			messages: [],
-			chatBot: {},
 		};
-		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handleClick = this.handleClick.bind(this);
-		this.handleEnter = this.handleEnter.bind(this);
-		this.sendMessageToRoom = this.sendMessageToRoom.bind(this);
 	}
 
 	async componentDidMount() {
@@ -49,21 +41,10 @@ class Chat extends React.Component {
 			if (loggedInUser) {
 				// on refresh initialize chatbot again
 				await this.props.initializeChatbot(message);
-				const messages = await this.props.fetchMessages();
-				console.log(messages);
 			} else {
 				try {
 					// save chatbot message from socket to server
 					await this.props.initializeChatbot(message);
-					this.setState({
-						// chatBot: {
-						// 	isChatBot: true,
-						// 	name,
-						// 	room,
-						// 	message,
-						// },
-						messages: [...this.state.messages, message],
-					});
 				} catch (err) {
 					console.log('failed to initialize chatbot');
 				}
@@ -94,20 +75,9 @@ class Chat extends React.Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		// if prevState's properties change somehow, perform some action.
-		const { name, room, user, message, messages } = this.state;
+		const { name, room, user } = this.state;
 		if (prevState.name !== name || prevState.room !== room) {
 			clientSocket.emit('join', user, () => {});
-		}
-		// if (prevState.message !== message) {
-
-		// }
-		if (prevState.messages !== messages) {
-			// the handleSubmit method is crucial. It allowed us to make a change to local state, which can then be conditionally checked for changes.
-			// handles initializing chatBot and other messages. chatBot becomes a record in the db
-			clientSocket.on('message', ({ user, text }) => {
-				console.log('user information -> ' + user);
-				console.log('text object -> ' + text);
-			});
 		}
 	}
 
@@ -116,56 +86,7 @@ class Chat extends React.Component {
 		clientSocket.off();
 	}
 
-	handleChange(e) {
-		// the name of our input is message. computed property name syntax
-		this.setState({
-			[e.target.name]: e.target.value,
-		});
-	}
-
-	async handleSubmit(e) {
-		e.preventDefault();
-		// passing this user along to addMessage so that our backend can take care of the association via Sequelize magic methods
-		const { user, message } = this.state;
-		const msgObjectFromThunk = await this.props.addMessage(message, user);
-		this.setState({
-			messages: [...this.state.messages, msgObjectFromThunk],
-		});
-		// note that userId is null on post but is satisfied on the get route for messages.
-		// our thunk will turn message into an object via shorthand notation. ( {message:message, user: user} )
-		// we provided a JSON object to the backend (well, axios did) as our server expects information in a JSON object
-	}
-
-	async handleClick(e) {
-		await this.handleSubmit(e);
-		this.sendMessageToRoom(e);
-	}
-
-	async handleEnter(e) {
-		// may consider handling the case of pointer click. and then adding a new case.
-		if (e.key === 'Enter') {
-			console.log('enter');
-			await this.handleSubmit(e);
-			this.sendMessageToRoom(e);
-		}
-	}
-
-	sendMessageToRoom(e) {
-		e.preventDefault();
-		// recall that handleChange is going to be manipulating this.state.message
-		// we can actually check if this.state.message has input. we can also 'clear' the input box be setting the message string to '' in this method
-		if (this.state.message) {
-			// recall that we have an event listener on the server side
-			clientSocket.emit('sendMessage', { user: this.state.user, message: this.state.message });
-			// reset the message value (being tracked on input) to empty string.
-			this.setState({ message: '' });
-		}
-	}
-
 	render() {
-		// console.log(this.state.messages);
-		const { handleChange, handleClick, handleEnter } = this;
-		const { message } = this.state;
 		return (
 			<div id="vertical-container" className="ui grid middle aligned">
 				<div className="row">
@@ -173,18 +94,8 @@ class Chat extends React.Component {
 						<div className="ui container">
 							<div className="white-background-container">
 								<ChatHeader room={this.state.room} />
-								<Input />
-								{/* Need to flesh out the content */}
-								{/* <form onSubmit={handleClick}>
-									<input
-										name="message"
-										value={message}
-										placeholder="Send a message!"
-										onChange={handleChange}
-										onKeyPress={handleEnter}
-									/>
-									<button type="submit">Send</button>
-								</form> */}
+								<MessageList socket={clientSocket} user={this.state.user} />
+								<Input socket={clientSocket} user={this.state.user} />
 							</div>
 						</div>
 					</div>
@@ -200,7 +111,6 @@ const mapDispatch = (dispatch) => ({
 	getUsers: () => dispatch(getUsers()),
 	getUser: (id) => dispatch(getUser(id)),
 	addMessage: (message, user) => dispatch(addMessage(message, user)),
-	fetchMessages: () => dispatch(fetchMessages()),
 	initializeChatbot: (message) => dispatch(initializeChatbot(message)),
 });
 
