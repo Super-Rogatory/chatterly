@@ -11,6 +11,7 @@ import {
 	initializeChatbot,
 } from '../../store/effects/thunks';
 import ChatHeader from './ChatHeader';
+import Input from './Input';
 
 let clientSocket;
 
@@ -172,6 +173,7 @@ class Chat extends React.Component {
 						<div className="ui container">
 							<div className="white-background-container">
 								<ChatHeader room={this.state.room} />
+								<Input />
 								{/* Need to flesh out the content */}
 								{/* <form onSubmit={handleClick}>
 									<input
