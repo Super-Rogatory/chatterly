@@ -16,7 +16,9 @@ class Chat extends React.Component {
 		this.state = {
 			user: {},
 			users: [],
+			isLoaded: false,
 		};
+		this.getUserRoom = this.getUserRoom.bind(this);
 	}
 
 	async componentDidMount() {
@@ -44,24 +46,18 @@ class Chat extends React.Component {
 			// should return the users in the room
 			const users = await getUsersInRoom(room);
 			this.setState({ user: dbUser, users });
+			// initialize chatbot and officially join room after user is created.
+			clientSocket.emit('join', dbUser);
 		} else {
 			// using information from the Redux store, we can create a new user. If user does not exist when we try to getItem, setItem in localStorage and db.
 			// name and room is set in the Home component.
 			const user = await createUser(nameFromStore, roomFromStore);
 			window.localStorage.setItem('user', JSON.stringify({ id: user.id, name: nameFromStore, room: roomFromStore }));
 			this.setState({ user });
+			// initialize chatbot and officially join room after user is created.
+			clientSocket.emit('join', user);
 		}
-
-		// we will modify the id to carry the socket.id
-		// create the chatbot user
-	}
-
-	componentDidUpdate(prevProps) {
-		// if prevState's properties change somehow, perform some action.
-		const { user } = this.state;
-		if (prevProps.nameFromStore !== this.props.nameFromStore || prevProps.roomFromStore !== this.props.roomFromStore) {
-			clientSocket.emit('join', user, () => {});
-		}
+		this.setState({ isLoaded: true });
 	}
 
 	componentWillUnmount() {
@@ -70,22 +66,32 @@ class Chat extends React.Component {
 		clientSocket.off();
 	}
 
+	getUserRoom() {
+		if (this.state.isLoaded) {
+			return this.state.user.room;
+		}
+	}
+
 	render() {
-		return (
-			<div id="vertical-container" className="ui grid middle aligned">
-				<div className="row">
-					<div className="column" align="middle">
-						<div className="ui container">
-							<div className="white-background-container">
-								<ChatHeader room={this.props.roomFromStore} />
-								<MessageList socket={clientSocket} user={this.state.user} />
-								<Input socket={clientSocket} user={this.state.user} />
+		if (!this.state.isLoaded) {
+			return 'Loading...';
+		} else {
+			return (
+				<div id="vertical-container" className="ui grid middle aligned">
+					<div className="row">
+						<div className="column" align="middle">
+							<div className="ui container">
+								<div className="white-background-container">
+									<ChatHeader room={this.props.roomFromStore || this.getUserRoom()} />
+									<MessageList socket={clientSocket} user={this.state.user} />
+									<Input socket={clientSocket} user={this.state.user} />
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		);
+			);
+		}
 	}
 }
 

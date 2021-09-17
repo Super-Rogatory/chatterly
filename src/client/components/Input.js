@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { addMessage, fetchMessages } from '../../store/effects/thunks';
 
 class Input extends React.Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			message: '',
 			messages: [],
