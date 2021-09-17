@@ -1,0 +1,6 @@
+.message-container {
+	display: flex;
+	justify-content: flex-start;
+	height: auto;
+	width: auto;
+}

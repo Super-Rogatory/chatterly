@@ -13,12 +13,8 @@ class MessageList extends React.Component {
 		};
 	}
 
-	async componentDidUpdate(prevProps, prevState) {
+	async componentDidUpdate(prevProps) {
 		if (prevProps.messages !== this.props.messages) {
-			// the handleSubmit method is crucial. It allowed us to make a change to local state, which can then be conditionally checked for changes.
-			// handles initializing chatBot and other messages. chatBot becomes a record in the db
-			// this.setState({ isLoaded: true });
-			// this.setState({ messages: await this.props.fetchMessages() });
 			const messages = await fetchMessagesInRoom(this.props.user.room);
 			this.setState({ messages });
 		}
