@@ -11,6 +11,7 @@ router.get('/', async (req, res, next) => {
 		next(err);
 	}
 });
+
 router.get('/:room', async (req, res, next) => {
 	try {
 		const messages = await Message.findAll({
@@ -24,6 +25,7 @@ router.get('/:room', async (req, res, next) => {
 		next(err);
 	}
 });
+
 router.post('/', async (req, res, next) => {
 	if (req.body.user) {
 		try {
@@ -32,14 +34,6 @@ router.post('/', async (req, res, next) => {
 			if (!message) res.status(404).send('unable to create message');
 			const user = await User.findByPk(req.body.user.id);
 			await user.addMessage(message);
-			res.send(message);
-		} catch (err) {
-			next(err);
-		}
-	} else {
-		try {
-			const message = await Message.create({ text: req.body.message });
-			if (!message) res.status(404).send('unable to create message');
 			res.send(message);
 		} catch (err) {
 			next(err);

@@ -79,13 +79,6 @@ export const getUsersInRoom = (room) => {
 };
 
 // -----------------------------------------------------------------------------------------------------------------------------------------------//
-export const initializeChatbot = (message) => {
-	return async (dispatch) => {
-		const { data } = await axios.post('http://localhost:8080/api/messages', { message });
-		dispatch(_addMessage(data));
-		return data;
-	};
-};
 
 export const addMessage = (message, user) => {
 	return async (dispatch) => {

@@ -16,7 +16,7 @@ class Input extends React.Component {
 		this.sendMessageToRoom = this.sendMessageToRoom.bind(this);
 	}
 
-	componentDidUpdate(prevProps, prevState) {
+	componentDidUpdate(prevProps) {
 		// if prevState's properties change somehow, perform some action.
 		if (prevProps.messages !== this.props.messages) {
 			// the handleSubmit method is crucial. It allowed us to make a change to local state, which can then be conditionally checked for changes.

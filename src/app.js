@@ -29,7 +29,7 @@ const io = socket(server, {
 io.on('connection', (socket) => {
 	console.log('we have a new connection');
 
-	socket.on('join', ({ id, name, room }, cb) => {
+	socket.on('join', ({ id, name, room }) => {
 		// a valid id, name, and room indicates successful creation of a user in the front-end.
 		console.log(id, name, room);
 
@@ -39,9 +39,6 @@ io.on('connection', (socket) => {
 		socket.broadcast.to(room).emit('initializeChatbot', { user: 'ChatBot', text: `${name}, has joined!` });
 
 		socket.join(room);
-
-		// callback will include some sort of functionality at the end.
-		cb();
 	});
 
 	// waiting for an emitted event from the front-end

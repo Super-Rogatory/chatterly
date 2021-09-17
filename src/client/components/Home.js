@@ -41,10 +41,6 @@ class Home extends React.Component {
 		}
 	}
 
-	componentWillUnmount() {
-		this.setState({ inputError: false });
-	}
-
 	render() {
 		const { name, room, nameError, roomError } = this.state;
 		return (
