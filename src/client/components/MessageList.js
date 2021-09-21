@@ -15,6 +15,7 @@ class MessageList extends React.Component {
 
 	async componentDidUpdate(prevProps) {
 		if (prevProps.messages !== this.props.messages) {
+			// fetching messages from room allows us to see the userId that is attached to each message.
 			const messages = await fetchMessagesInRoom(this.props.user.room);
 			this.setState({ messages });
 		}

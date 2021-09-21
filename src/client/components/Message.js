@@ -5,11 +5,11 @@ import { getUser } from '../../store/effects/thunks';
 class Message extends React.Component {
 	constructor(props) {
 		super(props);
-		this.isCurrentUser = this.isCurrentUser.bind(this);
 		this.state = {
 			isLoaded: false,
 			senderUser: {},
 		};
+		this.isCurrentUser = this.isCurrentUser.bind(this);
 	}
 
 	async componentDidMount() {
@@ -24,11 +24,17 @@ class Message extends React.Component {
 
 	render() {
 		return this.isCurrentUser() ? (
-			<div className="message-container">
+			<div className="message-container user">
 				<p className="user-sender-name">{this.props.user.name}</p>
+				<div className="user-message-box">
+					<p className="user-message-text">{this.props.message.text}</p>
+				</div>
 			</div>
 		) : (
-			<div className="message-container">
+			<div className="message-container recipient">
+				<div className="message-box">
+					<p className="message-text">{this.props.message.text}</p>
+				</div>
 				<p className="sender-name">{this.state.senderUser.name}</p>
 			</div>
 		);
