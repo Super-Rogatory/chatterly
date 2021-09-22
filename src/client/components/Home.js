@@ -12,6 +12,7 @@ class Home extends React.Component {
 			room: '',
 			nameError: false,
 			roomError: false,
+			errMessage: '',
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,17 +27,34 @@ class Home extends React.Component {
 	handleSubmit(e) {
 		// handles erroneous input, if inputs check out - we can call setName and setRoom which will set name and room in the redux store
 		// clears localStorage before sending
+
 		window.localStorage.clear();
+
 		const { name, room } = this.state;
-		if (!name || !room) {
-			e.preventDefault();
-			if (room) this.setState({ nameError: true, roomError: false });
-			else if (name) this.setState({ roomError: true, nameError: false });
-			else this.setState({ nameError: true, roomError: true });
+		if (this.checkNameFaulty(name)) {
+			e.preventDefault(); // cancels normal behavior of the submit - does not submit
+			this.setState({
+				nameError: true,
+				roomError: false,
+				errMessage: 'You are not allowed to have the same name as the moderator.',
+			});
 		} else {
-			this.props.setName(name);
-			this.props.setRoom(room);
+			this.setState({ errMessage: '' });
+			if (!name || !room) {
+				e.preventDefault(); // cancels normal submit
+				if (room) this.setState({ nameError: true, roomError: false });
+				else if (name) this.setState({ roomError: true, nameError: false });
+				else this.setState({ nameError: true, roomError: true });
+			} else {
+				this.props.setName(name);
+				this.props.setRoom(room);
+			}
 		}
+	}
+
+	checkNameFaulty(name) {
+		console.log('hello');
+		return name.toLowerCase() === 'chatbot' ? true : false;
 	}
 
 	render() {
@@ -84,7 +102,9 @@ class Home extends React.Component {
 										</Link>
 									</form>
 									{(nameError || roomError) && (
-										<div className="ui bottom warning message">Don't forget to enter both name and room.</div>
+										<div className="ui bottom warning message">
+											{this.state.errMessage || "Don't forget to enter both name and room."}
+										</div>
 									)}
 								</div>
 							</div>
@@ -114,5 +134,6 @@ export default connect(mapState, mapDispatch)(Home);
 // information from Redux store. However, our getUser will end up getting the wrong information.
 
 // NOTE: if chatbot exists in room don't create another new one?
+// Consider creating a chatbot ASSOCIATED to a user.
 
 // NOTE: might consider removing all messages in a room when the chat room is empty.

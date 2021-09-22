@@ -54,4 +54,9 @@ io.on('connection', (socket) => {
 // mounted on api per usual
 app.use('/api', require('./server/api/index'));
 
+app.use((err, req, res, next) => {
+	console.error(err.stack);
+	res.status(500).send('An error has occured!');
+});
+
 server.listen(PORT, () => console.log(`server: listening on PORT ${PORT}`));
