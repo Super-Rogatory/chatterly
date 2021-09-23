@@ -31,9 +31,8 @@
 		"nodemon": "^2.0.12"
 	},
 	"scripts": {
-		"start": "react-scripts start",
-		"start-server": "nodemon src/app",
-		"start-dev": "npm run start-client & npm run start-server"
+		"start": "react-scripts start & npm run start-server",
+		"start-server": "node src/app"
 	},
 	"eslintConfig": {
 		"extends": [
