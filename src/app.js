@@ -36,7 +36,7 @@ io.on('connection', (socket) => {
 		// emitting an event from the back-end to the front-end
 		socket.emit('initializeChatbot', { user: 'ChatBot', room, text: `${name}, welcome to the room ${room}` });
 
-		socket.broadcast.to(room).emit('initializeChatbot', { user: 'ChatBot', text: `${name}, has joined!` });
+		io.to(room).emit('initializeChatbot', { user: 'ChatBot', text: `${name}, has joined!` });
 
 		socket.join(room);
 	});

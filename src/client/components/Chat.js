@@ -93,6 +93,7 @@ class Chat extends React.Component {
 	}
 
 	componentWillUnmount() {
+		window.localStorage.clear();
 		this.state.clientSocket.emit('sendDisconnectMessage', this.state.user);
 		this.state.clientSocket.disconnect();
 		this.state.clientSocket.off();

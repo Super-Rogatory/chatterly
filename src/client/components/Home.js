@@ -140,7 +140,8 @@ export default connect(mapState, mapDispatch)(Home);
 // NOTE: might consider removing all messages in a room when the chat room is empty.
 
 // NOTE: fix formatting issues, not completely centered.
+// NOTE: Optimize the program (way too much overhead from AJAX)
 
 // MVP
-// NOTE: ensure that new messages pop up correctly
+// NOTE: ensure that new messages pop up correctly - DONE
 // NOTE: might consider limiting character to 150 max (255) is the max on the server.

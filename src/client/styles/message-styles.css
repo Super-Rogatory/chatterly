@@ -13,6 +13,8 @@
 
 .sender-name {
 	margin: 0;
+	height: 20px;
+	white-space: nowrap;
 }
 
 .message-box {
