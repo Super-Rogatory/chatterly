@@ -22,8 +22,8 @@ class Input extends React.Component {
 			// the handleSubmit method is crucial. It allowed us to make a change to local state, which can then be conditionally checked for changes.
 			// handles initializing chatBot and other messages. chatBot becomes a record in the db
 			this.props.socket.on('message', ({ user, text }) => {
-				console.log('user information -> ' + user);
-				console.log('text object -> ' + text);
+				// console.log('user information -> ' + user);
+				// console.log('text object -> ' + text);
 			});
 		}
 	}
@@ -58,7 +58,6 @@ class Input extends React.Component {
 	}
 
 	sendMessageToRoom(e) {
-		e.preventDefault();
 		// recall that handleChange is going to be manipulating this.state.message
 		// we can actually check if this.state.message has input. we can also 'clear' the input box be setting the message string to '' in this method
 		if (this.state.message) {

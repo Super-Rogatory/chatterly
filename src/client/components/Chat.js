@@ -13,6 +13,7 @@ class Chat extends React.Component {
 		super();
 		this.state = {
 			user: {},
+			chatBot: {},
 			isLoaded: false,
 			noUser: false,
 			clientSocket: io('localhost:8080'),
@@ -29,13 +30,19 @@ class Chat extends React.Component {
 		this.state.clientSocket.on('initializeChatbot', async ({ user: name, room, text: message }) => {
 			try {
 				// save chatbot message from socket to server
-				const chatbot = await this.props.createUser(name, room);
-				await this.props.addMessage(message, chatbot);
+				this.setState({ chatBot: await this.props.createUser(name, room) });
+				await this.props.addMessage(message, this.state.chatBot);
 			} catch (err) {
 				console.log('failed to initialize chatbot');
 			}
 		});
 
+		// handles display of disconnect message
+		this.state.clientSocket.on('disconnectMessage', async ({ text }) => {
+			await this.props.addMessage(text, this.state.chatBot);
+		});
+
+		// handles persistent user && user creation.
 		// if user is already logged in, on refresh, set the state with the user object from localStorage and fetch users in the room
 		if (loggedInUser) {
 			// once we parsed the loggedInUser, we can use the id to fetch the user from the db and continue as normal
@@ -85,6 +92,7 @@ class Chat extends React.Component {
 	}
 
 	componentWillUnmount() {
+		this.state.clientSocket.emit('sendDisconnectMessage', this.state.user);
 		this.state.clientSocket.disconnect();
 		this.state.clientSocket.off();
 	}

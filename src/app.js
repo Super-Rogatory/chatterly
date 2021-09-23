@@ -47,6 +47,10 @@ io.on('connection', (socket) => {
 		io.to(user.room).emit('message', { user: user.name, text: message });
 	});
 
+	socket.on('sendDisconnectMessage', (user) => {
+		io.to(user.room).emit('disconnectMessage', { text: `${user.name} has left.` });
+	});
+
 	socket.on('disconnect', () => {
 		console.log('user has left');
 	});

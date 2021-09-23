@@ -128,9 +128,7 @@ export default connect(mapState, mapDispatch)(Home);
 
 // TODOS:
 
-// NOTE: there are issues with local storage. If two tabs are opened at the same time, logging in on one tab will set localStorage for every tab on the browser.
-// This means that every tab on the browser will have the same user info as the first person. Meaning our setName and setRoom will actually set the
-// information from Redux store. However, our getUser will end up getting the wrong information.
+// Finishing touches!
 
 // NOTE: if chatbot exists in room don't create another new one?
 // Consider creating a chatbot ASSOCIATED to a user.
