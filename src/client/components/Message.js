@@ -13,9 +13,16 @@ class Message extends React.Component {
 	}
 
 	async componentDidMount() {
+		// if our drilled user does not own the message, get the user from the message's userId
 		if (!this.isCurrentUser()) {
 			this.setState({ senderUser: await this.props.getUser(this.props.message.userId) });
 		}
+		// signify that getUser request and all other functionality has finished.
+		this.setState({ isLoaded: true });
+	}
+
+	isChatBot(user) {
+		return user.name === 'chatbot';
 	}
 
 	isCurrentUser() {
@@ -23,22 +30,27 @@ class Message extends React.Component {
 		return this.props.user.id === this.props.message.userId;
 	}
 
+	getCurrentUser(senderObject1, senderObject2) {
+		if (Object.keys(senderObject1).length) return senderObject1;
+		return senderObject2;
+	}
+
 	render() {
-		return this.isCurrentUser() ? (
-			<div className="message-container user">
-				<p className="user-sender-name">{`${this.props.user.name}:`}</p>
-				<div className="user-message-box">
-					<p className="user-message-text">{this.props.message.text}</p>
+		if (!this.state.isLoaded) {
+			return 'Loading...!';
+		} else {
+			// if the message is not attached to the current user, it will take the userId of the message to find the real user.
+			// hence, if this.state.senderUser exists..resolve that value instead of this.props.user. this.props.user will always exist.
+			const currentUser = this.getCurrentUser(this.state.senderUser, this.props.user);
+			return (
+				<div className="message-container user">
+					<p className="sender-name">{`${currentUser.name}:`}</p>
+					<div className="message-box">
+						<p className={`message-text ${this.isChatBot(currentUser) ? '' : 'blue'}`}>{this.props.message.text}</p>
+					</div>
 				</div>
-			</div>
-		) : (
-			<div className="message-container recipient">
-				<p className="sender-name">{`${this.state.senderUser.name}:`}</p>
-				<div className="message-box">
-					<p className="message-text">{this.props.message.text}</p>
-				</div>
-			</div>
-		);
+			);
+		}
 	}
 }
 

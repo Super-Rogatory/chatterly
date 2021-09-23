@@ -1,21 +1,19 @@
 .message-container {
 	display: flex;
-	flex-direction: column;
 	justify-content: flex-start;
 	padding: 0 3%; /* pulls messages off the left and right a bit */
 }
-
-.user {
-}
-
-.recipient {
+.message-box {
+	display: flex;
 	justify-content: flex-start;
+	width: 100%;
+	height: 20px;
 }
 
-.user-sender-name {
-	margin: 0;
+.message-text {
+	padding-left: 0.5em;
 }
 
-.sender-name {
-	margin: 0;
+.blue {
+	color: blue;
 }
