@@ -132,11 +132,15 @@ export default connect(mapState, mapDispatch)(Home);
 
 // TODOS:
 
-// Finishing touches!
+// Final fishing touches!
 
 // NOTE: if chatbot exists in room don't create another new one?
 // Consider creating a chatbot ASSOCIATED to a user.
 
 // NOTE: might consider removing all messages in a room when the chat room is empty.
 
+// NOTE: fix formatting issues, not completely centered.
+
+// MVP
+// NOTE: ensure that new messages pop up correctly
 // NOTE: might consider limiting character to 150 max (255) is the max on the server.

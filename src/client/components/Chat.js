@@ -1,7 +1,7 @@
 import React from 'react';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
-import { addMessage, createUser, getUser, getUsers, getUsersInRoom } from '../../store/effects/thunks';
+import { addMessage, createUser, fetchMessages, getUser, getUsers, getUsersInRoom } from '../../store/effects/thunks';
 import ChatHeader from './ChatHeader';
 import Input from './Input';
 import MessageList from './MessageList';
@@ -87,7 +87,6 @@ class Chat extends React.Component {
 				console.log(err);
 			}
 		}
-
 		this.setState({ isLoaded: true });
 	}
 
@@ -137,6 +136,7 @@ const mapDispatchToProps = (dispatch) => ({
 	getUsers: () => dispatch(getUsers()),
 	getUser: (id) => dispatch(getUser(id)),
 	addMessage: (message, user) => dispatch(addMessage(message, user)),
+	fetchMessages: () => dispatch(fetchMessages()),
 });
 
 const mapStateToProps = (state) => ({

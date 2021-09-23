@@ -32,6 +32,9 @@ class Message extends React.Component {
 	}
 
 	getCurrentUser(senderObject1, senderObject2) {
+		if (!senderObject1 || !senderObject2) {
+			alert('Server error. Please exit the room and re-enter.');
+		}
 		if (Object.keys(senderObject1).length) return senderObject1;
 		return senderObject2;
 	}
