@@ -19,12 +19,11 @@ class ChatHeader extends React.Component {
 		return (
 			<div className="chat-header-wrapper">
 				<div className="left-side-header-container">
-					{/* place image of online dot */}
 					<h3> {`Room: ${this.handleHeaderRoomName(this.props.room)}`}</h3>
 				</div>
 				<div className="right-side-header-container">
-					<Link to="/">
-						<img src={signOutIcon} alt="sign out button" />{' '}
+					<Link to="/" onClick={() => window.localStorage.clear()}>
+						<img src={signOutIcon} alt="sign out button" />
 					</Link>
 				</div>
 			</div>

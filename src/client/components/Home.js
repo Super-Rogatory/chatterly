@@ -53,7 +53,6 @@ class Home extends React.Component {
 	}
 
 	checkNameFaulty(name) {
-		console.log('hello');
 		return name.toLowerCase() === 'chatbot' ? true : false;
 	}
 

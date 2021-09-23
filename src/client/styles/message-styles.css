@@ -2,13 +2,19 @@
 	padding-top: 2%;
 	overflow: auto;
 	flex: auto;
+	font-size: 15px;
 }
 
 .message-container {
 	display: flex;
 	justify-content: flex-start;
-	padding: 0 3%; /* pulls messages off the left and right a bit */
+	padding: 0.5% 3%; /* pulls messages off the left and right a bit */
 }
+
+.sender-name {
+	margin: 0;
+}
+
 .message-box {
 	display: flex;
 	justify-content: flex-start;

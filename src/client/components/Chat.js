@@ -7,9 +7,6 @@ import Input from './Input';
 import MessageList from './MessageList';
 import { Redirect } from 'react-router-dom';
 
-let clientSocket;
-clientSocket = io('localhost:8080');
-
 class Chat extends React.Component {
 	// constructor serves to keep track of the name, room, and the address to reference the server
 	constructor() {
@@ -18,6 +15,7 @@ class Chat extends React.Component {
 			user: {},
 			isLoaded: false,
 			noUser: false,
+			clientSocket: io('localhost:8080'),
 		};
 		this.getUserRoom = this.getUserRoom.bind(this);
 	}
@@ -28,7 +26,7 @@ class Chat extends React.Component {
 		const { nameFromStore, roomFromStore, createUser, getUser } = this.props;
 
 		// initialize chatbot to start!
-		clientSocket.on('initializeChatbot', async ({ user: name, room, text: message }) => {
+		this.state.clientSocket.on('initializeChatbot', async ({ user: name, room, text: message }) => {
 			try {
 				// save chatbot message from socket to server
 				const chatbot = await this.props.createUser(name, room);
@@ -54,7 +52,7 @@ class Chat extends React.Component {
 				this.setState({ user: dbUser });
 
 				// initialize chatbot and officially join room after user is created.
-				clientSocket.emit('join', dbUser);
+				this.state.clientSocket.emit('join', dbUser);
 			} catch (err) {
 				console.log(err);
 			}
@@ -77,7 +75,7 @@ class Chat extends React.Component {
 				this.setState({ user });
 
 				// initialize chatbot and officially join room after user is created.
-				clientSocket.emit('join', user);
+				this.state.clientSocket.emit('join', user);
 			} catch (err) {
 				console.log(err);
 			}
@@ -87,9 +85,8 @@ class Chat extends React.Component {
 	}
 
 	componentWillUnmount() {
-		clientSocket.emit('disconnect');
-		clientSocket.removeAllListeners();
-		clientSocket.off();
+		this.state.clientSocket.disconnect();
+		this.state.clientSocket.off();
 	}
 
 	getUserRoom() {
@@ -114,8 +111,8 @@ class Chat extends React.Component {
 							<div className="ui container">
 								<div className="white-background-container">
 									<ChatHeader room={this.props.roomFromStore || this.getUserRoom()} />
-									<MessageList socket={clientSocket} user={this.state.user} />
-									<Input socket={clientSocket} user={this.state.user} />
+									<MessageList socket={this.state.clientSocket} user={this.state.user} />
+									<Input socket={this.state.clientSocket} user={this.state.user} />
 								</div>
 							</div>
 						</div>
