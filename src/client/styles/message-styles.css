@@ -1,3 +1,8 @@
+.messages {
+	padding-top: 2%;
+	overflow: auto;
+	flex: auto;
+}
 .message-container {
 	display: flex;
 	justify-content: flex-start;

@@ -23,7 +23,7 @@ class MessageList extends React.Component {
 
 	render() {
 		return (
-			<ScrollToBottom>
+			<ScrollToBottom className="messages">
 				{this.state.messages.map((message, index) => (
 					<div key={index}>
 						<Message message={message} user={this.props.user} />
