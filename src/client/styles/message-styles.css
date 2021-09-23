@@ -3,6 +3,7 @@
 	overflow: auto;
 	flex: auto;
 }
+
 .message-container {
 	display: flex;
 	justify-content: flex-start;

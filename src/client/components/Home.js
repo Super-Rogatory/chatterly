@@ -137,3 +137,5 @@ export default connect(mapState, mapDispatch)(Home);
 // Consider creating a chatbot ASSOCIATED to a user.
 
 // NOTE: might consider removing all messages in a room when the chat room is empty.
+
+// NOTE: might consider limiting character to 150 max (255) is the max on the server.
