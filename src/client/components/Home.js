@@ -18,6 +18,10 @@ class Home extends React.Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
+	componentDidMount() {
+		window.localStorage.clear(); // fixes infinite loop error on server restart
+	}
+
 	handleChange(e) {
 		this.setState({
 			[e.target.name]: e.target.value,
