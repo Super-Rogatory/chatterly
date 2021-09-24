@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { setRoom, setName } from '../../store/effects/thunks';
+import { setRoom, setName } from '../store/effects/thunks';
 import { connect } from 'react-redux';
 
 class Home extends React.Component {

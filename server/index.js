@@ -1,16 +1,18 @@
 const http = require('http');
 const socket = require('socket.io');
 const express = require('express');
+const path = require('path');
 const app = express();
 const cors = require('cors');
 const server = http.createServer(app);
-const db = require('../src/server/db/index').db; // need to actually run the index, that's where the associations lie.
-const PORT = process.env.PORT || 8080;
+const db = require('../server/db/index').db; // need to actually run the index, that's where the associations lie.
+const PORT = process.env.PORT || 5000;
+const morgan = require('morgan');
 
 // syncing the db
 db.sync()
 	.then(() => console.log('Database is synced'))
-	.catch(() => console.log('Error syncing the db'));
+	.catch((err) => console.log('Error syncing the db', err));
 
 // cross origin middleware
 app.use(cors());
@@ -18,6 +20,22 @@ app.use(cors());
 // body parsing middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// serves static files from the React app
+app.use(express.static(path.resolve(__dirname, '../client/build')));
+
+// logging middleware
+app.use(morgan('dev'));
+
+// allows access control
+app.use((req, res, next) => {
+	res.set('Content-Type', 'application/json');
+	res.set('Access-Control-Allow-Origin', '*');
+	res.set('Access-Control-Allow-Credentials', true);
+	res.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+	res.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+	next();
+});
 
 // socket.io server instance
 const io = socket(server, {
@@ -55,12 +73,16 @@ io.on('connection', (socket) => {
 		console.log('user has left');
 	});
 });
+
 // mounted on api per usual
-app.use('/api', require('./server/api/index'));
+app.use('/api', require('../server/api/index'));
 
 app.use((err, req, res, next) => {
 	console.error(err.stack);
 	res.status(500).send('An error has occured!');
 });
 
+app.get('*', (req, res) => {
+	res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+});
 server.listen(PORT, () => console.log(`server: listening on PORT ${PORT}`));

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ScrollToBottom from 'react-scroll-to-bottom';
-import { fetchMessages } from '../../store/effects/thunks';
-import { fetchMessagesInRoom } from '../../store/effects/utils';
+import { fetchMessages } from '../store/effects/thunks';
+import { fetchMessagesInRoom } from '../store/effects/utils';
 import Message from './Message';
 
 class MessageList extends React.Component {

@@ -1,11 +1,13 @@
 import React from 'react';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
-import { addMessage, createUser, fetchMessages, getUser, getUsers, getUsersInRoom } from '../../store/effects/thunks';
+import { addMessage, createUser, fetchMessages, getUser, getUsersInRoom } from '../store/effects/thunks';
 import ChatHeader from './ChatHeader';
 import Input from './Input';
 import MessageList from './MessageList';
 import { Redirect } from 'react-router-dom';
+const PORT = process.env.PORT || 5000;
+const url = `http://localhost:${PORT}`;
 
 class Chat extends React.Component {
 	// constructor serves to keep track of the name, room, and the address to reference the server
@@ -16,7 +18,7 @@ class Chat extends React.Component {
 			chatBot: {},
 			isLoaded: false,
 			noUser: false,
-			clientSocket: io('localhost:8080'),
+			clientSocket: io(`${url}`),
 		};
 		this.getUserRoom = this.getUserRoom.bind(this);
 	}
@@ -136,7 +138,6 @@ class Chat extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
 	createUser: (name, room) => dispatch(createUser(name, room)),
 	getUsersInRoom: (room) => dispatch(getUsersInRoom(room)),
-	getUsers: () => dispatch(getUsers()),
 	getUser: (id) => dispatch(getUser(id)),
 	addMessage: (message, user) => dispatch(addMessage(message, user)),
 	fetchMessages: () => dispatch(fetchMessages()),

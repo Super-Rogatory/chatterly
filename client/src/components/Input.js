@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addMessage, fetchMessages } from '../../store/effects/thunks';
+import { addMessage, fetchMessages } from '../store/effects/thunks';
 
 class Input extends React.Component {
 	constructor(props) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getUser } from '../../store/effects/thunks';
+import { getUser } from '../store/effects/thunks';
 // import Loader from 'react-loader-spinner';
 
 class Message extends React.Component {
