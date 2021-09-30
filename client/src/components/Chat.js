@@ -33,9 +33,9 @@ class Chat extends React.Component {
 			try {
 				// save chatbot message from socket to server
 				this.setState({ chatBot: await this.props.createUser(name, room) });
-				await this.props.addMessage(message, this.state.chatBot);
+
 				// allows for message to refresh on both clients.
-				this.state.clientSocket.emit('sendMessage', this.state.chatBot);
+				this.state.clientSocket.emit('sendMessage', { user: this.state.chatBot, msg: message });
 			} catch (err) {
 				console.log('failed to initialize chatbot');
 			}

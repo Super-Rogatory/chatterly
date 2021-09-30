@@ -5,9 +5,6 @@ const Message = db.define('message', {
 	text: {
 		type: Sequelize.STRING,
 	},
-	room: {
-		type: Sequelize.STRING,
-	},
 });
 
 module.exports = Message;

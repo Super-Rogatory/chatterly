@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5000;
 const morgan = require('morgan');
 
 // syncing the db
-db.sync()
+db.sync({ force: true })
 	.then(() => console.log('Database is synced'))
 	.catch((err) => console.log('Error syncing the db', err));
 
@@ -54,19 +54,20 @@ io.on('connection', (socket) => {
 		// emitting an event from the back-end to the front-end
 		socket.emit('initializeChatbot', { user: 'ChatBot', room, text: `${name}, welcome to the room ${room}` });
 
-		io.to(room).emit('initializeChatbot', { user: 'ChatBot', text: `${name}, has joined!` });
-
 		socket.join(room);
+
+		socket.to(room).emit('initializeChatbot', { user: 'ChatBot', room, text: `${name}, has joined!` });
 	});
 
 	// waiting for an emitted event from the front-end
-	socket.on('sendMessage', (user) => {
+	socket.on('sendMessage', ({ user, msg }) => {
+		console.log(user, msg);
 		// We can emit a message to the room relative to user object from front-end call
-		io.to(user.room).emit('message');
+		io.in(user.room).emit('message', { user, msg });
 	});
 
 	socket.on('sendDisconnectMessage', (user) => {
-		io.to(user.room).emit('disconnectMessage', { text: `${user.name} has left.` });
+		io.in(user.room).emit('disconnectMessage', { text: `${user.name} has left.` });
 	});
 
 	socket.on('disconnect', () => {

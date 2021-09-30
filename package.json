@@ -21,7 +21,9 @@
 	},
 	"scripts": {
 		"start": "node server",
-		"build": "cd client/ && npm install && npm run build"
+		"build": "cd client/ && npm install && npm run build",
+		"devStart": "cd client/ && npm install && npm run start",
+		"devServer": "nodemon server"
 	},
 	"cacheDirectories": [
 		"node_modules",
