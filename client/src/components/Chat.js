@@ -6,6 +6,7 @@ import ChatHeader from './ChatHeader';
 import Input from './Input';
 import MessageList from './MessageList';
 import { Redirect } from 'react-router-dom';
+
 const PORT = process.env.PORT || 5000;
 const url = `http://localhost:${PORT}`;
 
@@ -15,7 +16,6 @@ class Chat extends React.Component {
 		super();
 		this.state = {
 			user: {},
-			chatBot: {},
 			isLoaded: false,
 			noUser: false,
 			clientSocket: io(`${url}`),
@@ -31,14 +31,13 @@ class Chat extends React.Component {
 		// initialize chatbot to start!
 		this.state.clientSocket.on('initializeRoom', async ({ room: roomName, text: message }) => {
 			// we want to open room once. If we handled a persistent user, don't open room again. This is handled in openRoom definition
-			await this.props.openRoom(roomName);
-
 			try {
-				// save chatbot message from socket to server
-				// this.setState({ chatBot: await this.props.createUser(name, room) });
-
-				// allows for message to refresh on both clients.
-				this.state.clientSocket.emit('sendMessage', { user: this.state.chatBot, msg: message });
+				// save chatbot message from socket to server, room is an object with two properties - check api routes.
+				const room = await this.props.openRoom(roomName);
+				if (!room.isExisting) {
+					// instance methods are used in post router so room has access to isExisting and chatbot.
+					this.state.clientSocket.emit('sendMessage', { user: room.chatBot, msg: message });
+				}
 			} catch (err) {
 				console.log('failed to initialize chatbot');
 			}

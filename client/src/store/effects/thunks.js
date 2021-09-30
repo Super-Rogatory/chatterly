@@ -98,7 +98,7 @@ export const openRoom = (name) => {
 	return async (dispatch) => {
 		const { data: room } = await axios.post(`${url}/api/rooms`, { name });
 		if (!room.isExisting) {
-			dispatch(_createRoom(room.newRoom));
+			dispatch(_createRoom(room.room));
 		}
 		return room;
 	};

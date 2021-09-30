@@ -11,8 +11,9 @@ router.post('/', async (req, res, next) => {
 		} else {
 			// else create a new room
 			const newRoom = await Room.create({ name: req.body.name });
+			const chatBot = await newRoom.getChatBot();
 			if (!newRoom) res.status(404).send('room was unable to be created');
-			else res.send({ room: newRoom, isExisting: false });
+			else res.send({ room: newRoom, isExisting: false, chatBot });
 		}
 	} catch (err) {
 		next(err);

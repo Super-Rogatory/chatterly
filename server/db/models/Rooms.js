@@ -36,9 +36,14 @@ const Room = db.define('room', {
 */
 
 // instance methods
+Room.prototype.getChatBot = async function () {
+	const users = await this.getUsers();
+	return users[0];
+};
 // Room.prototype.hasChatBot = () => {};
 // { force : true}
 // hooks
+
 Room.afterCreate(async (room) => {
 	// room.createUser is a magic method we can utilize.
 	try {

@@ -23,9 +23,7 @@ class Input extends React.Component {
 			// handles initializing chatBot and other messages. chatBot becomes a record in the db
 			this.props.socket.on('message', async ({ user, msg }) => {
 				// fetches all messages -> will update this.props.messages so that messages render properly.
-				console.log(user, msg);
-				await this.props.addMessage(msg, user);
-				// await this.props.fetchMessages();
+				await this.props.fetchMessages();
 			});
 		}
 	}
