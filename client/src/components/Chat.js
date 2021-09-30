@@ -1,7 +1,7 @@
 import React from 'react';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
-import { addMessage, createUser, fetchMessages, getUser, getUsersInRoom } from '../store/effects/thunks';
+import { addMessage, createUser, fetchMessages, getUser, getUsersInRoom, openRoom } from '../store/effects/thunks';
 import ChatHeader from './ChatHeader';
 import Input from './Input';
 import MessageList from './MessageList';
@@ -29,10 +29,13 @@ class Chat extends React.Component {
 		const { nameFromStore, roomFromStore, createUser, getUser } = this.props;
 
 		// initialize chatbot to start!
-		this.state.clientSocket.on('initializeChatbot', async ({ user: name, room, text: message }) => {
+		this.state.clientSocket.on('initializeRoom', async ({ room: roomName, text: message }) => {
+			// we want to open room once. If we handled a persistent user, don't open room again. This is handled in openRoom definition
+			await this.props.openRoom(roomName);
+
 			try {
 				// save chatbot message from socket to server
-				this.setState({ chatBot: await this.props.createUser(name, room) });
+				// this.setState({ chatBot: await this.props.createUser(name, room) });
 
 				// allows for message to refresh on both clients.
 				this.state.clientSocket.emit('sendMessage', { user: this.state.chatBot, msg: message });
@@ -141,6 +144,7 @@ const mapDispatchToProps = (dispatch) => ({
 	getUser: (id) => dispatch(getUser(id)),
 	addMessage: (message, user) => dispatch(addMessage(message, user)),
 	fetchMessages: () => dispatch(fetchMessages()),
+	openRoom: (name) => dispatch(openRoom(name)),
 });
 
 const mapStateToProps = (state) => ({

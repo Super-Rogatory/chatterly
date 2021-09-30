@@ -52,11 +52,11 @@ io.on('connection', (socket) => {
 		console.log(id, name, room);
 
 		// emitting an event from the back-end to the front-end
-		socket.emit('initializeChatbot', { user: 'ChatBot', room, text: `${name}, welcome to the room ${room}` });
+		socket.emit('initializeRoom', { room, text: `${name}, welcome to the room ${room}` });
 
 		socket.join(room);
 
-		socket.to(room).emit('initializeChatbot', { user: 'ChatBot', room, text: `${name}, has joined!` });
+		socket.to(room).emit('initializeRoom', { room, text: `${name}, has joined!` });
 	});
 
 	// waiting for an emitted event from the front-end

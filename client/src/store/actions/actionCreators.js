@@ -53,3 +53,9 @@ export const _getMessages = (messages) => {
 		messages,
 	};
 };
+export const _createRoom = (room) => {
+	return {
+		type: types.CREATE_ROOM,
+		room,
+	};
+};
