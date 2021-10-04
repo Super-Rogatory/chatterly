@@ -5,7 +5,6 @@ const Room = require('../db/models/Rooms');
 router.get('/:id', async (req, res, next) => {
 	try {
 		const room = await Room.findOne({ where: { id: req.params.id } });
-		console.log(Object.keys(room.__proto__));
 		if (!room) res.status(404).send('could not find room');
 		res.send(room);
 	} catch (err) {

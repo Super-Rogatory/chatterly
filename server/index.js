@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5000;
 const morgan = require('morgan');
 
 // syncing the db
-db.sync()
+db.sync({ force: true })
 	.then(() => console.log('Database is synced'))
 	.catch((err) => console.log('Error syncing the db', err));
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { setRoom, setName } from '../store/effects/thunks';
 import { connect } from 'react-redux';
+import { canAddUser } from '../store/effects/utils';
 
 class Home extends React.Component {
 	// keeping track of name, room, and whether or not the input fields for name and room are false (handling the error in a boolean)
@@ -35,9 +36,8 @@ class Home extends React.Component {
 		// clears localStorage before sending
 		e.preventDefault(); // cancels normal behavior of the submit - does not submit
 		window.localStorage.clear();
-		// e.persist();
 		const { name, room } = this.state;
-		const nameIsTaken = await this.checkNameFaulty(name);
+		const nameIsTaken = await this.isNameFaulty(name);
 		this.setState({ errMessage: '' }); // resets err message input every time
 		if (nameIsTaken || !name || !room) {
 			if (!name && !room) this.handleErrorCases('nameandroomempty');
@@ -47,18 +47,23 @@ class Home extends React.Component {
 				if (room) this.handleErrorCases('nametakenandroomfull');
 				this.setState({ errMessage: 'Sorry, this username is already taken. Choose another one!' });
 			}
-
 			// if the name is not taken, then we are going to default to two other possible issues. meaning, the name input field is empty or the room input field is empty
 			else if (!name) this.handleErrorCases('nameempty');
 			// if the name is not taken AND the name input field is populated, this means that the room input field is empty
 			else if (!room) this.handleErrorCases('roomempty');
 		} else {
+			const data = window.localStorage.getItem('user');
+			const user = JSON.parse(data);
+			this.props.setName(user ? user.name : this.state.name);
+			this.props.setRoom(user ? user.room : this.state.room);
 			this.setState({ greenLight: true });
 		}
 	}
 
-	async checkNameFaulty(name) {
-		return name.toLowerCase() === 'chatbot' ? true : false;
+	async isNameFaulty(name) {
+		// if we hit the api and determine that we already have a name in the database then return true, else return false
+		// OR. if the user enters a name that is equal to the name of the moderator also return
+		return (await canAddUser(name)) || name.toLowerCase() === 'chatbot';
 	}
 
 	handleErrorCases(flag) {
@@ -84,12 +89,6 @@ class Home extends React.Component {
 		}
 	}
 
-	componentWillUnmount() {
-		const data = window.localStorage.getItem('user');
-		const user = JSON.parse(data);
-		this.props.setName(user ? user.name : this.state.name);
-		this.props.setRoom(user ? user.room : this.state.room);
-	}
 	render() {
 		const { name, room, nameError, roomError } = this.state;
 		if (window.localStorage.getItem('user') || this.state.greenLight) {

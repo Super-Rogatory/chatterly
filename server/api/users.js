@@ -11,11 +11,22 @@ router.get('/', async (req, res, next) => {
 		next(err);
 	}
 });
+
 router.get('/:id', async (req, res, next) => {
 	try {
 		const user = await User.findByPk(req.params.id);
 		if (!user) res.status(404).send('failed to find user');
 		else res.send(user);
+	} catch (err) {
+		next(err);
+	}
+});
+
+router.get('/misc/:name', async (req, res, next) => {
+	try {
+		const user = await User.findOne({ where: { name: req.params.name } });
+		if (!user) res.send(false);
+		else res.send(true);
 	} catch (err) {
 		next(err);
 	}
