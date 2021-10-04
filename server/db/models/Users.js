@@ -8,6 +8,7 @@ const User = db.define('user', {
 		validate: {
 			notEmpty: true,
 		},
+		isUnique: true,
 	},
 	room: {
 		type: Sequelize.STRING,

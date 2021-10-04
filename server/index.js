@@ -56,6 +56,7 @@ io.on('connection', (socket) => {
 
 		socket.join(room);
 
+		//emitting to all clients in the room except the user.
 		socket.to(room).emit('initializeRoom', { room, text: `${name}, has joined!` });
 	});
 

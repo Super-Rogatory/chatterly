@@ -16,6 +16,7 @@ class Chat extends React.Component {
 		super();
 		this.state = {
 			user: {},
+			room: {},
 			isLoaded: false,
 			noUser: false,
 			clientSocket: io(`${url}`),
@@ -33,11 +34,20 @@ class Chat extends React.Component {
 			// we want to open room once. If we handled a persistent user, don't open room again. This is handled in openRoom definition
 			try {
 				// save chatbot message from socket to server, room is an object with two properties - check api routes.
-				const room = await this.props.openRoom(roomName);
-				if (!room.isExisting) {
-					// instance methods are used in post router so room has access to isExisting and chatbot.
-					this.state.clientSocket.emit('sendMessage', { user: room.chatBot, msg: message });
-				}
+				// room will always have access to its chatbot. there is still only one chatbot.
+				const { room } = await this.props.openRoom(roomName);
+				this.setState({ room });
+				// check methods underneath such that after the user is created we can emit the message. (if user exists in room's participants)
+				// we need to see if there is a relationship between the room on line 37 and the room that the user has joined
+				// you need to match the user.id with the userId found in participants
+				// when that is found, we have the right user
+				// maybe we can do user.hasRoom()?
+				// maybe user.getRoom(), going to get all the rooms associated with the user.
+
+				// if () {
+				// 	// instance methods are used in post router so room has access to isExisting and chatbot.
+				// 	this.state.clientSocket.emit('sendMessage', { user: room.chatBot, msg: message });
+				// }
 			} catch (err) {
 				console.log('failed to initialize chatbot');
 			}
@@ -70,6 +80,7 @@ class Chat extends React.Component {
 				console.log(err);
 			}
 		} else {
+			// this code block on ever gets hit if there if the user has not logged in, or logs into a new room, etc.
 			// using information from the Redux store, we can create a new user. If user does not exist when we try to getItem, setItem in localStorage and db.
 			// name and room is set in the Home component.
 			try {
@@ -77,12 +88,13 @@ class Chat extends React.Component {
 					this.setState({ noUser: true });
 					throw new Error('Name input cannot be empty');
 				}
-
+				// unique constraint is not necessary
 				const user = await createUser(nameFromStore, roomFromStore);
 				if (!user) {
 					// send user to home if object is deleted from localstorage.
 					this.setState({ noUser: true });
 				}
+
 				// if user was created properly setItem in local storage and change state.
 				window.localStorage.setItem('user', JSON.stringify({ id: user.id, name: nameFromStore, room: roomFromStore }));
 				this.setState({ user });

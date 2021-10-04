@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { setRoom, setName } from '../store/effects/thunks';
 import { connect } from 'react-redux';
 
@@ -13,9 +13,11 @@ class Home extends React.Component {
 			nameError: false,
 			roomError: false,
 			errMessage: '',
+			greenLight: false,
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleErrorCases = this.handleErrorCases.bind(this);
 	}
 
 	componentDidMount() {
@@ -28,46 +30,70 @@ class Home extends React.Component {
 		});
 	}
 
-	handleSubmit(e) {
+	async handleSubmit(e) {
 		// handles erroneous input, if inputs check out - we can call setName and setRoom which will set name and room in the redux store
 		// clears localStorage before sending
-
+		e.preventDefault(); // cancels normal behavior of the submit - does not submit
 		window.localStorage.clear();
-
+		// e.persist();
 		const { name, room } = this.state;
-		if (this.checkNameFaulty(name)) {
-			e.preventDefault(); // cancels normal behavior of the submit - does not submit
-			this.setState({
-				nameError: true,
-				roomError: false,
-				errMessage: 'You are not allowed to have the same name as the moderator.',
-			});
-		} else {
-			this.setState({ errMessage: '' });
-			if (!name || !room) {
-				e.preventDefault(); // cancels normal submit
-				if (room) this.setState({ nameError: true, roomError: false });
-				else if (name) this.setState({ roomError: true, nameError: false });
-				else this.setState({ nameError: true, roomError: true });
-			} else {
-				this.props.setName(name);
-				this.props.setRoom(room);
+		const nameIsTaken = await this.checkNameFaulty(name);
+		this.setState({ errMessage: '' }); // resets err message input every time
+		if (nameIsTaken || !name || !room) {
+			if (!name && !room) this.handleErrorCases('nameandroomempty');
+			// if the name is populated but is taken, then check the conditions of the room field
+			else if (nameIsTaken) {
+				if (!room) this.handleErrorCases('nametakenandroomempty');
+				if (room) this.handleErrorCases('nametakenandroomfull');
+				this.setState({ errMessage: 'Sorry, this username is already taken. Choose another one!' });
 			}
+
+			// if the name is not taken, then we are going to default to two other possible issues. meaning, the name input field is empty or the room input field is empty
+			else if (!name) this.handleErrorCases('nameempty');
+			// if the name is not taken AND the name input field is populated, this means that the room input field is empty
+			else if (!room) this.handleErrorCases('roomempty');
+		} else {
+			this.setState({ greenLight: true });
 		}
 	}
 
-	checkNameFaulty(name) {
+	async checkNameFaulty(name) {
 		return name.toLowerCase() === 'chatbot' ? true : false;
 	}
 
+	handleErrorCases(flag) {
+		// if the name input is populated, check to see if room is
+		switch (flag) {
+			case 'nameandroomempty':
+			case 'nametakenandroomempty':
+				this.setState({ roomError: true, nameError: true });
+				break;
+			case 'nameempty':
+			case 'nametakenandroomfull':
+				this.setState({ roomError: false, nameError: true });
+				break;
+			case 'roomempty':
+				this.setState({
+					nameError: false,
+					roomError: true,
+				});
+				break;
+			default:
+				this.setState({ roomError: false, nameError: false });
+				break;
+		}
+	}
+
+	componentWillUnmount() {
+		const data = window.localStorage.getItem('user');
+		const user = JSON.parse(data);
+		this.props.setName(user ? user.name : this.state.name);
+		this.props.setRoom(user ? user.room : this.state.room);
+	}
 	render() {
 		const { name, room, nameError, roomError } = this.state;
-		if (window.localStorage.getItem('user')) {
+		if (window.localStorage.getItem('user') || this.state.greenLight) {
 			// to ensure that the same user is 'logged in' other rooms
-			const data = window.localStorage.getItem('user');
-			const user = JSON.parse(data);
-			this.props.setName(user.name);
-			this.props.setRoom(user.room);
 			return <Redirect to="/chat" />;
 		} else {
 			return (
@@ -77,7 +103,7 @@ class Home extends React.Component {
 							<div className="ui container">
 								<div className="ui purple segment">
 									<div className="ui centered large header">Join Chatterly</div>
-									<form className="ui attached form">
+									<form className="ui attached form" onSubmit={this.handleSubmit}>
 										<div className={`field ${nameError ? 'error' : ''}`}>
 											<label>Enter a name</label>
 											<input
@@ -98,11 +124,9 @@ class Home extends React.Component {
 												onChange={this.handleChange}
 											/>
 										</div>
-										<Link to="/chat" onClick={this.handleSubmit}>
-											<button type="submit" className="ui blue fluid button">
-												Sign In
-											</button>
-										</Link>
+										<button type="submit" className="ui blue fluid button">
+											Sign In
+										</button>
 									</form>
 									{(nameError || roomError) && (
 										<div className="ui bottom warning message">
