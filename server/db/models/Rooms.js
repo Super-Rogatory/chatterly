@@ -38,13 +38,11 @@ const Room = db.define('room', {
 
 // instance methods
 Room.prototype.getChatBot = async function () {
-	const users = await this.getUsers();
-	return users[0];
+	const chatbots = await this.getChatbots();
+	return chatbots[0];
 };
-// Room.prototype.hasChatBot = () => {};
-// { force : true}
-// hooks
 
+// hooks
 Room.afterCreate(async (room) => {
 	// room.createChatbot is a magic method we can utilize.
 	try {
@@ -54,13 +52,5 @@ Room.afterCreate(async (room) => {
 		console.log('error creating chatbot \n => ', err);
 	}
 });
-
-// Room.create({ name: 'test' })
-// 	.then(() => console.log('yay'))
-// 	.catch((err) => console.log(err));
-
-// Room.create({ name: 'crest' })
-// 	.then(() => console.log('yay'))
-// 	.catch((err) => console.log(err));
 
 module.exports = Room;

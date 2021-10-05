@@ -47,19 +47,9 @@ class Chat extends React.Component {
 			try {
 				// save chatbot message from socket to server, room is an object with two properties - check api routes.
 				// room will always have access to its chatbot. there is still only one chatbot.
-				const { room } = await this.props.openRoom(roomName);
-				this.setState({ room });
-				// check methods underneath such that after the user is created we can emit the message. (if user exists in room's participants)
-				// we need to see if there is a relationship between the room on line 37 and the room that the user has joined
-				// you need to match the user.id with the userId found in participants
-				// when that is found, we have the right user
-				// maybe we can do user.hasRoom()?
-				// maybe user.getRoom(), going to get all the rooms associated with the user.
-
-				// if () {
-				// 	// instance methods are used in post router so room has access to isExisting and chatbot.
-				// 	this.state.clientSocket.emit('sendMessage', { user: room.chatBot, msg: message });
-				// }
+				// if room is already open, that room is returned
+				const room = await this.props.openRoom(roomName);
+				this.state.clientSocket.emit('sendMessage', { user: room.chatBot, msg: message });
 			} catch (err) {
 				console.log('failed to initialize chatbot');
 			}
@@ -79,7 +69,6 @@ class Chat extends React.Component {
 			}
 			// if everything went well, set state with user info.
 			this.setState({ user: dbUser });
-
 			// initialize chatbot and officially join room after user is created.
 			this.state.clientSocket.emit('join', dbUser);
 		} catch (err) {
