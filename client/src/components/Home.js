@@ -62,7 +62,8 @@ class Home extends React.Component {
 				this.props.setRoom(room);
 				this.setState({ greenLight: true });
 			} catch (err) {
-				this.setState({ errMessage: 'Sorry, an error has occured while creating user' });
+				console.error('AN ERROR HAS OCCURED. => ', err.stack);
+				// this.setState({ errMessage: 'Sorry, an error has occured while creating user' });
 			}
 		}
 	}

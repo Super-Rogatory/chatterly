@@ -17,6 +17,10 @@ const User = db.define('user', {
 			notEmpty: true,
 		},
 	},
+	isGuest: {
+		type: Sequelize.BOOLEAN,
+		defaultValue: true,
+	},
 });
 
 module.exports = User;

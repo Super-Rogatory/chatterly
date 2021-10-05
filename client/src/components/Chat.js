@@ -1,7 +1,15 @@
 import React from 'react';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
-import { addMessage, createUser, fetchMessages, getUser, getUsersInRoom, openRoom } from '../store/effects/thunks';
+import {
+	addMessage,
+	createUser,
+	deleteUser,
+	fetchMessages,
+	getUser,
+	getUsersInRoom,
+	openRoom,
+} from '../store/effects/thunks';
 import ChatHeader from './ChatHeader';
 import Input from './Input';
 import MessageList from './MessageList';
@@ -28,7 +36,11 @@ class Chat extends React.Component {
 		// before anything, check to see if user object exists in localStorage and get information from Redux store
 		const loggedInUser = window.localStorage.getItem('user');
 		const { getUser } = this.props;
-
+		// assuming someone deletes from localstorage, then on refresh we can return to home.
+		if (!loggedInUser) {
+			this.setState({ noUser: true });
+			return;
+		}
 		// initialize chatbot to start!
 		this.state.clientSocket.on('initializeRoom', async ({ room: roomName, text: message }) => {
 			// we want to open room once. If we handled a persistent user, don't open room again. This is handled in openRoom definition
@@ -53,11 +65,6 @@ class Chat extends React.Component {
 			}
 		});
 
-		// handles display of disconnect message
-		this.state.clientSocket.on('disconnectMessage', async ({ text }) => {
-			await this.props.addMessage(text, this.state.chatBot);
-		});
-
 		// handles persistent user && user creation.
 		// if user is already logged in, on refresh, set the state with the user object from localStorage and fetch users in the room
 		// once we parsed the loggedInUser, we can use the id to fetch the user from the db and continue as normal
@@ -79,10 +86,19 @@ class Chat extends React.Component {
 			console.log(err);
 		}
 
+		// handles display of disconnect message
+		this.state.clientSocket.on('disconnectMessage', async ({ text }) => {
+			await this.props.addMessage(text, this.state.chatBot);
+		});
+
 		this.setState({ isLoaded: true });
 	}
 
-	componentWillUnmount() {
+	async componentWillUnmount() {
+		if (this.state.user.isGuest) {
+			await this.props.deleteUser(this.state.user.id);
+		}
+
 		window.localStorage.clear();
 		this.state.clientSocket.emit('sendDisconnectMessage', this.state.user);
 		this.state.clientSocket.disconnect();
@@ -125,6 +141,7 @@ class Chat extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
 	createUser: (name, room) => dispatch(createUser(name, room)),
+	deleteUser: (id) => dispatch(deleteUser(id)),
 	getUsersInRoom: (room) => dispatch(getUsersInRoom(room)),
 	getUser: (id) => dispatch(getUser(id)),
 	addMessage: (message, user) => dispatch(addMessage(message, user)),

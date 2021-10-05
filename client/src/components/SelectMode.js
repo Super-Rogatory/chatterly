@@ -12,7 +12,7 @@ class SelectMode extends React.Component {
 	}
 	render() {
 		if (this.state.redirectToChatAsGuest) return <Redirect to="/home" />;
-		if (this.state.redirectToChatAsGuest) return <Redirect to="/register" />; // Need to create register component
+		if (this.state.redirectToChatAsGuest) return <Redirect to="/register" />; // Need to create register component, change isGuest user status here.
 		return (
 			// Add Loop For Chatterly, a typewriter message that repeats.
 			<div className="select-mode-outerContainer">
