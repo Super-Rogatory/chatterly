@@ -27,7 +27,7 @@ class Chat extends React.Component {
 	async componentDidMount() {
 		// before anything, check to see if user object exists in localStorage and get information from Redux store
 		const loggedInUser = window.localStorage.getItem('user');
-		const { nameFromStore, roomFromStore, createUser, getUser } = this.props;
+		const { getUser } = this.props;
 
 		// initialize chatbot to start!
 		this.state.clientSocket.on('initializeRoom', async ({ room: roomName, text: message }) => {
@@ -60,51 +60,25 @@ class Chat extends React.Component {
 
 		// handles persistent user && user creation.
 		// if user is already logged in, on refresh, set the state with the user object from localStorage and fetch users in the room
-		if (loggedInUser) {
-			// once we parsed the loggedInUser, we can use the id to fetch the user from the db and continue as normal
-			try {
-				const user = JSON.parse(loggedInUser);
-				const dbUser = await getUser(user.id);
+		// once we parsed the loggedInUser, we can use the id to fetch the user from the db and continue as normal
+		try {
+			const user = JSON.parse(loggedInUser);
+			const dbUser = await getUser(user.id);
 
-				if (!dbUser) {
-					// send user back to home if local storage user cannot match with database user
-					this.setState({ noUser: true });
-					throw new Error('failed to fetch user information.');
-				}
-				// if everything went well, set state with user info.
-				this.setState({ user: dbUser });
-
-				// initialize chatbot and officially join room after user is created.
-				this.state.clientSocket.emit('join', dbUser);
-			} catch (err) {
-				console.log(err);
+			if (!dbUser) {
+				// send user back to home if local storage user cannot match with database user
+				this.setState({ noUser: true });
+				throw new Error('failed to fetch user information.');
 			}
-		} else {
-			// this code block on ever gets hit if there if the user has not logged in, or logs into a new room, etc.
-			// using information from the Redux store, we can create a new user. If user does not exist when we try to getItem, setItem in localStorage and db.
-			// name and room is set in the Home component.
-			try {
-				if (nameFromStore === '') {
-					this.setState({ noUser: true });
-					throw new Error('Name input cannot be empty');
-				}
-				// unique constraint is not necessary
-				const user = await createUser(nameFromStore, roomFromStore);
-				if (!user) {
-					// send user to home if object is deleted from localstorage.
-					this.setState({ noUser: true });
-				}
+			// if everything went well, set state with user info.
+			this.setState({ user: dbUser });
 
-				// if user was created properly setItem in local storage and change state.
-				window.localStorage.setItem('user', JSON.stringify({ id: user.id, name: nameFromStore, room: roomFromStore }));
-				this.setState({ user });
-
-				// initialize chatbot and officially join room after user is created.
-				this.state.clientSocket.emit('join', user);
-			} catch (err) {
-				console.log(err);
-			}
+			// initialize chatbot and officially join room after user is created.
+			this.state.clientSocket.emit('join', dbUser);
+		} catch (err) {
+			console.log(err);
 		}
+
 		this.setState({ isLoaded: true });
 	}
 

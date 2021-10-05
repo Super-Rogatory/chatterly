@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { setRoom, setName } from '../store/effects/thunks';
+import { setRoom, setName, createUser } from '../store/effects/thunks';
 import { connect } from 'react-redux';
 import { canAddUser } from '../store/effects/utils';
 
@@ -34,7 +34,9 @@ class Home extends React.Component {
 	async handleSubmit(e) {
 		// handles erroneous input, if inputs check out - we can call setName and setRoom which will set name and room in the redux store
 		// clears localStorage before sending
-		e.preventDefault(); // cancels normal behavior of the submit - does not submit
+		// cancels normal behavior of the submit - does not submit
+
+		e.preventDefault();
 		window.localStorage.clear();
 		const { name, room } = this.state;
 		const nameIsTaken = await this.isNameFaulty(name);
@@ -52,11 +54,16 @@ class Home extends React.Component {
 			// if the name is not taken AND the name input field is populated, this means that the room input field is empty
 			else if (!room) this.handleErrorCases('roomempty');
 		} else {
-			const data = window.localStorage.getItem('user');
-			const user = JSON.parse(data);
-			this.props.setName(user ? user.name : this.state.name);
-			this.props.setRoom(user ? user.room : this.state.room);
-			this.setState({ greenLight: true });
+			// at this point, our name and room fields are populated AND the name is not taken. Great. createUser now.
+			try {
+				const user = await this.props.createUser(name, room);
+				window.localStorage.setItem('user', JSON.stringify({ id: user.id, name, room }));
+				this.props.setName(name);
+				this.props.setRoom(room);
+				this.setState({ greenLight: true });
+			} catch (err) {
+				this.setState({ errMessage: 'Sorry, an error has occured while creating user' });
+			}
 		}
 	}
 
@@ -144,6 +151,7 @@ class Home extends React.Component {
 const mapDispatch = (dispatch) => ({
 	setRoom: (room) => dispatch(setRoom(room)),
 	setName: (name) => dispatch(setName(name)),
+	createUser: (name, room) => dispatch(createUser(name, room)),
 });
 
 const mapState = (state) => ({
