@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
-const Participants = db.define('participants', {
+const Participants = db.define('Participants', {
 	id: {
 		type: Sequelize.INTEGER,
 		primaryKey: true,
