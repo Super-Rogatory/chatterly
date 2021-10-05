@@ -13,26 +13,27 @@ const Room = db.define('room', {
 });
 
 /*
-  getMessages: [Function],
-  countMessages: [Function],
-  hasMessage: [Function],
-  hasMessages: [Function],
-  setMessages: [Function],
-  addMessage: [Function],
-  addMessages: [Function],
-  removeMessage: [Function],
-  removeMessages: [Function],
-  createMessage: [Function],
-  getUsers: [Function],
-  countUsers: [Function],
-  hasUser: [Function],
-  hasUsers: [Function],
-  setUsers: [Function],
-  addUser: [Function],
-  addUsers: [Function],
-  removeUser: [Function],
-  removeUsers: [Function],
-  createUser: [Function]
+[
+  '_customGetters',    '_customSetters',
+  'validators',        '_hasCustomGetters',
+  '_hasCustomSetters', 'rawAttributes',
+  '_isAttribute',      'getChatBot',
+  'getMessages',       'countMessages',
+  'hasMessage',        'hasMessages',
+  'setMessages',       'addMessage',
+  'addMessages',       'removeMessage',
+  'removeMessages',    'createMessage',
+  'getUsers',          'countUsers',
+  'hasUser',           'hasUsers',
+  'setUsers',          'addUser',
+  'addUsers',          'removeUser',
+  'removeUsers',       'createUser',
+  'getChatbots',       'countChatbots',
+  'hasChatbot',        'hasChatbots',
+  'setChatbots',       'addChatbot',
+  'addChatbots',       'removeChatbot',
+  'removeChatbots',    'createChatbot'
+]
 */
 
 // instance methods
@@ -45,10 +46,10 @@ Room.prototype.getChatBot = async function () {
 // hooks
 
 Room.afterCreate(async (room) => {
-	// room.createUser is a magic method we can utilize.
+	// room.createChatbot is a magic method we can utilize.
 	try {
 		// expectation: each room has a chatbot.
-		await room.createUser({ name: 'ChatBot', room: room.name });
+		await room.createChatbot({ name: 'chatbot', room: room.name });
 	} catch (err) {
 		console.log('error creating chatbot \n => ', err);
 	}

@@ -104,7 +104,7 @@ class Home extends React.Component {
 									<div className="ui centered large header">Join Chatterly</div>
 									<form className="ui attached form" onSubmit={this.handleSubmit}>
 										<div className={`field ${nameError ? 'error' : ''}`}>
-											<label>Enter a name</label>
+											<label>Enter a username</label>
 											<input
 												placeholder="Enter Name"
 												name="name"
