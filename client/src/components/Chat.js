@@ -14,6 +14,7 @@ import ChatHeader from './ChatHeader';
 import Input from './Input';
 import MessageList from './MessageList';
 import { Redirect } from 'react-router-dom';
+import { associateUserAndRoom } from '../store/effects/utils';
 
 const PORT = process.env.PORT || 5000;
 const url = `http://localhost:${PORT}`;
@@ -41,6 +42,28 @@ class Chat extends React.Component {
 			this.setState({ noUser: true });
 			return;
 		}
+
+		// handles persistent user && user creation.
+		// if user is already logged in, on refresh, set the state with the user object from localStorage and fetch users in the room
+		// once we parsed the loggedInUser, we can use the id to fetch the user from the db and continue as normal
+		try {
+			const user = JSON.parse(loggedInUser);
+			const dbUser = await getUser(user.id);
+			console.log(user.id, 'look');
+			if (!dbUser) {
+				// send user back to home if local storage user cannot match with database user
+				this.setState({ noUser: true });
+				throw new Error('failed to fetch user information.');
+			}
+			// if everything went well, set state with user info.
+			this.setState({ user: dbUser });
+
+			// initialize chatbot and officially join room after user is created.
+			this.state.clientSocket.emit('join', this.state.user);
+		} catch (err) {
+			console.log(err);
+		}
+
 		// initialize chatbot to start!
 		this.state.clientSocket.on('initializeRoom', async ({ room: roomName, text: message }) => {
 			// we want to open room once. If we handled a persistent user, don't open room again. This is handled in openRoom definition
@@ -49,31 +72,12 @@ class Chat extends React.Component {
 				// room will always have access to its chatbot. there is still only one chatbot.
 				// if room is already open, that room is returned
 				const room = await this.props.openRoom(roomName);
+				await associateUserAndRoom(this.state.user, room.room);
 				this.state.clientSocket.emit('sendMessage', { user: room.chatBot, msg: message });
 			} catch (err) {
 				console.log('failed to initialize chatbot');
 			}
 		});
-
-		// handles persistent user && user creation.
-		// if user is already logged in, on refresh, set the state with the user object from localStorage and fetch users in the room
-		// once we parsed the loggedInUser, we can use the id to fetch the user from the db and continue as normal
-		try {
-			const user = JSON.parse(loggedInUser);
-			const dbUser = await getUser(user.id);
-
-			if (!dbUser) {
-				// send user back to home if local storage user cannot match with database user
-				this.setState({ noUser: true });
-				throw new Error('failed to fetch user information.');
-			}
-			// if everything went well, set state with user info.
-			this.setState({ user: dbUser });
-			// initialize chatbot and officially join room after user is created.
-			this.state.clientSocket.emit('join', dbUser);
-		} catch (err) {
-			console.log(err);
-		}
 
 		// handles display of disconnect message
 		this.state.clientSocket.on('disconnectMessage', async ({ text }) => {

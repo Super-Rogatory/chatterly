@@ -36,6 +36,11 @@ const Room = db.define('room', {
 ]
 */
 
+Room.getMessagesByRoom = async function (roomName) {
+	const room = await this.findOne({ where: { name: roomName } });
+	const messages = await room.getMessages();
+	return messages;
+};
 // instance methods
 Room.prototype.getChatBot = async function () {
 	const chatbots = await this.getChatbots();

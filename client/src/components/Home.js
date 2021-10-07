@@ -14,7 +14,6 @@ class Home extends React.Component {
 			nameError: false,
 			roomError: false,
 			errMessage: '',
-			greenLight: false,
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -60,7 +59,7 @@ class Home extends React.Component {
 				window.localStorage.setItem('user', JSON.stringify({ id: user.id, name, room }));
 				this.props.setName(name);
 				this.props.setRoom(room);
-				this.setState({ greenLight: true });
+				// recall that the component will rerender when props changes
 			} catch (err) {
 				console.error('AN ERROR HAS OCCURED. => ', err.stack);
 				// this.setState({ errMessage: 'Sorry, an error has occured while creating user' });
@@ -99,7 +98,7 @@ class Home extends React.Component {
 
 	render() {
 		const { name, room, nameError, roomError } = this.state;
-		if (window.localStorage.getItem('user') || this.state.greenLight) {
+		if (window.localStorage.getItem('user')) {
 			// to ensure that the same user is 'logged in' other rooms
 			return <Redirect to="/chat" />;
 		} else {
