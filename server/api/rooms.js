@@ -41,7 +41,7 @@ router.put('/', async (req, res, next) => {
 			if (room) {
 				//populates our participants table, not necessary for chatbot, should be done elsewhere
 				await room.addUser(user);
-				res.status(200).send('successfully associated room and user');
+				res.status(200).json('successfully associated room and user');
 			}
 		}
 	} catch (err) {

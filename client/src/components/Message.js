@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getUser } from '../store/effects/thunks';
+import { openRoom } from '../store/effects/thunks';
 // import Loader from 'react-loader-spinner';
 
 class Message extends React.Component {
@@ -16,7 +17,10 @@ class Message extends React.Component {
 	async componentDidMount() {
 		// if our drilled user does not own the message, get the user from the message's userId
 		if (!this.isCurrentUser()) {
-			this.setState({ senderUser: await this.props.getUser(this.props.message.userId) });
+			if (this.props.message.userId === null) {
+				const room = await this.props.openRoom(this.props.room);
+				this.setState({ senderUser: room.chatBot });
+			} else this.setState({ senderUser: await this.props.getUser(this.props.message.userId) });
 		}
 		// signify that getUser request and all other functionality has finished.
 		this.setState({ isLoaded: true });
@@ -59,8 +63,12 @@ class Message extends React.Component {
 	}
 }
 
+const mapStateToProps = (state) => ({
+	room: state.room,
+});
 const mapDispatchToProps = (dispatch) => ({
 	getUser: (id) => dispatch(getUser(id)),
+	openRoom: (roomName) => dispatch(openRoom(roomName)),
 });
 
-export default connect(null, mapDispatchToProps)(Message);
+export default connect(mapStateToProps, mapDispatchToProps)(Message);

@@ -49,7 +49,6 @@ class Chat extends React.Component {
 		try {
 			const user = JSON.parse(loggedInUser);
 			const dbUser = await getUser(user.id);
-			console.log(user.id, 'look');
 			if (!dbUser) {
 				// send user back to home if local storage user cannot match with database user
 				this.setState({ noUser: true });
@@ -68,15 +67,19 @@ class Chat extends React.Component {
 		this.state.clientSocket.on('initializeRoom', async ({ room: roomName, text: message }) => {
 			// we want to open room once. If we handled a persistent user, don't open room again. This is handled in openRoom definition
 			try {
-				// save chatbot message from socket to server, room is an object with two properties - check api routes.
-				// room will always have access to its chatbot. there is still only one chatbot.
-				// if room is already open, that room is returned
+				// room will always have access to its chatbot. there is only one chatbot. if room is already open, that room is returned
 				const room = await this.props.openRoom(roomName);
+
+				// add user to participants table. should allow us to getMessagesByRoom
 				await associateUserAndRoom(this.state.user, room.room);
-				this.state.clientSocket.emit('sendMessage', { user: room.chatBot, msg: message });
+				this.state.clientSocket.emit('sendWelcomeMessage', { user: room.chatBot, msg: message });
 			} catch (err) {
 				console.log('failed to initialize chatbot');
 			}
+		});
+
+		this.state.clientSocket.on('connectMessage', async ({ user, msg }) => {
+			await this.props.addMessage(msg, user);
 		});
 
 		// handles display of disconnect message

@@ -16,7 +16,8 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:room', async (req, res, next) => {
 	try {
-		const messages = Room.getMessagesByRoom(req.params.room);
+		console.log('made it');
+		const messages = await Room.getMessagesByRoom(req.params.room);
 		if (!messages) res.status(404).send('no messages found!');
 		res.send(messages);
 	} catch (err) {
@@ -39,16 +40,13 @@ router.post('/', async (req, res, next) => {
 			// our original user object could not use magic methods, so we made another user based on that id and became a wizard then.
 			const user = await User.findByPk(req.body.user.id);
 			if (!user) res.status(404).send('unable to find user');
-			console.log(req.body.user.id);
 			// associate user with message as normal, not necessary for chatbot
 			await user.addMessage(message);
-
 			res.send(message);
 		} catch (err) {
 			next(err);
 		}
 	}
-
 	await room.addMessage(message);
 });
 

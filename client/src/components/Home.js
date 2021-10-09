@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { setRoom, setName, createUser } from '../store/effects/thunks';
 import { connect } from 'react-redux';
-import { canAddUser } from '../store/effects/utils';
+import { doesUserExist } from '../store/effects/utils';
 
 class Home extends React.Component {
 	// keeping track of name, room, and whether or not the input fields for name and room are false (handling the error in a boolean)
@@ -18,10 +18,6 @@ class Home extends React.Component {
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleErrorCases = this.handleErrorCases.bind(this);
-	}
-
-	componentDidMount() {
-		window.localStorage.clear(); // fixes infinite loop error on server restart
 	}
 
 	handleChange(e) {
@@ -70,7 +66,7 @@ class Home extends React.Component {
 	async isNameFaulty(name) {
 		// if we hit the api and determine that we already have a name in the database then return true, else return false
 		// OR. if the user enters a name that is equal to the name of the moderator also return
-		return (await canAddUser(name)) || name.toLowerCase() === 'chatbot';
+		return (await doesUserExist(name)) || name.toLowerCase() === 'chatbot';
 	}
 
 	handleErrorCases(flag) {

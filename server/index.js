@@ -60,6 +60,10 @@ io.on('connection', (socket) => {
 		socket.to(room).emit('initializeRoom', { room, text: `${name}, has joined!` });
 	});
 
+	socket.on('sendWelcomeMessage', ({ user, msg }) => {
+		io.in(user.room).emit('connectMessage', { user, msg });
+	});
+
 	// waiting for an emitted event from the front-end
 	socket.on('sendMessage', ({ user, msg }) => {
 		console.log(user, msg);
