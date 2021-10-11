@@ -35,9 +35,4 @@ const mapStateToProps = (state) => ({
 	room: state.room,
 });
 
-// const mapDispatchToProps = (dispatch) => ({
-// 	addMessage: (msg, user) => dispatch(addMessage(msg, user)),
-// 	fetchMessages: () => dispatch(fetchMessages()),
-// });
-
 export default connect(mapStateToProps, null)(MessageList);

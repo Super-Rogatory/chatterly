@@ -1,13 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addMessage, fetchMessages } from '../store/effects/thunks';
+import { addMessage } from '../store/effects/utils';
 
 class Input extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			message: '',
-			messages: [],
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
@@ -16,12 +15,10 @@ class Input extends React.Component {
 		this.sendMessageToRoom = this.sendMessageToRoom.bind(this);
 	}
 
-	async componentDidUpdate(prevProps) {}
-
 	async handleSubmit(e) {
 		e.preventDefault();
 		// passing this user along to addMessage so that our backend can take care of the association via Sequelize magic methods
-		await this.props.addMessage(this.state.message, this.props.user);
+		await addMessage(this.state.message, this.props.user);
 		// note that userId is null on post but is satisfied on the get route for messages.
 		// our thunk will turn message into an object via shorthand notation. ( {message:message, user: user} )
 		// we provided a JSON object to the backend (well, axios did) as our server expects information in a JSON object
@@ -74,13 +71,4 @@ class Input extends React.Component {
 	}
 }
 
-const mapStateToProps = (state) => ({
-	messages: state.messages,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-	addMessage: (msg, user) => dispatch(addMessage(msg, user)),
-	fetchMessages: () => dispatch(fetchMessages()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Input);
+export default connect(null, null)(Input);

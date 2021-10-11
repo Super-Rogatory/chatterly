@@ -1,6 +1,8 @@
 import React from 'react';
 import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 import Typewriter from 'typewriter-effect';
+import Home from './Home';
 
 class SelectMode extends React.Component {
 	constructor() {
@@ -13,10 +15,11 @@ class SelectMode extends React.Component {
 
 	componentDidMount() {
 		window.localStorage.clear(); // fixes infinite loop error on server restart
+		this.props.history.replace('');
 	}
 
 	render() {
-		if (this.state.redirectToChatAsGuest) return <Redirect to="/home" />;
+		if (this.state.redirectToChatAsGuest) return <Link to="/home" component={Home} />;
 		if (this.state.redirectToChatAsGuest) return <Redirect to="/register" />; // Need to create register component, change isGuest user status here.
 		if (window.localStorage.getItem('user')) {
 			// to ensure that the same user is 'logged in' other rooms

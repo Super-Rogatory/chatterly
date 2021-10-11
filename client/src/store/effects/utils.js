@@ -23,6 +23,6 @@ export const getRoom = async (id) => {
 	return room;
 };
 
-export const associateUserAndRoom = async (user, room) => {
-	await axios.put(`${url}/api/rooms`, { user, room });
+export const associateUserAndRoom = async (user) => {
+	await axios.put(`${url}/api/rooms`, { user });
 };

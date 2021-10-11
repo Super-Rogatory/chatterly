@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import signOutIcon from '../icons/signOutIcon.png';
 
 class ChatHeader extends React.Component {
@@ -22,9 +22,9 @@ class ChatHeader extends React.Component {
 					<h3> {`Room: ${this.handleHeaderRoomName(this.props.room)}`}</h3>
 				</div>
 				<div className="right-side-header-container">
-					<Link to="/" onClick={() => window.localStorage.clear()}>
+					<Redirect to="/" onClick={() => window.localStorage.clear()}>
 						<img src={signOutIcon} alt="sign out button" />
-					</Link>
+					</Redirect>
 				</div>
 			</div>
 		);

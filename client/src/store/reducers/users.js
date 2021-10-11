@@ -21,12 +21,3 @@ export const usersReducer = (state = [], action) => {
 			return state;
 	}
 };
-
-export const usersInRoom = (state = [], action) => {
-	switch (action.type) {
-		case types.FETCH_USERS_IN_ROOM:
-			return action.usersInRoom;
-		default:
-			return state;
-	}
-};

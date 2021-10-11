@@ -1,7 +1,7 @@
 import React from 'react';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
-import { createUser, deleteUser, fetchMessages, getUser, getUsersInRoom, openRoom } from '../store/effects/thunks';
+import { deleteUser, getUser, openRoom } from '../store/effects/thunks';
 import ChatHeader from './ChatHeader';
 import Input from './Input';
 import MessageList from './MessageList';
@@ -48,7 +48,10 @@ class Chat extends React.Component {
 			}
 			// if everything went well, set state with user info.
 			this.setState({ user: dbUser });
-
+			// room will always have access to its chatbot. there is only one chatbot PER ROOM. if room is already open, that room is returned
+			this.setState({ room: await this.props.openRoom(this.state.user.room) });
+			// associate user with appropriate room
+			await associateUserAndRoom(this.state.user);
 			// initialize chatbot and officially join room after user is created.
 			this.state.clientSocket.emit('join', this.state.user);
 		} catch (err) {
@@ -56,23 +59,16 @@ class Chat extends React.Component {
 		}
 
 		// initialize chatbot to start!
-		this.state.clientSocket.on('initializeChatbot', async ({ room: roomName, text: message }) => {
+		this.state.clientSocket.on('initializeChatbot', async ({ text: message }) => {
 			// we want to open room once. If we handled a persistent user, don't open room again. This is handled in openRoom definition
 			try {
-				// room will always have access to its chatbot. there is only one chatbot. if room is already open, that room is returned
-				const room = await this.props.openRoom(roomName);
 				// after opening room, save message in db.
-				await addMessage(message, room.chatBot);
+				await addMessage(message, this.state.room.chatBot);
 				// trigger message list refresh, we should then be able to fetch after this.
-				this.state.clientSocket.emit('addedMessage', room.chatBot);
+				this.state.clientSocket.emit('addedMessage', this.state.room.chatBot);
 			} catch (err) {
 				console.log('failed to initialize chatbot');
 			}
-		});
-
-		this.state.clientSocket.on('connectUserWithRoom', async () => {
-			// this.state.user is an object, this.state.user.room is a string
-			await associateUserAndRoom(this.state.user, this.state.user.room);
 		});
 
 		// handles display of disconnect message
@@ -130,11 +126,8 @@ class Chat extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-	createUser: (name, room) => dispatch(createUser(name, room)),
 	deleteUser: (id) => dispatch(deleteUser(id)),
-	getUsersInRoom: (room) => dispatch(getUsersInRoom(room)),
 	getUser: (id) => dispatch(getUser(id)),
-	fetchMessages: () => dispatch(fetchMessages()),
 	openRoom: (name) => dispatch(openRoom(name)),
 });
 

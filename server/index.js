@@ -52,10 +52,9 @@ io.on('connection', (socket) => {
 		console.log(id, name, room);
 
 		// emitting an event from the back-end to the front-end
-		io.to('initializeChatbot', { room, text: `${name}, welcome to the room ${room}` });
+		socket.emit('initializeChatbot', { text: `${name}, welcome to the room ${room}` });
 
 		socket.join(room);
-		socket.emit('connectUserWithRoom');
 		//emitting to all clients in the room except the user.
 		socket.to(room).emit('initializeChatbot', { room, text: `${name}, has joined!` });
 	});
