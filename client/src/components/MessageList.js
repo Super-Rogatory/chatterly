@@ -9,7 +9,6 @@ class MessageList extends React.Component {
 		super(props);
 		this.state = {
 			messages: [],
-			initializedWelcome: false,
 		};
 	}
 

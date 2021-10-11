@@ -56,24 +56,23 @@ class Chat extends React.Component {
 		}
 
 		// initialize chatbot to start!
-		this.state.clientSocket.on('initializeRoom', async ({ room: roomName, text: message }) => {
+		this.state.clientSocket.on('initializeChatbot', async ({ room: roomName, text: message }) => {
 			// we want to open room once. If we handled a persistent user, don't open room again. This is handled in openRoom definition
 			try {
 				// room will always have access to its chatbot. there is only one chatbot. if room is already open, that room is returned
 				const room = await this.props.openRoom(roomName);
-
-				// add user to participants table. should allow us to getMessagesByRoom
-				await associateUserAndRoom(this.state.user, room.room);
-				this.state.clientSocket.emit('sendWelcomeMessage', { user: room.chatBot, msg: message });
+				// after opening room, save message in db.
+				await addMessage(message, room.chatBot);
+				// trigger message list refresh, we should then be able to fetch after this.
+				this.state.clientSocket.emit('addedMessage', room.chatBot);
 			} catch (err) {
 				console.log('failed to initialize chatbot');
 			}
 		});
 
-		this.state.clientSocket.on('connectMessage', async ({ user, msg }) => {
-			await addMessage(msg, user);
-			this.state.clientSocket.emit('addedMessage', user);
-			// we should then be able to fetch after this.
+		this.state.clientSocket.on('connectUserWithRoom', async () => {
+			// this.state.user is an object, this.state.user.room is a string
+			await associateUserAndRoom(this.state.user, this.state.user.room);
 		});
 
 		// handles display of disconnect message

@@ -36,7 +36,7 @@ router.post('/', async (req, res, next) => {
 router.put('/', async (req, res, next) => {
 	try {
 		if (req.body.user && req.body.room) {
-			const room = await Room.findOne({ where: { name: req.body.room.name } });
+			const room = await Room.findOne({ where: { name: req.body.room } });
 			const user = await Users.findOne({ where: { name: req.body.user.name } });
 			if (room) {
 				//populates our participants table, not necessary for chatbot, should be done elsewhere
