@@ -51,7 +51,7 @@ class Input extends React.Component {
 		// we can actually check if this.state.message has input. we can also 'clear' the input box be setting the message string to '' in this method
 		if (this.state.message) {
 			// recall that we have an event listener on the server side
-			this.props.socket.emit('sendMessage', this.props.user);
+			this.props.socket.emit('addedMessage', this.props.user);
 			// reset the message value (being tracked on input) to empty string.
 			this.setState({ message: '' });
 		}

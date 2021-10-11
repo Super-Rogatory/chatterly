@@ -1,20 +1,12 @@
 import React from 'react';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
-import {
-	addMessage,
-	createUser,
-	deleteUser,
-	fetchMessages,
-	getUser,
-	getUsersInRoom,
-	openRoom,
-} from '../store/effects/thunks';
+import { createUser, deleteUser, fetchMessages, getUser, getUsersInRoom, openRoom } from '../store/effects/thunks';
 import ChatHeader from './ChatHeader';
 import Input from './Input';
 import MessageList from './MessageList';
 import { Redirect } from 'react-router-dom';
-import { associateUserAndRoom } from '../store/effects/utils';
+import { addMessage, associateUserAndRoom } from '../store/effects/utils';
 
 const PORT = process.env.PORT || 5000;
 const url = `http://localhost:${PORT}`;
@@ -79,12 +71,15 @@ class Chat extends React.Component {
 		});
 
 		this.state.clientSocket.on('connectMessage', async ({ user, msg }) => {
-			await this.props.addMessage(msg, user);
+			await addMessage(msg, user);
+			this.state.clientSocket.emit('addedMessage', user);
+			// we should then be able to fetch after this.
 		});
 
 		// handles display of disconnect message
 		this.state.clientSocket.on('disconnectMessage', async ({ text }) => {
-			await this.props.addMessage(text, this.state.chatBot);
+			await addMessage(text, this.state.chatBot);
+			this.state.clientSocket.emit('addedMessage', this.state.chatBot);
 		});
 
 		this.setState({ isLoaded: true });
@@ -140,7 +135,6 @@ const mapDispatchToProps = (dispatch) => ({
 	deleteUser: (id) => dispatch(deleteUser(id)),
 	getUsersInRoom: (room) => dispatch(getUsersInRoom(room)),
 	getUser: (id) => dispatch(getUser(id)),
-	addMessage: (message, user) => dispatch(addMessage(message, user)),
 	fetchMessages: () => dispatch(fetchMessages()),
 	openRoom: (name) => dispatch(openRoom(name)),
 });

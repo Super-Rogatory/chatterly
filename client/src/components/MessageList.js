@@ -13,6 +13,12 @@ class MessageList extends React.Component {
 		};
 	}
 
+	componentDidMount() {
+		this.props.socket.on('message', async (user) => {
+			this.setState({ messages: await fetchMessagesInRoom(user.room) });
+		});
+	}
+
 	render() {
 		return (
 			<ScrollToBottom className="messages">

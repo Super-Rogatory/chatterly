@@ -65,10 +65,10 @@ io.on('connection', (socket) => {
 	});
 
 	// waiting for an emitted event from the front-end
-	socket.on('sendMessage', ({ user, msg }) => {
-		console.log(user, msg);
+	socket.on('addedMessage', (user) => {
 		// We can emit a message to the room relative to user object from front-end call
-		io.in(user.room).emit('message', { user, msg });
+		console.log('a message has been sent');
+		io.in(user.room).emit('message', user);
 	});
 
 	socket.on('sendDisconnectMessage', (user) => {
