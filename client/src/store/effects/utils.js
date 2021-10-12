@@ -8,7 +8,7 @@ export const addMessage = async (msg, user) => {
 };
 
 export const fetchMessagesInRoom = async (room) => {
-	const { data: messages } = await axios.get(`${url}/api/messages`);
+	const { data: messages } = await axios.get(`${url}/api/messages/${room}`);
 	return messages;
 };
 

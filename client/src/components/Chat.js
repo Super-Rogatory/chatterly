@@ -73,7 +73,7 @@ class Chat extends React.Component {
 
 		// handles display of disconnect message
 		this.state.clientSocket.on('disconnectMessage', async ({ text }) => {
-			await addMessage(text, this.state.chatBot);
+			await addMessage(text, this.state.room.chatBot);
 			this.state.clientSocket.emit('addedMessage', this.state.chatBot);
 		});
 

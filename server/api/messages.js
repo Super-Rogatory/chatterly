@@ -16,7 +16,6 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:room', async (req, res, next) => {
 	try {
-		console.log('made it');
 		const messages = await Room.getMessagesByRoom(req.params.room);
 		if (!messages) res.status(404).send('no messages found!');
 		res.send(messages);

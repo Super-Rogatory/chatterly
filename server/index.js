@@ -56,7 +56,7 @@ io.on('connection', (socket) => {
 
 		socket.join(room);
 		//emitting to all clients in the room except the user.
-		socket.to(room).emit('initializeChatbot', { room, text: `${name}, has joined!` });
+		socket.to(room).emit('initializeChatbot', { text: `${name}, has joined!` });
 	});
 
 	// waiting for an emitted event from the front-end

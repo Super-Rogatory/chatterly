@@ -37,3 +37,9 @@
 	width: 24px;
 	height: 24px;
 }
+
+.no-style {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+}
