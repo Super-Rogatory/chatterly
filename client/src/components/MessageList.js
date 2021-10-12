@@ -11,7 +11,7 @@ class MessageList extends React.Component {
 		};
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
 		this.props.socket.on('message', async (user) => {
 			this.setState({ messages: await fetchMessagesInRoom(user.room) });
 		});

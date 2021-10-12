@@ -15,7 +15,6 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
 	try {
-		console.log(req.body.name);
 		const room = await Room.findOne({ where: { name: req.body.name } });
 		// console.log(room);
 		if (room) {

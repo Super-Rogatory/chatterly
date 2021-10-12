@@ -52,6 +52,7 @@ Room.getMessagesByRoom = async function (roomName) {
 	});
 	return messages;
 };
+
 // instance methods
 Room.prototype.getChatBot = async function () {
 	const chatbots = await this.getChatbots();

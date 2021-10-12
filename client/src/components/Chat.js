@@ -93,11 +93,15 @@ class Chat extends React.Component {
 		}
 	}
 
+	testSpeed() {
+		console.log('this is the testspeed function');
+	}
+
 	render() {
+		this.testSpeed();
 		if (this.state.noUser) {
 			return <Redirect to="/" />;
 		}
-
 		if (!this.state.isLoaded) {
 			return 'Loading...';
 		} else {

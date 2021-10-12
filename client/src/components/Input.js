@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { addMessage } from '../store/effects/utils';
 
 class Input extends React.Component {
@@ -19,9 +18,6 @@ class Input extends React.Component {
 		e.preventDefault();
 		// passing this user along to addMessage so that our backend can take care of the association via Sequelize magic methods
 		await addMessage(this.state.message, this.props.user);
-		// note that userId is null on post but is satisfied on the get route for messages.
-		// our thunk will turn message into an object via shorthand notation. ( {message:message, user: user} )
-		// we provided a JSON object to the backend (well, axios did) as our server expects information in a JSON object
 	}
 
 	handleChange(e) {
@@ -31,12 +27,13 @@ class Input extends React.Component {
 	}
 
 	async handleClick(e) {
+		// handles pointer click on Enter
 		await this.handleSubmit(e);
 		this.sendMessageToRoom(e);
 	}
 
 	async handleEnter(e) {
-		// may consider handling the case of pointer click. and then adding a new case.
+		// handles key click of Enter
 		if (e.key === 'Enter') {
 			await this.handleSubmit(e);
 			this.sendMessageToRoom(e);
@@ -71,4 +68,4 @@ class Input extends React.Component {
 	}
 }
 
-export default connect(null, null)(Input);
+export default Input;
