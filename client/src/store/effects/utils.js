@@ -12,6 +12,12 @@ export const fetchMessagesInRoom = async (room) => {
 	return messages;
 };
 
+export const openRoom = async (name) => {
+	// if room already exists do not dispatch the action as it will duplicate in the store.
+	const { data: room } = await axios.post(`${url}/api/rooms`, { name });
+	return room;
+};
+
 export const doesUserExist = async (name) => {
 	if (!name) return false;
 	const { data: isNameTaken } = await axios.get(`${url}/api/users/misc/${name}`);

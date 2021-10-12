@@ -41,7 +41,7 @@ router.post('/', async (req, res, next) => {
 			if (!user) res.status(404).send('unable to find user');
 			// associate user with message as normal, not necessary for chatbot
 			await user.addMessage(message);
-			res.send(message);
+			res.status(200).send(message);
 		} catch (err) {
 			next(err);
 		}

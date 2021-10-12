@@ -62,7 +62,6 @@ io.on('connection', (socket) => {
 	// waiting for an emitted event from the front-end
 	socket.on('addedMessage', (user) => {
 		// We can emit a message to the room relative to user object from front-end call
-		console.log('a message has been sent');
 		io.in(user.room).emit('message', user);
 	});
 

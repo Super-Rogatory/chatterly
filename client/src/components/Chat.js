@@ -1,12 +1,12 @@
 import React from 'react';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
-import { deleteUser, getUser, openRoom } from '../store/effects/thunks';
+import { deleteUser, getUser } from '../store/effects/thunks';
 import ChatHeader from './ChatHeader';
 import Input from './Input';
 import MessageList from './MessageList';
 import { Redirect } from 'react-router-dom';
-import { addMessage, associateUserAndRoom } from '../store/effects/utils';
+import { addMessage, associateUserAndRoom, openRoom } from '../store/effects/utils';
 
 const PORT = process.env.PORT || 5000;
 const url = `http://localhost:${PORT}`;
@@ -49,7 +49,7 @@ class Chat extends React.Component {
 			// if everything went well, set state with user info.
 			this.setState({ user: dbUser });
 			// room will always have access to its chatbot. there is only one chatbot PER ROOM. if room is already open, that room is returned
-			this.setState({ room: await this.props.openRoom(this.state.user.room) });
+			this.setState({ room: await openRoom(this.state.user.room) });
 			// associate user with appropriate room
 			await associateUserAndRoom(this.state.user);
 			// initialize chatbot and officially join room after user is created.
@@ -80,12 +80,7 @@ class Chat extends React.Component {
 		this.setState({ isLoaded: true });
 	}
 
-	async componentWillUnmount() {
-		if (this.state.user.isGuest) {
-			await this.props.deleteUser(this.state.user.id);
-		}
-
-		window.localStorage.clear();
+	componentWillUnmount() {
 		this.state.clientSocket.emit('sendDisconnectMessage', this.state.user);
 		this.state.clientSocket.disconnect();
 		this.state.clientSocket.off();
@@ -112,8 +107,8 @@ class Chat extends React.Component {
 						<div className="column" align="middle">
 							<div className="ui container">
 								<div className="white-background-container">
-									<ChatHeader room={this.props.roomFromStore || this.getUserRoom()} />
-									<MessageList socket={this.state.clientSocket} user={this.state.user} />
+									<ChatHeader roomName={this.props.roomFromStore || this.getUserRoom()} user={this.state.user} />
+									<MessageList socket={this.state.clientSocket} user={this.state.user} room={this.state.room} />
 									<Input socket={this.state.clientSocket} user={this.state.user} />
 								</div>
 							</div>
@@ -128,7 +123,6 @@ class Chat extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
 	deleteUser: (id) => dispatch(deleteUser(id)),
 	getUser: (id) => dispatch(getUser(id)),
-	openRoom: (name) => dispatch(openRoom(name)),
 });
 
 const mapStateToProps = (state) => ({

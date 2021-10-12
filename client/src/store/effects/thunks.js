@@ -7,7 +7,6 @@ import {
 	_getMessages,
 	_getUsersInRoom,
 	_addMessage,
-	_createRoom,
 } from '../actions/actionCreators';
 import axios from 'axios';
 
@@ -88,18 +87,5 @@ export const fetchMessages = () => {
 		const { data: messages } = await axios.get(`${url}/api/messages`);
 		dispatch(_getMessages(messages));
 		return messages;
-	};
-};
-
-// -----------------------------------------------------------------------------------------------------------------------------------------------//
-
-export const openRoom = (name) => {
-	// if room already exists do not dispatch the action as it will duplicate in the store.
-	return async (dispatch) => {
-		const { data: room } = await axios.post(`${url}/api/rooms`, { name });
-		if (!room.isExisting) {
-			dispatch(_createRoom(room.room));
-		}
-		return room;
 	};
 };

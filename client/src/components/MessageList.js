@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import { fetchMessagesInRoom } from '../store/effects/utils';
 import Message from './Message';
@@ -13,8 +12,6 @@ class MessageList extends React.Component {
 	}
 
 	componentDidMount() {
-		// this.setState({ messages: await fetchMessagesInRoom(this.props.room) });
-
 		this.props.socket.on('message', async (user) => {
 			this.setState({ messages: await fetchMessagesInRoom(user.room) });
 		});
@@ -25,7 +22,7 @@ class MessageList extends React.Component {
 			<ScrollToBottom className="messages">
 				{this.state.messages.map((message, index) => (
 					<div key={index}>
-						<Message message={message} user={this.props.user} />
+						<Message message={message} user={this.props.user} room={this.props.room} />
 					</div>
 				))}
 			</ScrollToBottom>
@@ -33,8 +30,4 @@ class MessageList extends React.Component {
 	}
 }
 
-const mapStateToProps = (state) => ({
-	room: state.room,
-});
-
-export default connect(mapStateToProps, null)(MessageList);
+export default MessageList;

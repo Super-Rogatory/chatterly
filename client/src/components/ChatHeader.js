@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { deleteUser } from '../store/effects/thunks';
 import signOutIcon from '../icons/signOutIcon.png';
 
 class ChatHeader extends React.Component {
@@ -9,6 +11,7 @@ class ChatHeader extends React.Component {
 			redirectToHome: false,
 		};
 		this.handleHeaderRoomName = this.handleHeaderRoomName.bind(this);
+		this.handleRedirect = this.handleRedirect.bind(this);
 	}
 
 	handleHeaderRoomName(name) {
@@ -16,6 +19,13 @@ class ChatHeader extends React.Component {
 			return ''.concat(name.slice(0, 20), '...');
 		}
 		return name;
+	}
+
+	async handleRedirect() {
+		if (this.props.user.isGuest) {
+			await this.props.deleteUser(this.props.user.id);
+		}
+		this.setState({ redirectToHome: true });
 	}
 
 	render() {
@@ -26,11 +36,11 @@ class ChatHeader extends React.Component {
 		return (
 			<div className="chat-header-wrapper">
 				<div className="left-side-header-container">
-					<h3> {`Room: ${this.handleHeaderRoomName(this.props.room)}`}</h3>
+					<h3> {`Room: ${this.handleHeaderRoomName(this.props.roomName)}`}</h3>
 				</div>
 				<div className="right-side-header-container">
 					<button className="no-style">
-						<img src={signOutIcon} alt="sign out button" onClick={() => this.setState({ redirectToHome: true })} />
+						<img src={signOutIcon} alt="sign out button" onClick={this.handleRedirect} />
 					</button>
 				</div>
 			</div>
@@ -38,4 +48,8 @@ class ChatHeader extends React.Component {
 	}
 }
 
-export default ChatHeader;
+const mapDispatchToProps = (dispatch) => ({
+	deleteUser: (id) => dispatch(deleteUser(id)),
+});
+
+export default connect(null, mapDispatchToProps)(ChatHeader);
