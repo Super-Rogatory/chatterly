@@ -1,4 +1,7 @@
 const Sequelize = require('sequelize');
+const Message = require('./Messages');
+const Op = Sequelize.Op;
+
 const db = require('../db');
 
 const Room = db.define('room', {
@@ -38,7 +41,15 @@ const Room = db.define('room', {
 
 Room.getMessagesByRoom = async function (roomName) {
 	const room = await this.findOne({ where: { name: roomName } });
-	const messages = await room.getMessages();
+	const messages = await Message.findAll({
+		include: this,
+		where: {
+			roomId: {
+				[Op.eq]: room.id,
+			},
+		},
+		order: [['createdAt', 'ASC']],
+	});
 	return messages;
 };
 // instance methods

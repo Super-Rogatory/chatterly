@@ -17,7 +17,6 @@ class Message extends React.Component {
 		// if our drilled user does not own the message, get the user from the message's userId
 		if (!this.isCurrentUser()) {
 			if (this.props.message.userId === null) {
-				console.log(this.props.room);
 				this.setState({ senderUser: this.props.room.chatBot });
 			} else this.setState({ senderUser: await this.props.getUser(this.props.message.userId) });
 		}
