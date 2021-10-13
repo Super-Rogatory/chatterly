@@ -4,7 +4,10 @@ const PORT = process.env.PORT || 5000;
 const url = `http://localhost:${PORT}`;
 
 export const addMessage = async (msg, user) => {
-	await axios.post(`${url}/api/messages`, { message: msg, user });
+	const { data: message } = await axios.post(`${url}/api/messages`, { message: msg, user });
+	if (message.err) {
+		throw new Error('unable to add message. likely the user was a guest and privileges have expired.');
+	}
 };
 
 export const fetchMessagesInRoom = async (room) => {

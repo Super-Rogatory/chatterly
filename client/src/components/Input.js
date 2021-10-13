@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router';
 import { addMessage } from '../store/effects/utils';
 
 class Input extends React.Component {
@@ -6,6 +7,7 @@ class Input extends React.Component {
 		super(props);
 		this.state = {
 			message: '',
+			errorState: false,
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
@@ -17,7 +19,11 @@ class Input extends React.Component {
 	async handleSubmit(e) {
 		e.preventDefault();
 		// passing this user along to addMessage so that our backend can take care of the association via Sequelize magic methods
-		await addMessage(this.state.message, this.props.user);
+		try {
+			await addMessage(this.state.message, this.props.user);
+		} catch (err) {
+			this.setState({ errorState: true });
+		}
 	}
 
 	handleChange(e) {
@@ -52,6 +58,9 @@ class Input extends React.Component {
 	}
 
 	render() {
+		if (this.state.errorState) {
+			return <Redirect to="/" />;
+		}
 		return (
 			<form className="ui fluid action input" onSubmit={this.handleClick}>
 				<input

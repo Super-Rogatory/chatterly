@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const path = require('path');
 const Message = require('../db/models/Messages');
 const User = require('../db/models/Users');
 const Room = require('../db/models/Rooms');
-
 router.get('/', async (req, res, next) => {
 	try {
 		const messages = await Message.findAll();
@@ -38,9 +38,12 @@ router.post('/', async (req, res, next) => {
 		try {
 			// our original user object could not use magic methods, so we made another user based on that id and became a wizard then.
 			const user = await User.findByPk(req.body.user.id);
-			if (!user) res.status(404).send('unable to find user');
+			if (!user) {
+				res.send({ err: true });
+				return;
+			}
 			// associate user with message as normal, not necessary for chatbot
-			await user.addMessage(message);
+			else await user.addMessage(message);
 		} catch (err) {
 			next(err);
 		}
