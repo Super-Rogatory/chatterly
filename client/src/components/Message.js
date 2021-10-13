@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getUser } from '../store/effects/thunks';
-// import Loader from 'react-loader-spinner';
 
 class Message extends React.Component {
 	constructor(props) {
@@ -43,7 +42,6 @@ class Message extends React.Component {
 
 	render() {
 		if (!this.state.isLoaded) {
-			//<Loader type="Circles" color="#d5a26c" />;
 			return '';
 		} else {
 			// if the message is not attached to the current user, it will take the userId of the message to find the real user.

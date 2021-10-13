@@ -7,6 +7,7 @@ import Input from './Input';
 import MessageList from './MessageList';
 import { Redirect } from 'react-router-dom';
 import { addMessage, associateUserAndRoom, openRoom } from '../store/effects/utils';
+import Loader from 'react-loader-spinner';
 
 const PORT = process.env.PORT || 5000;
 const url = `http://localhost:${PORT}`;
@@ -93,17 +94,18 @@ class Chat extends React.Component {
 		}
 	}
 
-	testSpeed() {
-		console.log('this is the testspeed function');
-	}
-
 	render() {
-		this.testSpeed();
 		if (this.state.noUser) {
 			return <Redirect to="/" />;
 		}
 		if (!this.state.isLoaded) {
-			return 'Loading...';
+			return (
+				<div id="vertical-container" className="ui grid middle aligned">
+					<div className="middle">
+						<Loader type="ThreeDots" color="#d5a26c" />;
+					</div>
+				</div>
+			);
 		} else {
 			return (
 				<div id="vertical-container" className="ui grid middle aligned">

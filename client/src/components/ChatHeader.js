@@ -22,11 +22,11 @@ class ChatHeader extends React.Component {
 	}
 
 	async handleRedirect() {
-		if (this.props.user.isGuest) {
-			// perhaps instead of deleting user immediately, you could delete all guests one hour after this point of unmounting - and their messages
-			// give a warning of this effect in select mode screen.
-			await this.props.deleteUser(this.props.user.id);
-		}
+		// if (this.props.user.isGuest) {
+		// 	// perhaps instead of deleting user immediately, you could delete all guests one hour after this point of unmounting - and their messages
+		// 	// give a warning of this effect in select mode screen.
+		// 	await this.props.deleteUser(this.props.user.id);
+		// }
 		this.setState({ redirectToHome: true });
 	}
 

@@ -43,3 +43,10 @@
 	border: none;
 	cursor: pointer;
 }
+
+.middle {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: auto;
+}

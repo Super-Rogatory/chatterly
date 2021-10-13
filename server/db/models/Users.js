@@ -23,4 +23,11 @@ const User = db.define('user', {
 	},
 });
 
+User.afterCreate((user) => {
+	if (user.isGuest) {
+		setTimeout(async () => {
+			console.log(user);
+		}, 3000);
+	}
+});
 module.exports = User;
