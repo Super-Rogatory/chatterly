@@ -82,6 +82,7 @@ class Chat extends React.Component {
 	}
 
 	componentWillUnmount() {
+		this.props.toggleGuestWarning(false);
 		this.state.clientSocket.emit('sendDisconnectMessage', this.state.user);
 		this.state.clientSocket.disconnect();
 		this.state.clientSocket.off();
@@ -96,7 +97,6 @@ class Chat extends React.Component {
 
 	render() {
 		if (this.state.noUser) {
-			this.props.toggleGuestWarning(false);
 			this.props.toggleGuestExpired(true);
 			return <Redirect to="/" />;
 		}

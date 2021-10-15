@@ -36,7 +36,7 @@ User.afterCreate((user) => {
 				},
 			});
 			await user.destroy();
-		}, 3000);
+		}, 3600000);
 	}
 });
 module.exports = User;
