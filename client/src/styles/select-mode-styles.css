@@ -87,3 +87,7 @@ Typewriter {
 	width: 100%;
 	margin: auto;
 }
+
+.warning-message-container h3 {
+	text-align: center;
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
-import { deleteUser, getUser } from '../store/effects/thunks';
+import { deleteUser, getUser, isGuestExpired, togglePopup } from '../store/effects/thunks';
 import ChatHeader from './ChatHeader';
 import Input from './Input';
 import MessageList from './MessageList';
@@ -96,6 +96,8 @@ class Chat extends React.Component {
 
 	render() {
 		if (this.state.noUser) {
+			this.props.toggleGuestWarning(false);
+			this.props.toggleGuestExpired(true);
 			return <Redirect to="/" />;
 		}
 		if (!this.state.isLoaded) {
@@ -129,6 +131,8 @@ class Chat extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
 	deleteUser: (id) => dispatch(deleteUser(id)),
 	getUser: (id) => dispatch(getUser(id)),
+	toggleGuestWarning: (status) => dispatch(togglePopup(status)),
+	toggleGuestExpired: (status) => dispatch(isGuestExpired(status)),
 });
 
 const mapStateToProps = (state) => ({

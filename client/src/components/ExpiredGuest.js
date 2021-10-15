@@ -1,19 +1,37 @@
-// import React, { useState } from 'react';
-// import Popup from 'reactjs-popup';
-// import { Link } from 'react-router-dom';
+import React from 'react';
+import { connect } from 'react-redux';
+import { isGuestExpired } from '../store/effects/thunks';
 
-// const ExpiredGuestPopup = () => {
-// 	const [open, setOpen] = useState(true);
-// 	// const closePopup = () => {
-// 	// 	setOpen(false);
-// 	// };
-// 	return (
-// 		<div>
-// 			<Popup open={open}>
-// 				<div>Content here</div>
-// 			</Popup>
-// 		</div>
-// 	);
-// };
+class ExpiredGuest extends React.Component {
+	// eslint-disable-next-line no-useless-constructor
+	constructor(props) {
+		super(props);
+	}
+	render() {
+		if (this.props.isGuestExpired) {
+			return (
+				<div className="warning-message-container">
+					<div className="warning-message">
+						{this.props.children}
+						<div className="confirmations-buttons">
+							<button className="ui basic button" onClick={() => this.props.toggleGuestExpired(false)}>
+								OK!
+							</button>
+						</div>
+					</div>
+				</div>
+			);
+		}
+		return '';
+	}
+}
 
-// export default ExpiredGuestPopup;
+const mapStateToProps = (state) => ({
+	isGuestExpired: state.isGuestExpired,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	toggleGuestExpired: (status) => dispatch(isGuestExpired(status)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpiredGuest);

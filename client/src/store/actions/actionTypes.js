@@ -9,3 +9,4 @@ export const FETCH_MESSAGES = 'FETCH_MESSAGES';
 export const ADD_MESSAGE = 'ADD_MESSAGE';
 export const CREATE_ROOM = 'CREATE_ROOM';
 export const TOGGLE_POPUP = 'TOGGLE_POPUP';
+export const EXPIRED_GUEST = 'EXPIRED_GUEST';

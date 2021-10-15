@@ -20,7 +20,7 @@ class GuestWarningPopup extends React.Component {
 					<div className="warning-message">
 						{this.props.children}
 						<div className="confirmations-buttons">
-							<button className="ui basic button" onClick={() => this.props.togglePopup(false)}>
+							<button className="ui basic button" onClick={() => this.props.toggleGuestWarning(false)}>
 								I am not ready to rock and roll.
 							</button>
 							<button className="ui basic button" onClick={() => this.setState({ redirectToChatAsGuest: true })}>
@@ -40,7 +40,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	togglePopup: (status) => dispatch(togglePopup(status)),
+	toggleGuestWarning: (status) => dispatch(togglePopup(status)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GuestWarningPopup);

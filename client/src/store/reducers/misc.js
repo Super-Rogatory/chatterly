@@ -7,3 +7,12 @@ export const toggleStatusReducer = (state = false, action) => {
 			return state;
 	}
 };
+
+export const guestExpiredReducer = (state = false, action) => {
+	switch (action.type) {
+		case types.EXPIRED_GUEST:
+			return action.status;
+		default:
+			return state;
+	}
+};

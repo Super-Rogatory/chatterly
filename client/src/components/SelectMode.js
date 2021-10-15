@@ -4,6 +4,7 @@ import { Redirect } from 'react-router';
 import Typewriter from 'typewriter-effect';
 import { togglePopup } from '../store/effects/thunks';
 import GuestWarningPopup from './GuestWarningMessage';
+import ExpiredGuest from './ExpiredGuest';
 
 class SelectMode extends React.Component {
 	constructor() {
@@ -45,18 +46,21 @@ class SelectMode extends React.Component {
 					<div className="select-mode-container">
 						{!this.props.isTriggered && (
 							<div className="select-panel">
-								<button className="ui basic button" onClick={() => this.props.togglePopup(true)}>
+								<button className="ui basic button black" onClick={() => this.props.toggleGuestWarning(true)}>
 									JOIN CHATTERLY AS GUEST
 								</button>
 
-								<div className="ui basic center aligned segment">0 people online</div>
+								<div className="ui basic center aligned segment">
+									<h3>0 people online</h3>
+								</div>
 
-								<button className="ui basic button" onClick={() => this.setState({ redirectToChatAsUser: true })}>
+								<button className="ui basic button black" onClick={() => this.setState({ redirectToChatAsUser: true })}>
 									REGISTER AND KEEP USERNAME
 								</button>
 							</div>
 						)}
 					</div>
+
 					{/* Warning messages that popups when the user choices to join the chatroom as a guest. */}
 					<GuestWarningPopup>
 						<h3>
@@ -64,13 +68,13 @@ class SelectMode extends React.Component {
 							permanently, make sure to create an account with us. Ready to rock and roll?
 						</h3>
 					</GuestWarningPopup>
-					{/* { Add the ExpiredGuest popup message here, make sure to set expired state condition 
-					 <GuestWarningPopup>
-						<h3>
-							As a guest your username WILL disappear from my server within the hour. If you wish to keep your name
-							permanently, make sure to create an account with us. Ready to rock and roll?
-						</h3>
-					</GuestWarningPopup> */}
+
+					{
+						/* Will load after the component has to unmount from chat */
+						<ExpiredGuest>
+							<h3>Your guest session has expired. Consider creating an account to keep your username!</h3>
+						</ExpiredGuest>
+					}
 				</div>
 			);
 	}
@@ -78,10 +82,11 @@ class SelectMode extends React.Component {
 
 const mapStateToProps = (state) => ({
 	isTriggered: state.isTriggered,
+	isGuestExpired: state.isGuestExpired,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	togglePopup: (status) => dispatch(togglePopup(status)),
+	toggleGuestWarning: (status) => dispatch(togglePopup(status)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectMode);

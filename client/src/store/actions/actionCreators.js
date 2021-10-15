@@ -59,3 +59,9 @@ export const _togglePopup = (status) => {
 		status,
 	};
 };
+export const _expiredGuest = (status) => {
+	return {
+		type: types.EXPIRED_GUEST,
+		status
+	}
+}

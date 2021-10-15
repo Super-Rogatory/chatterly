@@ -8,6 +8,7 @@ import {
 	_getUsersInRoom,
 	_addMessage,
 	_togglePopup,
+	_expiredGuest,
 } from '../actions/actionCreators';
 import axios from 'axios';
 
@@ -92,8 +93,15 @@ export const fetchMessages = () => {
 };
 // -----------------------------------------------------------------------------------------------------------------------------------------------//
 export const togglePopup = (status) => {
-	return function (dispatch) {
+	return (dispatch) => {
 		dispatch(_togglePopup(status));
+		return status;
+	};
+};
+
+export const isGuestExpired = (status) => {
+	return (dispatch) => {
+		dispatch(_expiredGuest(status));
 		return status;
 	};
 };
