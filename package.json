@@ -1,7 +1,7 @@
 {
 	"name": "chatterly",
 	"author": "Chukwudi Ikem",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"description": "A way to connecting with friends!",
 	"dependencies": {
 		"axios": "^0.21.1",

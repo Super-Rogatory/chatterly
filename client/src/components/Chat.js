@@ -21,7 +21,7 @@ class Chat extends React.Component {
 			room: {},
 			isLoaded: false,
 			noUser: false,
-			clientSocket: io(`${url}`),
+			clientSocket: io(`http://wechatterly.herokuapp.com/`),
 		};
 		this.getUserRoom = this.getUserRoom.bind(this);
 	}

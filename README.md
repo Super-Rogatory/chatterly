@@ -1,7 +1,7 @@
-# Testing Locally
+# WeChatterly
 
 # Link to site - http://wechatterly.herokuapp.com/
 
-# Still building. Poorly Optimized. E.T.A 09/30/21
+# Working on Project Optimizations, improving implementation for speed and security. E.T.A 11/04/21
 
 # For Local Dev

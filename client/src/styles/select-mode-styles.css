@@ -81,13 +81,13 @@ Typewriter {
 	background-color: blanchedalmond;
 }
 
+.warning-message-container h3 {
+	text-align: center;
+}
+
 .confirmations-buttons {
 	display: flex;
 	justify-content: space-around;
 	width: 100%;
 	margin: auto;
-}
-
-.warning-message-container h3 {
-	text-align: center;
 }
