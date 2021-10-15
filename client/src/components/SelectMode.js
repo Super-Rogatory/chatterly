@@ -43,24 +43,18 @@ class SelectMode extends React.Component {
 					</div>
 					{/* Show select mode menu only when launchPopup is false */}
 					<div className="select-mode-container">
-						{!this.props.isTriggered ? (
-							<>
-								<div className="mode-background-box">
-									<button className="ui basic fluid button" onClick={() => this.props.togglePopup(true)}>
-										JOIN CHATTERLY AS GUEST
-									</button>
-								</div>
-								<div className="mode-background-box">
-									<button
-										className="ui basic fluid button"
-										onClick={() => this.setState({ redirectToChatAsUser: true })}
-									>
-										REGISTER AND KEEP USERNAME
-									</button>
-								</div>
-							</>
-						) : (
-							''
+						{!this.props.isTriggered && (
+							<div className="select-panel">
+								<button className="ui basic button" onClick={() => this.props.togglePopup(true)}>
+									JOIN CHATTERLY AS GUEST
+								</button>
+
+								<div className="ui basic center aligned segment">0 people online</div>
+
+								<button className="ui basic button" onClick={() => this.setState({ redirectToChatAsUser: true })}>
+									REGISTER AND KEEP USERNAME
+								</button>
+							</div>
 						)}
 					</div>
 					{/* Warning messages that popups when the user choices to join the chatroom as a guest. */}
@@ -70,6 +64,13 @@ class SelectMode extends React.Component {
 							permanently, make sure to create an account with us. Ready to rock and roll?
 						</h3>
 					</GuestWarningPopup>
+					{/* { Add the ExpiredGuest popup message here, make sure to set expired state condition 
+					 <GuestWarningPopup>
+						<h3>
+							As a guest your username WILL disappear from my server within the hour. If you wish to keep your name
+							permanently, make sure to create an account with us. Ready to rock and roll?
+						</h3>
+					</GuestWarningPopup> */}
 				</div>
 			);
 	}

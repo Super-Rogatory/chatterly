@@ -44,10 +44,20 @@ Typewriter {
 	/* height: 95vh; 100vh is 100% of the viewport height .. 5 + 95*/
 }
 
+.select-panel {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	height: 35%;
+	padding: 16px 20px; /* top and bottom - 16px left and right 5 percent */
+	border-radius: 5px;
+	background-color: blanchedalmond;
+}
+
 .mode-background-box {
 	background-color: blanchedalmond;
 	border-radius: 5px;
-	box-shadow: 10px 5px 8px #888888;
+	/* box-shadow: 10px 5px 8px #888888; */
 }
 
 .warning-message-container {
