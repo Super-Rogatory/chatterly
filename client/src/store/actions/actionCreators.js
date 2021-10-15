@@ -53,3 +53,9 @@ export const _getMessages = (messages) => {
 		messages,
 	};
 };
+export const _togglePopup = (status) => {
+	return {
+		type: types.TOGGLE_POPUP,
+		status,
+	};
+};

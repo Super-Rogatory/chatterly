@@ -7,6 +7,7 @@ import {
 	_getMessages,
 	_getUsersInRoom,
 	_addMessage,
+	_togglePopup,
 } from '../actions/actionCreators';
 import axios from 'axios';
 
@@ -87,5 +88,12 @@ export const fetchMessages = () => {
 		const { data: messages } = await axios.get(`${url}/api/messages`);
 		dispatch(_getMessages(messages));
 		return messages;
+	};
+};
+// -----------------------------------------------------------------------------------------------------------------------------------------------//
+export const togglePopup = (status) => {
+	return function (dispatch) {
+		dispatch(_togglePopup(status));
+		return status;
 	};
 };

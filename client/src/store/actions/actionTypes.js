@@ -8,3 +8,4 @@ export const FETCH_USERS_IN_ROOM = 'FETCH_USERS_IN_ROOM';
 export const FETCH_MESSAGES = 'FETCH_MESSAGES';
 export const ADD_MESSAGE = 'ADD_MESSAGE';
 export const CREATE_ROOM = 'CREATE_ROOM';
+export const TOGGLE_POPUP = 'TOGGLE_POPUP';

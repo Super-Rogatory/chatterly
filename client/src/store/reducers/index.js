@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { toggleStatusReducer } from './misc';
 import { nameReducer } from './name';
 import { roomReducer, roomsReducer } from './room';
 import { usersReducer, userReducer } from './users';
@@ -8,6 +9,7 @@ const combinedReducer = combineReducers({
 	rooms: roomsReducer,
 	user: userReducer,
 	users: usersReducer,
+	isTriggered: toggleStatusReducer,
 });
 
 export default combinedReducer;
