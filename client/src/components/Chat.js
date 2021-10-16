@@ -21,7 +21,7 @@ class Chat extends React.Component {
 			room: {},
 			isLoaded: false,
 			noUser: false,
-			clientSocket: io(`http://wechatterly.herokuapp.com/`),
+			clientSocket: io(`${url}`),
 		};
 		this.getUserRoom = this.getUserRoom.bind(this);
 	}
@@ -84,6 +84,8 @@ class Chat extends React.Component {
 	componentWillUnmount() {
 		this.props.toggleGuestWarning(false);
 		this.state.clientSocket.emit('sendDisconnectMessage', this.state.user);
+		this.state.clientSocket.emit('updateActiveUserCount', { type: 'inactive', user: this.state.user });
+		this.state.clientSocket.removeAllListeners();
 		this.state.clientSocket.disconnect();
 		this.state.clientSocket.off();
 	}

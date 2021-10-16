@@ -5,6 +5,8 @@ import Typewriter from 'typewriter-effect';
 import { togglePopup } from '../store/effects/thunks';
 import GuestWarningPopup from './GuestWarningMessage';
 import ExpiredGuest from './ExpiredGuest';
+import { getActiveUsers } from '../store/effects/utils';
+import Loader from 'react-loader-spinner';
 
 class SelectMode extends React.Component {
 	constructor() {
@@ -12,11 +14,15 @@ class SelectMode extends React.Component {
 		this.state = {
 			redirectToChatAsGuest: false,
 			redirectToChatAsUser: false,
+			activeUsers: 0,
+			isLoaded: false,
 		};
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
+		this.setState({ activeUsers: await getActiveUsers() });
 		window.localStorage.clear(); // fixes infinite loop error on server restart
+		this.setState({ isLoaded: true });
 	}
 
 	render() {
@@ -25,6 +31,15 @@ class SelectMode extends React.Component {
 		if (window.localStorage.getItem('user')) {
 			// to ensure that the same user is 'logged in' other rooms
 			return <Redirect to="/chat" />;
+		}
+		if (!this.state.isLoaded) {
+			return (
+				<div id="vertical-container" className="ui grid middle aligned">
+					<div className="middle">
+						<Loader type="ThreeDots" color="#d5a26c" />;
+					</div>
+				</div>
+			);
 		} else
 			return (
 				// Add Loop For Chatterly, a typewriter message that repeats.
@@ -51,7 +66,7 @@ class SelectMode extends React.Component {
 								</button>
 
 								<div className="ui basic center aligned segment">
-									<h3>0 people online</h3>
+									<h3>{`${this.state.activeUsers.count} people online`}</h3>
 								</div>
 
 								<button className="ui basic button black" onClick={() => this.setState({ redirectToChatAsUser: true })}>

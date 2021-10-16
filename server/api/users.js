@@ -22,6 +22,29 @@ router.get('/:id', async (req, res, next) => {
 	}
 });
 
+router.get('/misc/getUserCount', async (req, res, next) => {
+	try {
+		const count = await User.getActiveUserCount();
+		if (!count) res.status(200).send({ count: 0 });
+		else res.send({ count });
+	} catch (err) {
+		next(err);
+	}
+});
+
+router.post('/misc/decreaseUserCount', async (req, res, next) => {
+	try {
+		const user = await User.findOne({ where: { name: req.body.name } });
+		if (!user) res.send(404).send('failed to find user');
+		else {
+			user.active = false;
+			user.save();
+		}
+	} catch (err) {
+		next(err);
+	}
+});
+
 router.get('/misc/:name', async (req, res, next) => {
 	try {
 		const user = await User.findOne({ where: { name: req.params.name } });

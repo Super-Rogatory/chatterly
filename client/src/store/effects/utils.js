@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const PORT = process.env.PORT || 5000;
-const url = `http://wechatterly.herokuapp.com/`;
+const url = `http://localhost:${PORT}`;
 
 export const addMessage = async (msg, user) => {
 	const { data: message } = await axios.post(`${url}/api/messages`, { message: msg, user });
@@ -34,4 +34,13 @@ export const getRoom = async (id) => {
 
 export const associateUserAndRoom = async (user) => {
 	await axios.put(`${url}/api/rooms`, { user });
+};
+
+export const getActiveUsers = async () => {
+	const { data: count } = await axios.get(`${url}/api/users/misc/getUserCount`);
+	return count;
+};
+
+export const updateInactiveUser = async (user) => {
+	await axios.post(`${url}/api/users/misc/decreaseUserCount`, { name: user.name });
 };

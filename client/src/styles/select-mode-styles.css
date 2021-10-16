@@ -8,6 +8,7 @@
 
 Typewriter {
 	display: inline-flex;
+	min-height: 30px;
 }
 
 .select-mode-outerContainer {
@@ -22,6 +23,7 @@ Typewriter {
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
+	min-height: 2em;
 	height: 5vh;
 	/* height: 5vh; 100vh is 100% of the viewport height */
 	width: 50%;
@@ -32,7 +34,7 @@ Typewriter {
 }
 
 .typewriter-text {
-	font-size: 30px;
+	font-size: 2em;
 }
 
 .select-mode-container {

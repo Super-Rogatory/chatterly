@@ -33,7 +33,14 @@ class ChatHeader extends React.Component {
 	render() {
 		if (this.state.redirectToHome) {
 			window.localStorage.clear();
-			return <Redirect to="/" />;
+			return (
+				<Redirect
+					to={{
+						pathname: '/',
+						state: { refreshUsers: true },
+					}}
+				/>
+			);
 		}
 		return (
 			<div className="chat-header-wrapper">

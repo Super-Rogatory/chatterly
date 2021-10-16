@@ -13,7 +13,7 @@ import {
 import axios from 'axios';
 
 const PORT = process.env.PORT || 5000;
-const url = `http://wechatterly.herokuapp.com/`;
+const url = `http://localhost:${PORT}`;
 
 export const setName = (name) => {
 	return function (dispatch) {
