@@ -7,10 +7,9 @@ const cors = require('cors');
 const server = http.createServer(app);
 const db = require('../server/db/index').db; // need to actually run the index, that's where the associations lie.
 const morgan = require('morgan');
-const axios = require('axios');
 
 const PORT = process.env.PORT || 5000;
-const url = `http://localhost:${PORT}`;
+
 // syncing the db
 db.sync({ force: true })
 	.then(() => console.log('Database is synced'))
@@ -69,13 +68,8 @@ io.on('connection', (socket) => {
 
 	// handling the active user count server-side
 	socket.on('updateActiveUserCount', async ({ type, user }) => {
-		switch (type) {
-			case 'inactive':
-				await axios.post(`${url}/api/users/misc/decreaseUserCount`, { name: user.name });
-				break;
-			default:
-				break;
-		}
+		console.log(type, user);
+		socket.emit('updateUserCount', { type, user });
 	});
 
 	socket.on('sendDisconnectMessage', (user) => {

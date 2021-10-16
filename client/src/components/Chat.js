@@ -6,7 +6,7 @@ import ChatHeader from './ChatHeader';
 import Input from './Input';
 import MessageList from './MessageList';
 import { Redirect } from 'react-router-dom';
-import { addMessage, associateUserAndRoom, openRoom } from '../store/effects/utils';
+import { addMessage, associateUserAndRoom, openRoom, updateInactiveUser } from '../store/effects/utils';
 import Loader from 'react-loader-spinner';
 
 const PORT = process.env.PORT || 5000;
@@ -72,22 +72,29 @@ class Chat extends React.Component {
 			}
 		});
 
+		this.state.clientSocket.on('updateUserCount', async ({ type, user }) => {
+			console.log(type, user);
+			switch (type) {
+				case 'inactive':
+					console.log('yo');
+					await updateInactiveUser(user);
+					break;
+				default:
+					break;
+			}
+		});
+
 		// handles display of disconnect message
 		this.state.clientSocket.on('disconnectMessage', async ({ text }) => {
 			await addMessage(text, this.state.room.chatBot);
-			this.state.clientSocket.emit('addedMessage', this.state.chatBot);
+			this.state.clientSocket.emit('addedMessage', this.state.room.chatBot);
 		});
 
 		this.setState({ isLoaded: true });
 	}
 
 	componentWillUnmount() {
-		this.props.toggleGuestWarning(false);
-		this.state.clientSocket.emit('sendDisconnectMessage', this.state.user);
-		this.state.clientSocket.emit('updateActiveUserCount', { type: 'inactive', user: this.state.user });
-		this.state.clientSocket.removeAllListeners();
-		this.state.clientSocket.disconnect();
-		this.state.clientSocket.off();
+		window.localStorage.clear();
 	}
 
 	getUserRoom() {
@@ -117,7 +124,11 @@ class Chat extends React.Component {
 						<div className="column" align="middle">
 							<div className="ui container">
 								<div className="white-background-container">
-									<ChatHeader roomName={this.props.roomFromStore || this.getUserRoom()} user={this.state.user} />
+									<ChatHeader
+										socket={this.state.clientSocket}
+										roomName={this.props.roomFromStore || this.getUserRoom()}
+										user={this.state.user}
+									/>
 									<MessageList socket={this.state.clientSocket} user={this.state.user} room={this.state.room} />
 									<Input socket={this.state.clientSocket} user={this.state.user} />
 								</div>
