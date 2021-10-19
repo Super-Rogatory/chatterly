@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { isGuestExpired } from '../store/effects/thunks';
+import { updateChatterlyStatus } from '../store/effects/thunks';
 
 class ExpiredGuest extends React.Component {
 	// eslint-disable-next-line no-useless-constructor
@@ -14,7 +14,10 @@ class ExpiredGuest extends React.Component {
 					<div className="warning-message">
 						{this.props.children}
 						<div className="confirmations-buttons">
-							<button className="ui basic button" onClick={() => this.props.toggleGuestExpired(false)}>
+							<button
+								className="ui basic button"
+								onClick={() => this.props.updateComponent('toggleGuestExpiredPopup', false)}
+							>
 								OK!
 							</button>
 						</div>
@@ -31,7 +34,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	toggleGuestExpired: (status) => dispatch(isGuestExpired(status)),
+	updateComponent: (type, status) => dispatch(updateChatterlyStatus(type, status)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpiredGuest);

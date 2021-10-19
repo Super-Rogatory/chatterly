@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { togglePopup } from '../store/effects/thunks';
+import { updateChatterlyStatus } from '../store/effects/thunks';
 
 class GuestWarningPopup extends React.Component {
 	constructor(props) {
@@ -20,7 +20,10 @@ class GuestWarningPopup extends React.Component {
 					<div className="warning-message">
 						{this.props.children}
 						<div className="confirmations-buttons">
-							<button className="ui basic button" onClick={() => this.props.toggleGuestWarning(false)}>
+							<button
+								className="ui basic button"
+								onClick={() => this.props.updateComponent('toggleGuestWarningPopup', false)}
+							>
 								I am not ready to rock and roll.
 							</button>
 							<button className="ui basic button" onClick={() => this.setState({ redirectToChatAsGuest: true })}>
@@ -40,7 +43,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	toggleGuestWarning: (status) => dispatch(togglePopup(status)),
+	updateComponent: (type, status) => dispatch(updateChatterlyStatus(type, status)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GuestWarningPopup);

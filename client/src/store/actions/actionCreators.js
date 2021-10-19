@@ -65,3 +65,15 @@ export const _expiredGuest = (status) => {
 		status,
 	};
 };
+export const _missingUser = (status) => {
+	return {
+		type: types.MISSING_USER,
+		status,
+	};
+};
+export const _updatedCount = (status) => {
+	return {
+		type: types.UPDATE_COUNT,
+		status,
+	};
+};

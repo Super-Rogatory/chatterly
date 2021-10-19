@@ -9,6 +9,8 @@ import {
 	_addMessage,
 	_togglePopup,
 	_expiredGuest,
+	_updatedCount,
+	_missingUser,
 } from '../actions/actionCreators';
 import axios from 'axios';
 
@@ -92,16 +94,28 @@ export const fetchMessages = () => {
 	};
 };
 // -----------------------------------------------------------------------------------------------------------------------------------------------//
-export const togglePopup = (status) => {
+export const updateChatterlyStatus = (type, status) => {
+	// creating a 'one-stop-shop' consumer experience - Ryan [The Office]
 	return (dispatch) => {
-		dispatch(_togglePopup(status));
-		return status;
-	};
-};
+		switch (type) {
+			case 'toggleGuestWarningPopup':
+				dispatch(_togglePopup(status));
+				break;
 
-export const isGuestExpired = (status) => {
-	return (dispatch) => {
-		dispatch(_expiredGuest(status));
+			case 'toggleGuestExpiredPopup':
+				dispatch(_expiredGuest(status));
+				break;
+			case 'updateCount':
+				dispatch(_updatedCount(status));
+				break;
+
+			case 'missingUser':
+				dispatch(_missingUser(status));
+				break;
+
+			default:
+				break;
+		}
 		return status;
 	};
 };

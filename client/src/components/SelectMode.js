@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import Typewriter from 'typewriter-effect';
-import { togglePopup } from '../store/effects/thunks';
+import { updateChatterlyStatus } from '../store/effects/thunks';
 import GuestWarningPopup from './GuestWarningMessage';
 import ExpiredGuest from './ExpiredGuest';
 import { getActiveUsers } from '../store/effects/utils';
@@ -61,7 +61,10 @@ class SelectMode extends React.Component {
 					<div className="select-mode-container">
 						{!this.props.isTriggered && (
 							<div className="select-panel">
-								<button className="ui basic button black" onClick={() => this.props.toggleGuestWarning(true)}>
+								<button
+									className="ui basic button black"
+									onClick={() => this.props.updateComponent('toggleGuestWarningPopup', true)}
+								>
 									JOIN CHATTERLY AS GUEST
 								</button>
 
@@ -101,7 +104,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	toggleGuestWarning: (status) => dispatch(togglePopup(status)),
+	updateComponent: (type, status) => dispatch(updateChatterlyStatus(type, status)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectMode);

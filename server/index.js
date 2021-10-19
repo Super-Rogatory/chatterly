@@ -66,12 +66,6 @@ io.on('connection', (socket) => {
 		io.in(user.room).emit('message', user);
 	});
 
-	// handling the active user count server-side
-	socket.on('updateActiveUserCount', async ({ type, user }) => {
-		console.log(type, user);
-		socket.emit('updateUserCount', { type, user });
-	});
-
 	socket.on('sendDisconnectMessage', (user) => {
 		io.in(user.room).emit('disconnectMessage', { text: `${user.name} has left.` });
 	});

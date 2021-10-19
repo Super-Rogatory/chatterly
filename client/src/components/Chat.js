@@ -1,12 +1,12 @@
 import React from 'react';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
-import { deleteUser, getUser, isGuestExpired, togglePopup } from '../store/effects/thunks';
+import { deleteUser, getUser, updateChatterlyStatus } from '../store/effects/thunks';
 import ChatHeader from './ChatHeader';
 import Input from './Input';
 import MessageList from './MessageList';
 import { Redirect } from 'react-router-dom';
-import { addMessage, associateUserAndRoom, openRoom, updateInactiveUser } from '../store/effects/utils';
+import { addMessage, associateUserAndRoom, openRoom } from '../store/effects/utils';
 import Loader from 'react-loader-spinner';
 
 const PORT = process.env.PORT || 5000;
@@ -72,18 +72,6 @@ class Chat extends React.Component {
 			}
 		});
 
-		this.state.clientSocket.on('updateUserCount', async ({ type, user }) => {
-			console.log(type, user);
-			switch (type) {
-				case 'inactive':
-					console.log('yo');
-					await updateInactiveUser(user);
-					break;
-				default:
-					break;
-			}
-		});
-
 		// handles display of disconnect message
 		this.state.clientSocket.on('disconnectMessage', async ({ text }) => {
 			await addMessage(text, this.state.room.chatBot);
@@ -105,8 +93,9 @@ class Chat extends React.Component {
 	}
 
 	render() {
+		// if you try to fetch user from the database and it has been auto deleted (w/ respect to time duration) send user to home with guest expired messasge
 		if (this.state.noUser) {
-			this.props.toggleGuestExpired(true);
+			this.props.updateComponent('toggleGuestExpiredPopup', true);
 			return <Redirect to="/" />;
 		}
 		if (!this.state.isLoaded) {
@@ -144,8 +133,9 @@ class Chat extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
 	deleteUser: (id) => dispatch(deleteUser(id)),
 	getUser: (id) => dispatch(getUser(id)),
-	toggleGuestWarning: (status) => dispatch(togglePopup(status)),
-	toggleGuestExpired: (status) => dispatch(isGuestExpired(status)),
+	updateComponent: (type, status) => dispatch(updateChatterlyStatus(type, status)),
+	// toggleGuestWarning: (status) => dispatch(togglePopup(status)),
+	// toggleGuestExpired: (status) => dispatch(isGuestExpired(status)),
 });
 
 const mapStateToProps = (state) => ({
