@@ -82,7 +82,8 @@ class Chat extends React.Component {
 	}
 
 	componentWillUnmount() {
-		window.localStorage.clear();
+		this.state.clientSocket.disconnect();
+		this.state.clientSocket.off();
 	}
 
 	getUserRoom() {
@@ -134,8 +135,6 @@ const mapDispatchToProps = (dispatch) => ({
 	deleteUser: (id) => dispatch(deleteUser(id)),
 	getUser: (id) => dispatch(getUser(id)),
 	updateComponent: (type, status) => dispatch(updateChatterlyStatus(type, status)),
-	// toggleGuestWarning: (status) => dispatch(togglePopup(status)),
-	// toggleGuestExpired: (status) => dispatch(isGuestExpired(status)),
 });
 
 const mapStateToProps = (state) => ({

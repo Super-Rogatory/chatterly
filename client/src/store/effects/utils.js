@@ -42,5 +42,6 @@ export const getActiveUsers = async () => {
 };
 
 export const updateInactiveUser = async (user) => {
-	await axios.post(`${url}/api/users/misc/decreaseUserCount`, { name: user.name });
+	const { data: status } = await axios.post(`${url}/api/users/misc/decreaseUserCount`, { name: user.name });
+	return status;
 };

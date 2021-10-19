@@ -24,17 +24,23 @@ class ChatHeader extends React.Component {
 
 	async handleRedirect() {
 		// what if I used updateInactiveUser to change some property that forces rerender of count.
+		
 		this.props.updateComponent('toggleGuestWarningPopup', false);
 		this.props.socket.emit('sendDisconnectMessage', this.props.user);
-		// await updateInactiveUser(this.props.user);
 		this.props.socket.disconnect();
 		this.props.socket.off();
-		this.setState({ redirectToHome: true });
+		const isSaved = await updateInactiveUser(this.props.user);
+		if (isSaved) {
+			this.setState({ redirectToHome: true });
+		}
 	}
 
 	render() {
 		// this will handle the redirectToHome only AFTER we have handled the redirectLogic.
-		console.log(this.state.redirectToHome);
+		if (this.state.redirectToHome) {
+			window.localStorage.clear();
+			return <Redirect to="/" />;
+		}
 		return (
 			<div className="chat-header-wrapper">
 				<div className="left-side-header-container">
