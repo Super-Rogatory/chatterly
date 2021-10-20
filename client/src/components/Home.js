@@ -1,6 +1,6 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
-import { setRoom, setName, createUser } from '../store/effects/thunks';
+import { Link, Redirect } from 'react-router-dom';
+import { setRoom, setName, createUser, updateChatterlyStatus } from '../store/effects/thunks';
 import { connect } from 'react-redux';
 import { doesUserExist } from '../store/effects/utils';
 
@@ -99,45 +99,31 @@ class Home extends React.Component {
 			return <Redirect to="/chat" />;
 		} else {
 			return (
-				<div id="vertical-container" className="ui grid middle aligned">
-					<div className="row">
-						<div className="column" align="middle">
-							<div className="ui container">
-								<div className="ui purple segment">
-									<div className="ui centered large header">Join Chatterly</div>
-									<form className="ui attached form" onSubmit={this.handleSubmit}>
-										<div className={`field ${nameError ? 'error' : ''}`}>
-											<label>Enter a username</label>
-											<input
-												placeholder="Enter Name"
-												name="name"
-												type="text"
-												value={name}
-												onChange={this.handleChange}
-											/>
-										</div>
-										<div className={`field ${roomError ? 'error' : ''}`}>
-											<label>Join a room!</label>
-											<input
-												placeholder="Enter Room"
-												name="room"
-												type="text"
-												value={room}
-												onChange={this.handleChange}
-											/>
-										</div>
-										<button type="submit" className="ui blue fluid button">
-											Sign In
-										</button>
-									</form>
-									{(nameError || roomError) && (
-										<div className="ui bottom warning message">
-											{this.state.errMessage || "Don't forget to enter both name and room."}
-										</div>
-									)}
-								</div>
+				<div id="vertical-container" className="middle">
+					<div className="home-background-container middle">
+						<div className="ui centered large header">Join Chatterly</div>
+						<form className="ui attached form" onSubmit={this.handleSubmit}>
+							<div className={`field ${nameError ? 'error' : ''}`}>
+								<label>Enter a username</label>
+								<input placeholder="Enter Name" name="name" type="text" value={name} onChange={this.handleChange} />
 							</div>
-						</div>
+							<div className={`field ${roomError ? 'error' : ''}`}>
+								<label>Join a room!</label>
+								<input placeholder="Enter Room" name="room" type="text" value={room} onChange={this.handleChange} />
+							</div>
+							<Link to="/" onClick={() => this.props.updateComponent('toggleGuestWarningPopup', false)}>
+								<button className="ui basic left floated black button">Back</button>
+							</Link>
+
+							<button type="submit" className="ui basic right floated black button">
+								Sign In
+							</button>
+						</form>
+						{(nameError || roomError) && (
+							<div className="ui bottom warning message">
+								{this.state.errMessage || "Don't forget to enter both name and room."}
+							</div>
+						)}
 					</div>
 				</div>
 			);
@@ -148,6 +134,7 @@ const mapDispatch = (dispatch) => ({
 	setRoom: (room) => dispatch(setRoom(room)),
 	setName: (name) => dispatch(setName(name)),
 	createUser: (name, room) => dispatch(createUser(name, room)),
+	updateComponent: (type, status) => dispatch(updateChatterlyStatus(type, status)),
 });
 
 const mapState = (state) => ({

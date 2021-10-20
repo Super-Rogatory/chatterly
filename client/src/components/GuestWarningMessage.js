@@ -21,12 +21,12 @@ class GuestWarningPopup extends React.Component {
 						{this.props.children}
 						<div className="confirmations-buttons">
 							<button
-								className="ui basic button"
+								className="ui basic black button"
 								onClick={() => this.props.updateComponent('toggleGuestWarningPopup', false)}
 							>
 								I am not ready to rock and roll.
 							</button>
-							<button className="ui basic button" onClick={() => this.setState({ redirectToChatAsGuest: true })}>
+							<button className="ui basic black button" onClick={() => this.setState({ redirectToChatAsGuest: true })}>
 								I understand that my name will disappear in one hour!
 							</button>
 						</div>
