@@ -71,9 +71,3 @@ export const _missingUser = (status) => {
 		status,
 	};
 };
-export const _updatedCount = (status) => {
-	return {
-		type: types.UPDATE_COUNT,
-		status,
-	};
-};

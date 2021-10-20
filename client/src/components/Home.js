@@ -112,7 +112,9 @@ class Home extends React.Component {
 								<input placeholder="Enter Room" name="room" type="text" value={room} onChange={this.handleChange} />
 							</div>
 							<Link to="/" onClick={() => this.props.updateComponent('toggleGuestWarningPopup', false)}>
-								<button className="ui basic left floated black button">Back</button>
+								<button type="button" className="ui basic left floated black button">
+									Back
+								</button>
 							</Link>
 
 							<button type="submit" className="ui basic right floated black button">

@@ -25,12 +25,3 @@ export const missingUserReducer = (state = false, action) => {
 			return state;
 	}
 };
-
-export const updateCountReducer = (state = false, action) => {
-	switch (action.type) {
-		case types.UPDATE_COUNT:
-			return action.status;
-		default:
-			return state;
-	}
-};

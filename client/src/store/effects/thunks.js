@@ -9,7 +9,6 @@ import {
 	_addMessage,
 	_togglePopup,
 	_expiredGuest,
-	_updatedCount,
 	_missingUser,
 } from '../actions/actionCreators';
 import axios from 'axios';
@@ -104,9 +103,6 @@ export const updateChatterlyStatus = (type, status) => {
 
 			case 'toggleGuestExpiredPopup':
 				dispatch(_expiredGuest(status));
-				break;
-			case 'updateCount':
-				dispatch(_updatedCount(status));
 				break;
 
 			case 'missingUser':

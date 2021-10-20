@@ -10,5 +10,4 @@ export const ADD_MESSAGE = 'ADD_MESSAGE';
 export const CREATE_ROOM = 'CREATE_ROOM';
 export const TOGGLE_POPUP = 'TOGGLE_POPUP';
 export const EXPIRED_GUEST = 'EXPIRED_GUEST';
-export const UPDATE_COUNT = 'UPDATE_COUNT';
 export const MISSING_USER = 'MISSING_USER';
