@@ -50,7 +50,7 @@ Typewriter {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
-	height: 35%;
+	min-height: 35%;
 	padding: 16px 20px; /* top and bottom - 16px left and right 5 percent */
 	border-radius: 5px;
 	background-color: blanchedalmond;

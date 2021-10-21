@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { setRoom, setName, createUser, updateChatterlyStatus } from '../store/effects/thunks';
 import { connect } from 'react-redux';
 import { doesUserExist } from '../store/effects/utils';
+import styles from '../styles/importantstyles.scss';
 
 class Home extends React.Component {
 	// keeping track of name, room, and whether or not the input fields for name and room are false (handling the error in a boolean)
