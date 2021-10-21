@@ -10,7 +10,7 @@ import { addMessage, associateUserAndRoom, openRoom } from '../store/effects/uti
 import Loader from 'react-loader-spinner';
 
 const PORT = process.env.PORT || 5000;
-const url = `https://wechatterly.herokuapp.com`;
+const url = process.env.NODE_ENV === 'production' ? 'https://wechatterly.herokuapp.com' : `http://localhost:${PORT}`;
 
 class Chat extends React.Component {
 	// constructor serves to keep track of the name, room, and the address to reference the server
