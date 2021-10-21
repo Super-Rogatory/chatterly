@@ -21,7 +21,6 @@ class SelectMode extends React.Component {
 
 	async componentDidMount() {
 		this.setState({ activeUsers: await getActiveUsers() });
-		window.localStorage.clear(); // fixes infinite loop error on server restart
 		this.setState({ isLoaded: true });
 	}
 
@@ -69,7 +68,9 @@ class SelectMode extends React.Component {
 								</button>
 
 								<div className="ui basic center aligned segment">
-									<h3>{`${this.state.activeUsers.count} people online`}</h3>
+									<h3>{`${this.state.activeUsers.count} ${
+										this.state.activeUsers.count === 1 ? 'person' : 'people'
+									} online`}</h3>
 								</div>
 
 								<button className="ui basic button black" onClick={() => this.setState({ redirectToChatAsUser: true })}>

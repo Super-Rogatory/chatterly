@@ -36,7 +36,7 @@ router.post('/misc/decreaseUserCount', async (req, res, next) => {
 	try {
 		const user = await User.findOne({ where: { name: req.body.name } });
 		if (!user) {
-			res.send(404).send('failed to find user');
+			res.status(404).send('failed to find user');
 			return;
 		} else {
 			user.active = false;

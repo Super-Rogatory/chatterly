@@ -45,6 +45,7 @@ class Chat extends React.Component {
 			if (!dbUser) {
 				// send user back to home if local storage user cannot match with database user
 				this.setState({ noUser: true });
+
 				throw new Error('failed to fetch user information.');
 			}
 			// if everything went well, set state with user info.
@@ -96,6 +97,7 @@ class Chat extends React.Component {
 	render() {
 		// if you try to fetch user from the database and it has been auto deleted (w/ respect to time duration) send user to home with guest expired messasge
 		if (this.state.noUser) {
+			window.localStorage.clear();
 			this.props.updateComponent('toggleGuestExpiredPopup', true);
 			return <Redirect to="/" />;
 		}
