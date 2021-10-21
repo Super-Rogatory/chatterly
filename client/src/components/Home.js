@@ -127,7 +127,6 @@ class Home extends React.Component {
 								{this.state.errMessage || "Don't forget to enter both name and room."}
 							</div>
 						)}
-						<button className="button">Gang</button>
 					</div>
 				</div>
 			);

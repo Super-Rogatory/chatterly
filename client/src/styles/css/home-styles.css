@@ -26,5 +26,21 @@ body {
 }
 
 .home-background-container input {
-	color: blanchedalmond;
+	border: none;
+}
+
+.ui.form input[type='text'] {
+	background: blanchedalmond;
+	border-color: black;
+}
+
+.ui.form input[type='text']:focus {
+	background: blanchedalmond;
+	border-color: black;
+}
+
+.ui.form .field.error input[type='text'],
+.ui.form .fields.error .field input[type='text'] {
+	background: blanchedalmond;
+	border-color: red;
 }
