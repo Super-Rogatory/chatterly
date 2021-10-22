@@ -8,6 +8,7 @@ import MessageList from './MessageList';
 import { Redirect } from 'react-router-dom';
 import { addMessage, associateUserAndRoom, openRoom } from '../store/effects/utils';
 import Loader from 'react-loader-spinner';
+import UsersInRoom from './UsersInRoom';
 
 const PORT = process.env.PORT || 5000;
 const url = process.env.NODE_ENV === 'production' ? 'https://wechatterly.herokuapp.com' : `http://localhost:${PORT}`;
@@ -111,19 +112,17 @@ class Chat extends React.Component {
 			);
 		} else {
 			return (
-				<div id="vertical-container" className="ui grid middle aligned">
-					<div className="row">
-						<div className="column" align="middle">
-							<div className="ui container">
-								<div className="white-background-container">
-									<ChatHeader
-										socket={this.state.clientSocket}
-										roomName={this.props.roomFromStore || this.getUserRoom()}
-										user={this.state.user}
-									/>
-									<MessageList socket={this.state.clientSocket} user={this.state.user} room={this.state.room} />
-									<Input socket={this.state.clientSocket} user={this.state.user} />
-								</div>
+				<div id="vertical-container" className="chatroom-container">
+					<div className="chatroom-wapper" align="middle">
+						<div className="ui container">
+							<div className="white-background-container">
+								<ChatHeader
+									socket={this.state.clientSocket}
+									roomName={this.props.roomFromStore || this.getUserRoom()}
+									user={this.state.user}
+								/>
+								<MessageList socket={this.state.clientSocket} user={this.state.user} room={this.state.room} />
+								<Input socket={this.state.clientSocket} user={this.state.user} />
 							</div>
 						</div>
 					</div>

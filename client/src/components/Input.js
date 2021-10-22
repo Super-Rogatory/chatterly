@@ -62,7 +62,7 @@ class Input extends React.Component {
 			return <Redirect to="/" />;
 		}
 		return (
-			<form className="ui fluid action input" onSubmit={this.handleClick}>
+			<form className="ui fluid action input chat" onSubmit={this.handleClick}>
 				<input
 					type="text"
 					value={this.state.message}

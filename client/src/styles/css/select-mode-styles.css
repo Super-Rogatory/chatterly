@@ -71,7 +71,7 @@ Typewriter {
 	left: 0;
 	width: 100%;
 	height: 100vh; /* this is going to span the entire page and give the background "blur" effect */
-	background-color: rgba(29, 24, 24, 0.7);
+	background-color: rgba(25, 23, 20, 0.7);
 }
 
 .warning-message {
