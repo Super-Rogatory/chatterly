@@ -6,7 +6,7 @@ import ChatHeader from './ChatHeader';
 import Input from './Input';
 import MessageList from './MessageList';
 import { Redirect } from 'react-router-dom';
-import { addMessage, associateUserAndRoom, openRoom } from '../store/effects/utils';
+import { addMessage, associateUserAndRoom, openRoom, updateInactiveUser } from '../store/effects/utils';
 import Loader from 'react-loader-spinner';
 import UsersInRoom from './UsersInRoom';
 

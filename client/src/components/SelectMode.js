@@ -16,12 +16,22 @@ class SelectMode extends React.Component {
 			redirectToChatAsUser: false,
 			activeUsers: 0,
 			isLoaded: false,
+			intervalId: undefined,
 		};
 	}
 
 	async componentDidMount() {
-		this.setState({ activeUsers: await getActiveUsers() });
+		this.setState({ activeUsers: (await getActiveUsers()) || 0 });
+		this.intervalId = setInterval(async () => {
+			const count = await getActiveUsers();
+			this.setState({ activeUsers: count });
+		}, 5000);
+
 		this.setState({ isLoaded: true });
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.intervalId);
 	}
 
 	render() {
@@ -43,43 +53,53 @@ class SelectMode extends React.Component {
 			return (
 				// Add Loop For Chatterly, a typewriter message that repeats.
 				<div className="select-mode-outerContainer">
-					<div className="typewriter-container">
-						<Typewriter
-							options={{
-								strings: 'Chatterly',
-								autoStart: true,
-								loop: true,
-								wrapperClassName: 'typewriter-text',
-								cursorClassName: 'typewriter-text',
-								skipAddStyles: true,
-								pauseFor: 2000,
-							}}
-						/>
-					</div>
-					{/* Show select mode menu only when launchPopup is false */}
-					<div className="select-mode-container">
-						{!this.props.isTriggered && (
-							<div className="select-panel">
-								<button
-									className="ui basic button black"
-									onClick={() => this.props.updateComponent('toggleGuestWarningPopup', true)}
-								>
-									JOIN CHATTERLY AS GUEST
-								</button>
-
-								<div className="ui basic center aligned segment">
-									<h3>{`${this.state.activeUsers.count} ${
-										this.state.activeUsers.count === 1 ? 'person' : 'people'
-									} online`}</h3>
-								</div>
-
-								<button className="ui basic button black" onClick={() => this.setState({ redirectToChatAsUser: true })}>
-									REGISTER AND KEEP USERNAME
-								</button>
+					<section className="color-dark-background-overlay">
+						<div className="typewriter-flex-container">
+							<div className="typewriter-container">
+								<Typewriter
+									options={{
+										strings: 'Chatterly',
+										autoStart: true,
+										loop: true,
+										wrapperClassName: 'typewriter-text',
+										cursorClassName: 'typewriter-text',
+										skipAddStyles: true,
+										pauseFor: 2000,
+									}}
+								/>
 							</div>
-						)}
-					</div>
+						</div>
+						{/* Show select mode menu only when launchPopup is false */}
+						<div className="select-mode-container">
+							{!this.props.isTriggered && (
+								<div className="select-panel">
+									<button
+										className="ui basic button black"
+										onClick={() => this.props.updateComponent('toggleGuestWarningPopup', true)}
+									>
+										JOIN CHATTERLY AS GUEST
+									</button>
 
+									<div className="ui basic center aligned segment">
+										<h3>{`${this.state.activeUsers.count} ${
+											this.state.activeUsers.count === 1 ? 'person' : 'people'
+										} online`}</h3>
+									</div>
+
+									<button
+										className="ui basic button black"
+										onClick={() => this.setState({ redirectToChatAsUser: true })}
+									>
+										REGISTER AND KEEP USERNAME
+									</button>
+								</div>
+							)}
+						</div>
+					</section>
+					<footer className="footer-container-selectmode">
+						<h3 className="adjacent-quote-left">Chatterly: A mixture of old and new school chat room styles.</h3>
+						<h3 className="adjacent-quote-right">- Chukwudi Ikem.</h3>
+					</footer>
 					{/* Warning messages that popups when the user choices to join the chatroom as a guest. */}
 					<GuestWarningPopup>
 						<h3>
