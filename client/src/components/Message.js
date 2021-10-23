@@ -48,12 +48,12 @@ class Message extends React.Component {
 			// hence, if this.state.senderUser exists..resolve that value instead of this.props.user. this.props.user will always exist.
 			const currentUser = this.getCurrentUser(this.state.senderUser, this.props.user);
 			return (
-				<div className="message-container">
+				<>
 					<p className="sender-name">{`${currentUser.name}:`}</p>
 					<div className="message-box">
 						<p className={`message-text ${this.isChatBot(currentUser) ? '' : 'blue'}`}>{this.props.message.text}</p>
 					</div>
-				</div>
+				</>
 			);
 		}
 	}

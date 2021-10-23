@@ -22,14 +22,20 @@ class MessageList extends React.Component {
 
 	render() {
 		return (
-			<ScrollToBottom className="messages">
-				{this.state.messages.map((message, index) => (
-					<div key={index}>
-						<Message message={message} user={this.props.user} room={this.props.room} />
-					</div>
-				))}
-				{this.props.openParticipantsTab ? <UsersInRoom /> : ''}
-			</ScrollToBottom>
+			<div className="message-participants-wrapper-container">
+				<ScrollToBottom className="messages">
+					{this.state.messages.map((message, index) => (
+						<div className="message-container" key={index}>
+							<Message message={message} user={this.props.user} room={this.props.room} />
+						</div>
+					))}
+				</ScrollToBottom>
+				{this.props.openParticipantsTab && (
+					<ScrollToBottom classname="participants">
+						<UsersInRoom />
+					</ScrollToBottom>
+				)}
+			</div>
 		);
 	}
 }
