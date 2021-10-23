@@ -44,3 +44,9 @@ body {
 	background: blanchedalmond;
 	border-color: red;
 }
+
+.ui.warning.message {
+	background-color: #ecdeca;
+	color: black;
+	text-align: center;
+}

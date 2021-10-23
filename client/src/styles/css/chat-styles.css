@@ -20,7 +20,7 @@
 .chat-header-wrapper {
 	display: flex;
 	justify-content: space-between;
-	background-color: #cebea9;
+	background-color: rgb(121, 108, 89);
 	width: 100%;
 	min-height: 10%;
 	flex: none;
