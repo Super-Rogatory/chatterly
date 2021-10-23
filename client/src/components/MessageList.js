@@ -2,6 +2,9 @@ import React from 'react';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import { fetchMessagesInRoom } from '../store/effects/utils';
 import Message from './Message';
+import UsersInRoom from './UsersInRoom';
+import { connect } from 'react-redux';
+import { updateChatterlyStatus } from '../store/effects/thunks';
 
 class MessageList extends React.Component {
 	constructor(props) {
@@ -25,9 +28,18 @@ class MessageList extends React.Component {
 						<Message message={message} user={this.props.user} room={this.props.room} />
 					</div>
 				))}
+				{this.props.openParticipantsTab ? <UsersInRoom /> : ''}
 			</ScrollToBottom>
 		);
 	}
 }
 
-export default MessageList;
+const mapStateToProps = (state) => ({
+	openParticipantsTab: state.openParticipantsTab,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	updateComponent: (type, status) => dispatch(updateChatterlyStatus(type, status)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessageList);

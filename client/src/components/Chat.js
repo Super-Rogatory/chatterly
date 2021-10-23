@@ -8,7 +8,6 @@ import MessageList from './MessageList';
 import { Redirect } from 'react-router-dom';
 import { addMessage, associateUserAndRoom, openRoom, updateInactiveUser } from '../store/effects/utils';
 import Loader from 'react-loader-spinner';
-import UsersInRoom from './UsersInRoom';
 
 const PORT = process.env.PORT || 5000;
 const url = process.env.NODE_ENV === 'production' ? 'https://wechatterly.herokuapp.com' : `http://localhost:${PORT}`;
@@ -132,15 +131,15 @@ class Chat extends React.Component {
 	}
 }
 
+const mapStateToProps = (state) => ({
+	nameFromStore: state.name,
+	roomFromStore: state.room,
+});
+
 const mapDispatchToProps = (dispatch) => ({
 	deleteUser: (id) => dispatch(deleteUser(id)),
 	getUser: (id) => dispatch(getUser(id)),
 	updateComponent: (type, status) => dispatch(updateChatterlyStatus(type, status)),
-});
-
-const mapStateToProps = (state) => ({
-	nameFromStore: state.name,
-	roomFromStore: state.room,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

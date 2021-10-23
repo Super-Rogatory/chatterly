@@ -17,6 +17,15 @@ export const guestExpiredReducer = (state = false, action) => {
 	}
 };
 
+export const toggleParticipantsReducer = (state = false, action) => {
+	switch (action.type) {
+		case types.TOGGLE_PARTICIPANTS_TAB:
+			return action.status;
+		default:
+			return state;
+	}
+};
+
 export const missingUserReducer = (state = false, action) => {
 	switch (action.type) {
 		case types.MISSING_USER:

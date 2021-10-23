@@ -3,6 +3,7 @@
 	overflow: auto;
 	flex: auto;
 	font-size: 15px;
+	width: 100%;
 }
 
 .message-container {
@@ -30,4 +31,19 @@
 
 .blue {
 	color: blue;
+}
+
+.participants-header-wrapper {
+	display: flex;
+	flex-direction: column;
+	background-color: rgb(121, 108, 89);
+	width: 25%;
+	min-height: 10%;
+	border-left: 2px solid black;
+	border-bottom: 2px solid black;
+}
+
+.participants-header-container {
+	display: flex;
+	justify-content: flex-end;
 }

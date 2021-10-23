@@ -3,9 +3,11 @@ import React from 'react';
 export default class UsersInRoom extends React.Component {
 	render() {
 		return (
-			<button type="button" className="circular-button">
-				0
-			</button>
+			<div className="participants-header-container">
+				<div className="participants-header-wrapper">
+					<h3>{`Online - 0`}</h3>
+				</div>
+			</div>
 		);
 	}
 }

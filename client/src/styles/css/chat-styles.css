@@ -8,6 +8,7 @@
 .chatroom-wrapper {
 	display: inline-flex;
 }
+
 .white-background-container {
 	display: flex;
 	flex-direction: column;
@@ -17,6 +18,14 @@
 	width: 85%;
 	border-radius: 5px;
 }
+
+.chat-header-flex-container {
+	display: inline-flex;
+	min-height: 10%;
+	background-color: rgb(121, 108, 89);
+	border-radius: 5px 5px 0 0;
+}
+
 .chat-header-wrapper {
 	display: flex;
 	justify-content: space-between;
@@ -24,7 +33,6 @@
 	width: 100%;
 	min-height: 10%;
 	flex: none;
-	border-radius: 5px 5px 0 0;
 	border-bottom: 2px solid black;
 }
 
@@ -32,13 +40,15 @@
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
+	width: 50%;
 	margin-left: 2%;
 }
 
 .right-side-header-container {
 	display: flex;
 	align-items: center;
-	justify-content: flex-end;
+	justify-content: space-between;
+	width: 50%;
 	margin-right: 2%;
 }
 

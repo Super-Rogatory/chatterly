@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { deleteUser, updateChatterlyStatus } from '../store/effects/thunks';
 import signOutIcon from '../icons/signOutIcon.png';
+import people from '../icons/people.png';
 import { updateInactiveUser } from '../store/effects/utils';
 
 class ChatHeader extends React.Component {
@@ -13,6 +14,7 @@ class ChatHeader extends React.Component {
 		};
 		this.handleHeaderRoomName = this.handleHeaderRoomName.bind(this);
 		this.handleRedirect = this.handleRedirect.bind(this);
+		this.openParticipantsPanel = this.openParticipantsPanel.bind(this);
 	}
 
 	handleHeaderRoomName(name) {
@@ -20,6 +22,10 @@ class ChatHeader extends React.Component {
 			return ''.concat(name.slice(0, 20), '...');
 		}
 		return name;
+	}
+
+	openParticipantsPanel() {
+		this.props.updateComponent('openParticipantsTab', !this.props.openParticipantsTab);
 	}
 
 	async handleRedirect() {
@@ -46,6 +52,9 @@ class ChatHeader extends React.Component {
 					<h3> {`Room: ${this.handleHeaderRoomName(this.props.roomName)}`}</h3>
 				</div>
 				<div className="right-side-header-container">
+					<button className="no-style" onClick={this.openParticipantsPanel}>
+						<img src={people} alt="participants button" />
+					</button>
 					<button className="no-style" onClick={this.handleRedirect}>
 						<img src={signOutIcon} alt="sign out button" />
 					</button>
@@ -55,9 +64,13 @@ class ChatHeader extends React.Component {
 	}
 }
 
+const mapStateToProps = (state) => ({
+	openParticipantsTab: state.openParticipantsTab,
+});
+
 const mapDispatchToProps = (dispatch) => ({
 	deleteUser: (id) => dispatch(deleteUser(id)),
 	updateComponent: (type, status) => dispatch(updateChatterlyStatus(type, status)),
 });
 
-export default connect(null, mapDispatchToProps)(ChatHeader);
+export default connect(mapStateToProps, mapDispatchToProps)(ChatHeader);
