@@ -66,6 +66,10 @@ io.on('connection', (socket) => {
 		io.in(user.room).emit('message', user);
 	});
 
+	// update inactive users takes care of the active/inactive status (when the exit button is clicked)
+	socket.on('refreshOnlineUsers', (user) => {
+		io.in(user.room).emit('refreshUserList', user);
+	});
 	socket.on('sendDisconnectMessage', (user) => {
 		io.in(user.room).emit('disconnectMessage', { text: `${user.name} has left.` });
 	});

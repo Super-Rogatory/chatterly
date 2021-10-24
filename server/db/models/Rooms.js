@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const Message = require('./Messages');
+const User = require('./Users');
 const Op = Sequelize.Op;
 
 const db = require('../db');
@@ -38,6 +39,12 @@ const Room = db.define('room', {
   'removeChatbots',    'createChatbot'
 ]
 */
+Room.getUsersInRoom = async function (roomName) {
+	const room = await this.findOne({ where: { name: roomName } });
+	const users = await room.getActiveUsers();
+	console.log(users);
+	return users;
+};
 
 Room.getMessagesByRoom = async function (roomName) {
 	const room = await this.findOne({ where: { name: roomName } });
@@ -57,6 +64,21 @@ Room.getMessagesByRoom = async function (roomName) {
 Room.prototype.getChatBot = async function () {
 	const chatbots = await this.getChatbots();
 	return chatbots[0];
+};
+
+Room.prototype.getActiveUsers = async function () {
+	const users = await User.findAll({
+		where: {
+			room: {
+				[Op.eq]: this.name,
+			},
+			active: {
+				[Op.eq]: true,
+			},
+		},
+		attributes: ['name'],
+	});
+	return users;
 };
 
 // hooks

@@ -68,6 +68,7 @@ class Chat extends React.Component {
 				await addMessage(message, this.state.room.chatBot);
 				// trigger message list refresh, we should then be able to fetch after this.
 				this.state.clientSocket.emit('addedMessage', this.state.room.chatBot);
+				this.state.clientSocket.emit('refreshOnlineUsers', this.state.user);
 			} catch (err) {
 				console.log('failed to initialize chatbot');
 			}

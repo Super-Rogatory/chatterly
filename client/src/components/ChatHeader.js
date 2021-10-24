@@ -32,6 +32,7 @@ class ChatHeader extends React.Component {
 		// what if I used updateInactiveUser to change some property that forces rerender of count.
 		this.props.updateComponent('toggleGuestWarningPopup', false);
 		this.props.socket.emit('sendDisconnectMessage', this.props.user);
+		this.props.socket.emit('refreshOnlineUsers', this.props.user);
 		this.props.socket.disconnect();
 		this.props.socket.off();
 		const isSaved = await updateInactiveUser(this.props.user);

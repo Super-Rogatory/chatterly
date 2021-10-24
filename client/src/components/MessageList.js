@@ -33,7 +33,7 @@ class MessageList extends React.Component {
 
 				{this.props.openParticipantsTab && (
 					<ScrollToBottom className="participants">
-						<UsersInRoom />
+						<UsersInRoom user={this.props.user} socket={this.props.socket} />
 					</ScrollToBottom>
 				)}
 			</div>

@@ -7,7 +7,20 @@ router.get('/:id', async (req, res, next) => {
 	try {
 		const room = await Room.findOne({ where: { id: req.params.id } });
 		if (!room) res.status(404).send('could not find room');
-		res.send(room);
+		else res.send(room);
+	} catch (err) {
+		next(err);
+	}
+});
+
+router.get('/users/:room', async (req, res, next) => {
+	try {
+		const users = await Room.getUsersInRoom(req.params.room);
+		if (!users) {
+			res.status(200).send({ err: new Error('unable to find users in room'), status: false });
+			return;
+		}
+		res.status(200).send({ users, status: true });
 	} catch (err) {
 		next(err);
 	}
@@ -16,7 +29,6 @@ router.get('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
 	try {
 		const room = await Room.findOne({ where: { name: req.body.name } });
-		// console.log(room);
 		if (room) {
 			// if room already exists return that room to front end
 			const chatBot = await room.getChatBot();
