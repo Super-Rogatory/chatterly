@@ -23,8 +23,8 @@ export default class UsersInRoom extends React.Component {
 			<div className="participants-header-container">
 				<div className="participants-header-wrapper">
 					<h2>{`Online`}</h2>
-					{this.state.users.map((user) => {
-						return <h3>{user.name}</h3>;
+					{this.state.users.map((user, index) => {
+						return <h3 key={index}>{user.name}</h3>;
 					})}
 				</div>
 			</div>

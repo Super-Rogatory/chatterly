@@ -42,7 +42,6 @@ const Room = db.define('room', {
 Room.getUsersInRoom = async function (roomName) {
 	const room = await this.findOne({ where: { name: roomName } });
 	const users = await room.getActiveUsers();
-	console.log(users);
 	return users;
 };
 
