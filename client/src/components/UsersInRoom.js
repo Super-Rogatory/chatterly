@@ -5,7 +5,7 @@ export default class UsersInRoom extends React.Component {
 		return (
 			<div className="participants-header-container">
 				<div className="participants-header-wrapper">
-					<h3>{`Online - 0`}</h3>
+					<h3>{`Online`}</h3>
 				</div>
 			</div>
 		);

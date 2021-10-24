@@ -30,8 +30,9 @@ class MessageList extends React.Component {
 						</div>
 					))}
 				</ScrollToBottom>
+
 				{this.props.openParticipantsTab && (
-					<ScrollToBottom classname="participants">
+					<ScrollToBottom className="participants">
 						<UsersInRoom />
 					</ScrollToBottom>
 				)}

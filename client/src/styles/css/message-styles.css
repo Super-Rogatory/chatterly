@@ -1,24 +1,26 @@
-.messages {
-	padding-top: 2%;
-	overflow: auto;
-	flex: auto;
-	font-size: 15px;
-}
-
 .message-participants-wrapper-container {
 	display: inline-flex;
 	flex: auto;
-	/* position: relative; */
 	height: 100%;
 	overflow-y: auto;
-	width: 100%;
+	max-width: 100%;
+}
+
+.messages {
+	padding-top: 2%;
+	width: 80%;
+	font-size: 15px;
 }
 
 .message-container {
 	display: flex;
 	justify-content: flex-start;
-	padding: 0% 0px 0.5% 3%; /* pulls messages off the left and right a bit */
-	width: 75%;
+	padding: 0px 0px 5px 1.5rem; /* pulls messages off the left and bottom a bit */
+	/* overflow-x: hidden; ensures that the message container will not have a horizontal scroll action */
+	overflow-x: visible;
+	height: auto;
+	max-width: 100%;
+	inline-size: auto;
 }
 
 .sender-name {
@@ -30,23 +32,32 @@
 .message-box {
 	display: flex;
 	justify-content: flex-start;
-	width: 100%;
-	height: 20px;
+	max-width: 100%;
+	height: auto;
+	overflow-wrap: break-word;
 }
 
 .message-text {
 	padding-left: 0.5em;
+	width: 100%;
+	/* ensures that the text will break if it reaches the maximum width. */
+	word-wrap: break-word;
+	text-align: left;
 }
 
 .blue {
 	color: blue;
 }
 
+.participants {
+	width: 20%;
+}
+
 .participants-header-wrapper {
 	display: flex;
 	flex-direction: column;
 	background-color: rgb(121, 108, 89);
-	width: 25%;
+	width: 100%;
 	min-height: 10%;
 	border-left: 2px solid black;
 	border-bottom: 2px solid black;
@@ -54,6 +65,11 @@
 
 .participants-header-container {
 	display: flex;
-	justify-content: flex-end;
-	width: 25%;
+	width: 100%;
+	height: 100%;
+	/* justify-content: flex-end; */
+}
+
+.participants-header-wrapper h3 {
+	width: 100%;
 }
