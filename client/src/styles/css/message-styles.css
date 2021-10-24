@@ -9,8 +9,12 @@
 .messages {
 	padding-top: 2%;
 	height: auto;
-	max-width: 80%;
+	width: 100%;
 	font-size: 15px;
+}
+
+.shorten {
+	width: 80%;
 }
 
 .full {
