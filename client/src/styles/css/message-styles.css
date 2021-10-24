@@ -2,25 +2,28 @@
 	display: inline-flex;
 	flex: auto;
 	height: 100%;
-	overflow-y: auto;
+	overflow: auto;
 	max-width: 100%;
 }
 
 .messages {
 	padding-top: 2%;
-	width: 80%;
+	height: auto;
+	max-width: 80%;
 	font-size: 15px;
+}
+
+.full {
+	max-width: 100%;
 }
 
 .message-container {
 	display: flex;
 	justify-content: flex-start;
 	padding: 0px 0px 5px 1.5rem; /* pulls messages off the left and bottom a bit */
-	/* overflow-x: hidden; ensures that the message container will not have a horizontal scroll action */
-	overflow-x: visible;
+	flex-shrink: 2;
 	height: auto;
 	max-width: 100%;
-	inline-size: auto;
 }
 
 .sender-name {
@@ -32,7 +35,7 @@
 .message-box {
 	display: flex;
 	justify-content: flex-start;
-	max-width: 100%;
+	max-width: 90%;
 	height: auto;
 	overflow-wrap: break-word;
 }

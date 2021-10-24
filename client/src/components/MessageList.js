@@ -23,7 +23,7 @@ class MessageList extends React.Component {
 	render() {
 		return (
 			<div className="message-participants-wrapper-container">
-				<ScrollToBottom className="messages">
+				<ScrollToBottom className={`messages ${this.props.openParticipantsTab ? 'shorten' : 'full'}`}>
 					{this.state.messages.map((message, index) => (
 						<div className="message-container" key={index}>
 							<Message message={message} user={this.props.user} room={this.props.room} />
