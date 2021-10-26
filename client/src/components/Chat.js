@@ -79,10 +79,16 @@ class Chat extends React.Component {
 			}
 		});
 
+		// update online users array slice of redux store
+		this.state.clientSocket.on('refreshUserList', async (user) => {
+			await this.props.fetchUsers(user.room);
+		});
+
 		// handles display of disconnect message
 		this.state.clientSocket.on('disconnectMessage', async ({ text }) => {
 			await addMessage(text, this.state.room.chatBot);
 			this.state.clientSocket.emit('addedMessage', this.state.room.chatBot);
+			this.state.clientSocket.emit('refreshOnlineUsers', this.state.user);
 		});
 		// fetch the active users in room (via a thunk perhaps). this will change the users property on the state to make sure that usersInRoom is ready to display it without making
 		// the AJAX request there
