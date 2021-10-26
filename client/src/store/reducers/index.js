@@ -1,5 +1,11 @@
 import { combineReducers } from 'redux';
-import { toggleStatusReducer, guestExpiredReducer, missingUserReducer, toggleParticipantsReducer } from './misc';
+import {
+	toggleStatusReducer,
+	guestExpiredReducer,
+	missingUserReducer,
+	toggleParticipantsReducer,
+	saveIntervalIdStatusToState,
+} from './misc';
 import { nameReducer } from './name';
 import { roomReducer, roomsReducer } from './room';
 import { usersReducer, userReducer } from './users';
@@ -9,6 +15,7 @@ const combinedReducer = combineReducers({
 	rooms: roomsReducer,
 	user: userReducer,
 	users: usersReducer,
+	intervalId: saveIntervalIdStatusToState,
 	isTriggered: toggleStatusReducer,
 	openParticipantsTab: toggleParticipantsReducer,
 	isGuestExpired: guestExpiredReducer,

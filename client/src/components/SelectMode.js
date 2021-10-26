@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import Typewriter from 'typewriter-effect';
-import { updateChatterlyStatus } from '../store/effects/thunks';
+import { updateChatterlyStatus, updateUserCount } from '../store/effects/thunks';
 import GuestWarningPopup from './GuestWarningMessage';
 import ExpiredGuest from './ExpiredGuest';
 import { getActiveUsers } from '../store/effects/utils';
@@ -16,22 +16,35 @@ class SelectMode extends React.Component {
 			redirectToChatAsUser: false,
 			activeUsers: 0,
 			isLoaded: false,
-			intervalId: undefined,
+			intervalFunction: async () => {
+				const count = await getActiveUsers();
+				this.setState({ activeUsers: count });
+			},
 		};
+		this.handleGuest = this.handleGuest.bind(this);
 	}
 
 	async componentDidMount() {
 		this.setState({ activeUsers: (await getActiveUsers()) || 0 });
-		this.intervalId = setInterval(async () => {
-			const count = await getActiveUsers();
-			this.setState({ activeUsers: count });
-		}, 5000);
-
+		// updateUserCount is fed a type, and an intervalId (returned from the setInterval function)
+		this.props.updateUserCount('saveInterval', setInterval(this.state.intervalFunction, 5000));
 		this.setState({ isLoaded: true });
 	}
 
-	componentWillUnmount() {
-		clearInterval(this.intervalId);
+	componentDidUpdate(prevProps, prevState) {
+		// if the guest warning's isTriggered value changes, run this block.
+		// if the guest warning's isTriggered value changes and the it's false, setInterval again
+		// updateUserCount is fed a type, and in intervalId (returned from the setInterval function)
+		if (prevProps.isTriggered !== this.props.isTriggered) {
+			if (!this.props.isTriggered) {
+				this.props.updateUserCount('saveInterval', setInterval(this.state.intervalFunction, 5000));
+			}
+		}
+	}
+
+	handleGuest() {
+		this.props.updateUserCount('clearInterval', this.props.intervalId);
+		this.props.updateComponent('toggleGuestWarningPopup', true);
 	}
 
 	render() {
@@ -73,10 +86,7 @@ class SelectMode extends React.Component {
 						<div className="select-mode-container">
 							{!this.props.isTriggered && (
 								<div className="select-panel">
-									<button
-										className="ui basic button black"
-										onClick={() => this.props.updateComponent('toggleGuestWarningPopup', true)}
-									>
+									<button className="ui basic button black" onClick={this.handleGuest}>
 										JOIN CHATTERLY AS GUEST
 									</button>
 
@@ -122,10 +132,12 @@ class SelectMode extends React.Component {
 const mapStateToProps = (state) => ({
 	isTriggered: state.isTriggered,
 	isGuestExpired: state.isGuestExpired,
+	intervalId: state.intervalId,
 });
 
 const mapDispatchToProps = (dispatch) => ({
 	updateComponent: (type, status) => dispatch(updateChatterlyStatus(type, status)),
+	updateUserCount: (type, intervalId) => dispatch(updateUserCount(type, intervalId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectMode);

@@ -26,6 +26,17 @@ export const toggleParticipantsReducer = (state = false, action) => {
 	}
 };
 
+export const saveIntervalIdStatusToState = (state = {}, action) => {
+	switch (action.type) {
+		case types.SAVE_INTERVAL_FOR_USER_COUNT:
+			return action.intervalId;
+		case types.CLEAR_INTERVAL_FOR_USER_COUNT:
+			return action.status;
+		default:
+			return state;
+	}
+};
+
 export const missingUserReducer = (state = false, action) => {
 	switch (action.type) {
 		case types.MISSING_USER:

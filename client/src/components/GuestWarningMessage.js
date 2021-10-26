@@ -10,6 +10,7 @@ class GuestWarningPopup extends React.Component {
 			redirectToChatAsGuest: false,
 		};
 	}
+
 	render() {
 		if (this.state.redirectToChatAsGuest) {
 			return <Redirect to="/home" />;

@@ -65,6 +65,18 @@ export const _toggleParticipantsTab = (status) => {
 		status,
 	};
 };
+export const _saveIntervalForUserCount = (intervalId) => {
+	return {
+		type: types.SAVE_INTERVAL_FOR_USER_COUNT,
+		intervalId,
+	};
+};
+export const _clearIntervalForUserCount = (status) => {
+	return {
+		type: types.CLEAR_INTERVAL_FOR_USER_COUNT,
+		status,
+	};
+};
 export const _expiredGuest = (status) => {
 	return {
 		type: types.EXPIRED_GUEST,

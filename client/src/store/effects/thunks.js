@@ -11,6 +11,8 @@ import {
 	_expiredGuest,
 	_missingUser,
 	_toggleParticipantsTab,
+	_saveIntervalForUserCount,
+	_clearIntervalForUserCount,
 } from '../actions/actionCreators';
 import axios from 'axios';
 
@@ -118,5 +120,21 @@ export const updateChatterlyStatus = (type, status) => {
 				break;
 		}
 		return status;
+	};
+};
+
+export const updateUserCount = (type, intervalId) => {
+	return (dispatch) => {
+		switch (type) {
+			case 'clearInterval':
+				clearInterval(intervalId);
+				dispatch(_clearIntervalForUserCount({ isClear: true }));
+				break;
+			case 'saveInterval':
+				dispatch(_saveIntervalForUserCount(intervalId));
+				break;
+			default:
+				break;
+		}
 	};
 };

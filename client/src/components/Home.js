@@ -133,19 +133,19 @@ class Home extends React.Component {
 		}
 	}
 }
-const mapDispatch = (dispatch) => ({
+const mapDispatchToProps = (dispatch) => ({
 	setRoom: (room) => dispatch(setRoom(room)),
 	setName: (name) => dispatch(setName(name)),
 	createUser: (name, room) => dispatch(createUser(name, room)),
 	updateComponent: (type, status) => dispatch(updateChatterlyStatus(type, status)),
 });
 
-const mapState = (state) => ({
+const mapStateToProps = (state) => ({
 	name: state.name,
 	room: state.room,
 });
 
-export default connect(mapState, mapDispatch)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
 // TODOS:
 
