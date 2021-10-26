@@ -8,12 +8,3 @@ export const roomReducer = (state = '', action) => {
 			return state;
 	}
 };
-
-export const roomsReducer = (state = [], action) => {
-	switch (action.type) {
-		case types.CREATE_ROOM:
-			return [...state, action.room];
-		default:
-			return state;
-	}
-};

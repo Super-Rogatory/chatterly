@@ -82,14 +82,6 @@ router.delete('/:id', async (req, res, next) => {
 	}
 });
 
-router.get('/room/:room', async (req, res, next) => {
-	try {
-		const users = await User.findAll({ where: { room: req.params.room } });
-		res.send(users);
-	} catch (err) {
-		next(err);
-	}
-});
 module.exports = router;
 
 // NOTE: express handles 404's no need to throw new Error object.

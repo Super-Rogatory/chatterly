@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { getUser } from '../store/effects/thunks';
+import { getUser } from '../store/effects/utils';
 
 class Message extends React.Component {
 	constructor(props) {
@@ -17,7 +16,7 @@ class Message extends React.Component {
 		if (!this.isCurrentUser()) {
 			if (this.props.message.userId === null) {
 				this.setState({ senderUser: this.props.room.chatBot });
-			} else this.setState({ senderUser: await this.props.getUser(this.props.message.userId) });
+			} else this.setState({ senderUser: await getUser(this.props.message.userId) });
 		}
 		// signify that getUser request and all other functionality has finished.
 		this.setState({ isLoaded: true });
@@ -59,8 +58,4 @@ class Message extends React.Component {
 	}
 }
 
-const mapDispatchToProps = (dispatch) => ({
-	getUser: (id) => dispatch(getUser(id)),
-});
-
-export default connect(null, mapDispatchToProps)(Message);
+export default Message;

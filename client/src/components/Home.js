@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { setRoom, setName, createUser, updateChatterlyStatus } from '../store/effects/thunks';
+import { setRoom, setName, updateChatterlyStatus } from '../store/effects/thunks';
 import { connect } from 'react-redux';
-import { doesUserExist } from '../store/effects/utils';
+import { createUser, doesUserExist } from '../store/effects/utils';
 import '../../src/index.scss';
 
 class Home extends React.Component {
@@ -52,7 +52,7 @@ class Home extends React.Component {
 		} else {
 			// at this point, our name and room fields are populated AND the name is not taken. Great. createUser now.
 			try {
-				const user = await this.props.createUser(name, room);
+				const user = await createUser(name, room);
 				window.localStorage.setItem('user', JSON.stringify({ id: user.id, name, room }));
 				this.props.setName(name);
 				this.props.setRoom(room);
@@ -136,7 +136,6 @@ class Home extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
 	setRoom: (room) => dispatch(setRoom(room)),
 	setName: (name) => dispatch(setName(name)),
-	createUser: (name, room) => dispatch(createUser(name, room)),
 	updateComponent: (type, status) => dispatch(updateChatterlyStatus(type, status)),
 });
 

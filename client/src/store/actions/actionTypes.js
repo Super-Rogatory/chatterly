@@ -1,13 +1,6 @@
 export const SET_NAME = 'SET_NAME';
 export const SET_ROOM = 'SET_ROOM';
-export const CREATE_USER = 'CREATE_USER';
-export const DELETE_USER = 'DELETE_USER';
-export const GET_USER = 'GET_USER';
-export const FETCH_USERS = 'FETCH_USERS';
-export const FETCH_USERS_IN_ROOM = 'FETCH_USERS_IN_ROOM';
-export const FETCH_MESSAGES = 'FETCH_MESSAGES';
-export const ADD_MESSAGE = 'ADD_MESSAGE';
-export const CREATE_ROOM = 'CREATE_ROOM';
+export const GET_USERS_IN_ROOM = 'GET_USERS_IN_ROOM';
 export const TOGGLE_POPUP = 'TOGGLE_POPUP';
 export const TOGGLE_PARTICIPANTS_TAB = 'TOGGLE_PARTICIPANTS_TAB';
 export const SAVE_INTERVAL_FOR_USER_COUNT = 'SAVE_INTERVAL_FOR_USER_COUNT';

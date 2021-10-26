@@ -1,12 +1,7 @@
 import {
 	_setName,
 	_setRoom,
-	_createUser,
-	_deleteUser,
-	_getUser,
-	_getMessages,
 	_getUsersInRoom,
-	_addMessage,
 	_togglePopup,
 	_expiredGuest,
 	_missingUser,
@@ -30,71 +25,20 @@ export const setRoom = (room) => {
 		dispatch(_setRoom(room));
 	};
 };
-export const createUser = (name, room) => {
-	name = name.trim().toLowerCase();
-	room = room.trim().toLowerCase();
+
+// transformed from our utils file.
+export const fetchUsersInRoom = (room) => {
 	return async (dispatch) => {
 		try {
-			const { data: user } = await axios.post(`${url}/api/users`, { name, room });
-			dispatch(_createUser(user));
-			return user;
-		} catch (err) {
-			console.log(err);
-		}
-	};
-};
-export const deleteUser = (id) => {
-	return async (dispatch) => {
-		try {
-			await axios.delete(`${url}/api/users/${id}`);
-			dispatch(_deleteUser(id));
+			const { data } = await axios.get(`${url}/api/rooms/users/${room}`);
+			dispatch(_getUsersInRoom(data.users));
+			return data.users;
 		} catch (err) {
 			console.log(err);
 		}
 	};
 };
 
-export const getUser = (id) => {
-	return async (dispatch) => {
-		try {
-			const { data: user } = await axios.get(`${url}/api/users/${id}`);
-			dispatch(_getUser(user));
-			return user;
-		} catch (err) {
-			console.log(err);
-		}
-	};
-};
-
-export const getUsersInRoom = (room) => {
-	return async (dispatch) => {
-		try {
-			const { data: users } = await axios.get(`${url}/api/users/room/${room}`);
-			dispatch(_getUsersInRoom(users));
-			return users;
-		} catch (err) {
-			console.log(err);
-		}
-	};
-};
-
-// -----------------------------------------------------------------------------------------------------------------------------------------------//
-
-export const addMessage = (message, user) => {
-	return async (dispatch) => {
-		const { data } = await axios.post(`${url}/api/messages`, { message, user });
-		dispatch(_addMessage(data));
-		return data;
-	};
-};
-
-export const fetchMessages = () => {
-	return async (dispatch) => {
-		const { data: messages } = await axios.get(`${url}/api/messages`);
-		dispatch(_getMessages(messages));
-		return messages;
-	};
-};
 // -----------------------------------------------------------------------------------------------------------------------------------------------//
 export const updateChatterlyStatus = (type, status) => {
 	// creating a 'one-stop-shop' consumer experience - Ryan [The Office]

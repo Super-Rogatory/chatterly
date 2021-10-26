@@ -7,14 +7,13 @@ import {
 	saveIntervalIdStatusToState,
 } from './misc';
 import { nameReducer } from './name';
-import { roomReducer, roomsReducer } from './room';
-import { usersReducer, userReducer } from './users';
+import { roomReducer } from './room';
+import { usersInRoom } from './users';
+
 const combinedReducer = combineReducers({
 	name: nameReducer,
 	room: roomReducer,
-	rooms: roomsReducer,
-	user: userReducer,
-	users: usersReducer,
+	users: usersInRoom,
 	intervalId: saveIntervalIdStatusToState,
 	isTriggered: toggleStatusReducer,
 	openParticipantsTab: toggleParticipantsReducer,

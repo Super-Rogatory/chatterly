@@ -1,12 +1,13 @@
 import React from 'react';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
-import { deleteUser, getUser, updateChatterlyStatus } from '../store/effects/thunks';
+import { fetchUsersInRoom, updateChatterlyStatus, updateUserCount } from '../store/effects/thunks';
 import ChatHeader from './ChatHeader';
 import Input from './Input';
 import MessageList from './MessageList';
 import { Redirect } from 'react-router-dom';
 import { addMessage, associateUserAndRoom, openRoom, updateInactiveUser } from '../store/effects/utils';
+import { getUser } from '../store/effects/utils';
 import Loader from 'react-loader-spinner';
 
 const PORT = process.env.PORT || 5000;
@@ -27,9 +28,13 @@ class Chat extends React.Component {
 	}
 
 	async componentDidMount() {
+		// if for some reason the interval is STILL running, stop it here.
+		if (!this.props.intervalId.isClear) {
+			this.props.updateUserCount('clearInterval', this.props.intervalId);
+		}
+
 		// before anything, check to see if user object exists in localStorage and get information from Redux store
 		const loggedInUser = window.localStorage.getItem('user');
-		const { getUser } = this.props;
 		// assuming someone deletes from localstorage, then on refresh we can return to home.
 		if (!loggedInUser) {
 			this.setState({ noUser: true });
@@ -79,6 +84,9 @@ class Chat extends React.Component {
 			await addMessage(text, this.state.room.chatBot);
 			this.state.clientSocket.emit('addedMessage', this.state.room.chatBot);
 		});
+		// fetch the active users in room (via a thunk perhaps). this will change the users property on the state to make sure that usersInRoom is ready to display it without making
+		// the AJAX request there
+		this.props.fetchUsers(this.state.user.room);
 
 		this.setState({ isLoaded: true });
 	}
@@ -135,12 +143,14 @@ class Chat extends React.Component {
 const mapStateToProps = (state) => ({
 	nameFromStore: state.name,
 	roomFromStore: state.room,
+	intervalId: state.intervalId,
+	users: state.users,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	deleteUser: (id) => dispatch(deleteUser(id)),
-	getUser: (id) => dispatch(getUser(id)),
 	updateComponent: (type, status) => dispatch(updateChatterlyStatus(type, status)),
+	updateUserCount: (type, intervalId) => dispatch(updateUserCount(type, intervalId)),
+	fetchUsers: (room) => dispatch(fetchUsersInRoom(room)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

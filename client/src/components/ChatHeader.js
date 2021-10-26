@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { deleteUser, updateChatterlyStatus } from '../store/effects/thunks';
+import { updateChatterlyStatus } from '../store/effects/thunks';
 import signOutIcon from '../icons/signOutIcon.png';
 import people from '../icons/people.png';
 import { updateInactiveUser } from '../store/effects/utils';
@@ -70,7 +70,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	deleteUser: (id) => dispatch(deleteUser(id)),
 	updateComponent: (type, status) => dispatch(updateChatterlyStatus(type, status)),
 });
 

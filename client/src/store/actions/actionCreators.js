@@ -11,48 +11,14 @@ export const _setRoom = (room) => {
 		payload: room,
 	};
 };
-export const _createUser = (user) => {
+
+export const _getUsersInRoom = (users) => {
 	return {
-		type: types.CREATE_USER,
-		payload: user,
-	};
-};
-export const _deleteUser = (id) => {
-	return {
-		type: types.DELETE_USER,
-		id,
-	};
-};
-export const _getUser = (user) => {
-	return {
-		type: types.GET_USER,
-		user,
-	};
-};
-export const _getUsers = (users) => {
-	return {
-		type: types.FETCH_USERS,
+		type: types.GET_USERS_IN_ROOM,
 		users,
 	};
 };
-export const _getUsersInRoom = (users) => {
-	return {
-		type: types.FETCH_USERS_IN_ROOM,
-		usersInRoom: users,
-	};
-};
-export const _addMessage = (message) => {
-	return {
-		type: types.ADD_MESSAGE,
-		message,
-	};
-};
-export const _getMessages = (messages) => {
-	return {
-		type: types.FETCH_MESSAGES,
-		messages,
-	};
-};
+
 export const _togglePopup = (status) => {
 	return {
 		type: types.TOGGLE_POPUP,

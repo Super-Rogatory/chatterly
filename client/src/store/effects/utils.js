@@ -3,6 +3,26 @@ import axios from 'axios';
 const PORT = process.env.PORT || 5000;
 const url = process.env.NODE_ENV === 'production' ? 'https://wechatterly.herokuapp.com' : `http://localhost:${PORT}`;
 
+export const createUser = async (name, room) => {
+	name = name.trim().toLowerCase();
+	room = room.trim().toLowerCase();
+	try {
+		const { data: user } = await axios.post(`${url}/api/users`, { name, room });
+		return user;
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+export const getUser = async (id) => {
+	try {
+		const { data: user } = await axios.get(`${url}/api/users/${id}`);
+		return user;
+	} catch (err) {
+		console.log(err);
+	}
+};
+
 export const addMessage = async (msg, user) => {
 	const { data: message } = await axios.post(`${url}/api/messages`, { message: msg, user });
 	if (message.err) {
