@@ -58,7 +58,11 @@ export const getRoom = async (id) => {
 };
 
 export const associateUserAndRoom = async (user) => {
-	await axios.put(`${url}/api/rooms`, { user });
+	await axios.put(`${url}/api/rooms`, { user, type: 'associate' });
+};
+
+export const disassociateUserAndRoom = async (user) => {
+	await axios.put(`${url}/api/rooms`, { user, type: 'disassociate' });
 };
 
 export const getActiveUsers = async () => {

@@ -47,17 +47,31 @@ router.post('/', async (req, res, next) => {
 
 router.put('/', async (req, res, next) => {
 	try {
-		if (req.body.user) {
-			const room = await Room.findOne({ where: { name: req.body.user.room } });
-			const user = await User.findOne({ where: { name: req.body.user.name } });
-			if (room) {
-				//populates our participants table, not necessary for chatbot, should be done elsewhere
-				await room.addUser(user);
-				res.status(200).json('successfully associated room and user');
-			}
+		if (!req.body.type || !req.body.user) throw new Error('not type specified or user does not exist in put route');
+		const room = await Room.findOne({ where: { name: req.body.user.room } });
+		const user = await User.findOne({ where: { name: req.body.user.name } });
+		switch (req.body.type) {
+			case 'associate':
+				if (room) {
+					// populates our participants table, not necessary for chatbot, should be done elsewhere
+					await room.addUser(user);
+					res.status(200).json('successfully associated room and user');
+					break;
+				}
+
+			case 'disassociate':
+				if (room) {
+					await room.removeUser(user);
+					res.status(200).json('successfully disassociated room and user');
+					break;
+				}
+
+			default:
+				break;
 		}
 	} catch (err) {
 		next(err);
 	}
 });
+
 module.exports = router;

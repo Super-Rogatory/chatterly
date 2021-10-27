@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { updateChatterlyStatus } from '../store/effects/thunks';
 import signOutIcon from '../icons/signOutIcon.png';
 import people from '../icons/people.png';
-import { updateInactiveUser } from '../store/effects/utils';
+import { disassociateUserAndRoom } from '../store/effects/utils';
 
 class ChatHeader extends React.Component {
 	constructor(props) {
@@ -30,15 +30,12 @@ class ChatHeader extends React.Component {
 
 	async handleRedirect() {
 		// what if I used updateInactiveUser to change some property that forces rerender of count.
+		await disassociateUserAndRoom(this.props.user);
 		this.props.updateComponent('toggleGuestWarningPopup', false);
 		this.props.socket.emit('sendDisconnectMessage', this.props.user);
-		this.props.socket.emit('refreshOnlineUsers', this.props.user);
 		this.props.socket.disconnect();
 		this.props.socket.off();
-		const isSaved = await updateInactiveUser(this.props.user);
-		if (isSaved) {
-			this.setState({ redirectToHome: true });
-		}
+		this.setState({ redirectToHome: true });
 	}
 
 	render() {
