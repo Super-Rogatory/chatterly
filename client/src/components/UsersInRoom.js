@@ -20,7 +20,16 @@ class UsersInRoom extends React.Component {
 				<div className="participants-header-wrapper">
 					<h2>{`Online - ${this.props.users.length}`}</h2>
 					{this.props.users.map((user, index) => {
-						return <h3 key={index}>{user.name}</h3>;
+						return (
+							<div key={index} className="participant-name-status-container">
+								<div className="username-handle-container">
+									<h3>{`${user.name}`}</h3>
+								</div>
+								<div className="status-icon-container">
+									<div className={`circle ${user.active ? 'green' : 'greyed'}`}></div>
+								</div>
+							</div>
+						);
 					})}
 				</div>
 			</div>

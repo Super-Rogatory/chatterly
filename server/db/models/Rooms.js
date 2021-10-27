@@ -41,7 +41,7 @@ const Room = db.define('room', {
 */
 Room.getUsersInRoom = async function (roomName) {
 	const room = await this.findOne({ where: { name: roomName } });
-	const users = await room.getActiveUsers();
+	const users = await room.customGetUsers();
 	return users;
 };
 
@@ -65,17 +65,14 @@ Room.prototype.getChatBot = async function () {
 	return chatbots[0];
 };
 
-Room.prototype.getActiveUsers = async function () {
+Room.prototype.customGetUsers = async function () {
 	const users = await User.findAll({
 		where: {
 			room: {
 				[Op.eq]: this.name,
 			},
-			active: {
-				[Op.eq]: true,
-			},
 		},
-		attributes: ['name'],
+		attributes: ['name', 'active', 'isGuest'],
 	});
 	return users;
 };

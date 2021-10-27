@@ -32,7 +32,7 @@ User.getActiveUserCount = async function () {
 	const players = await this.findAll({ where: { active: true } });
 	return players.length;
 };
-// if the user is a guest user, their messages will be destroyed in an hour, also their record in the database will get destroyed.
+// if the user is a guest user, their messages will be destroyed in 30 min, also their record in the database will get destroyed.
 User.afterCreate((user) => {
 	if (user.isGuest) {
 		setTimeout(async () => {
@@ -44,7 +44,7 @@ User.afterCreate((user) => {
 				},
 			});
 			await user.destroy();
-		}, 3600000);
+		}, 1800000);
 	}
 });
 module.exports = User;
