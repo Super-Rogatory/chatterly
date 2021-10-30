@@ -11,7 +11,7 @@ const morgan = require('morgan');
 const PORT = process.env.PORT || 5000;
 
 // syncing the db
-db.sync({ force: true })
+db.sync()
 	.then(() => console.log('Database is synced'))
 	.catch((err) => console.log('Error syncing the db', err));
 
@@ -26,7 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 // logging middleware
-app.use(morgan('dev'));
+app.use(morgan(`${process.env.NODE_ENV === 'production' ? 'common' : 'dev'}`));
 
 // allows access control
 app.use((req, res, next) => {
