@@ -28,7 +28,7 @@ class GuestWarningPopup extends React.Component {
 								I am not ready to rock and roll.
 							</button>
 							<button className="ui basic black button" onClick={() => this.setState({ redirectToChatAsGuest: true })}>
-								I understand that my name will disappear in one hour!
+								I am ready to rock and roll.
 							</button>
 						</div>
 					</div>

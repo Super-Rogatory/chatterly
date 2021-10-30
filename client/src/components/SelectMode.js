@@ -113,8 +113,8 @@ class SelectMode extends React.Component {
 					{/* Warning messages that popups when the user choices to join the chatroom as a guest. */}
 					<GuestWarningPopup>
 						<h3>
-							As a guest your username WILL disappear from my server within the hour. If you wish to keep your name
-							permanently, make sure to create an account with us. Ready to rock and roll?
+							Guest users will be deleted in 30 minutes. Rooms filled with guests will have all messages wiped when the
+							room is emptied. Registered users keep their messages and name. Ready to rock and roll?
 						</h3>
 					</GuestWarningPopup>
 

@@ -24,11 +24,13 @@
 	width: 80%;
 	white-space: nowrap;
 }
+
 .username-handle-container > h3 {
 	width: 100%;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+
 .status-icon-container {
 	display: flex;
 	align-items: center;

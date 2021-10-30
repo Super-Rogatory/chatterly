@@ -11,7 +11,7 @@ const morgan = require('morgan');
 const PORT = process.env.PORT || 5000;
 
 // syncing the db
-db.sync()
+db.sync({ force: true })
 	.then(() => console.log('Database is synced'))
 	.catch((err) => console.log('Error syncing the db', err));
 
@@ -56,7 +56,7 @@ io.on('connection', (socket) => {
 		socket.emit('initializeChatbot', { text: `${name}, welcome to the room ${room}` });
 
 		socket.join(room);
-		//emitting to all clients in the room except the user.
+		// emitting to all clients in the room except the user.
 		socket.to(room).emit('initializeChatbot', { text: `${name}, has joined!` });
 	});
 
@@ -96,4 +96,5 @@ app.use((err, req, res, next) => {
 app.get('*', (req, res) => {
 	res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
 });
+
 server.listen(PORT, () => console.log(`server: listening on PORT ${PORT}`));
