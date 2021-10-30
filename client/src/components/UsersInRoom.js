@@ -9,11 +9,7 @@ class UsersInRoom extends React.Component {
 			isLoaded: false,
 		};
 	}
-	async componentDidMount() {
-		// fetch the active users in room (via a thunk perhaps)
-		// [{}] an array of objects.
-		// listen for new users when the room tab is open
-	}
+
 	render() {
 		return (
 			<div className="participants-header-container">
