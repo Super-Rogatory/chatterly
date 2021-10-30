@@ -82,6 +82,12 @@ io.on('connection', (socket) => {
 // mounted on api per usual
 app.use('/api', require('../server/api/index'));
 
+// handling 404
+app.use((req, res, next) => {
+	res.status(404).send('SORRY. Could not find the information you are looking for!');
+});
+
+// error handler
 app.use((err, req, res, next) => {
 	console.error(err.stack);
 	res.status(500).send('An error has occured!');

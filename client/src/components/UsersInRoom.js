@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchUsersInRoom } from '../store/effects/thunks';
 
 class UsersInRoom extends React.Component {
 	constructor(props) {
@@ -14,7 +13,7 @@ class UsersInRoom extends React.Component {
 		return (
 			<div className="participants-header-container">
 				<div className="participants-header-wrapper">
-					<h2>{`Online - ${this.props.users.length}`}</h2>
+					<h2>{`Online - ${this.props.activeUsers.length}`}</h2>
 					{this.props.users.map((user, index) => {
 						return (
 							<div key={index} className="participant-name-status-container">
@@ -37,8 +36,4 @@ const mapStateToProps = (state) => ({
 	users: state.users,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-	fetchUsers: (room) => dispatch(fetchUsersInRoom(room)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(UsersInRoom);
+export default connect(mapStateToProps, null)(UsersInRoom);

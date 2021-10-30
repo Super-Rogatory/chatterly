@@ -32,7 +32,8 @@ export const fetchUsersInRoom = (room) => {
 		try {
 			const { data } = await axios.get(`${url}/api/rooms/users/${room}`);
 			dispatch(_getUsersInRoom(data.users));
-			return data.users;
+			const activeUsers = data.users.filter((user) => user.active === true);
+			return { activeUsers, users: data.users };
 		} catch (err) {
 			console.log(err);
 		}

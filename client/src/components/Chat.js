@@ -22,6 +22,7 @@ class Chat extends React.Component {
 			room: {},
 			isLoaded: false,
 			noUser: false,
+			activeUsers: [],
 			clientSocket: io(`${url}`),
 		};
 		this.getUserRoom = this.getUserRoom.bind(this);
@@ -47,6 +48,7 @@ class Chat extends React.Component {
 		try {
 			const user = JSON.parse(loggedInUser);
 			const dbUser = await getUser(user.id);
+
 			if (!dbUser) {
 				// send user back to home if local storage user cannot match with database user
 				this.setState({ noUser: true });
@@ -81,7 +83,9 @@ class Chat extends React.Component {
 
 		// update online users array slice of redux store
 		this.state.clientSocket.on('refreshUserList', async (user) => {
-			await this.props.fetchUsers(user.room);
+			const users = await this.props.fetchUsers(user.room);
+			// allows users in room, access to the array of active users
+			this.setState({ activeUsers: users.activeUsers });
 		});
 
 		// handles display of disconnect message - on disconnect -
@@ -93,7 +97,6 @@ class Chat extends React.Component {
 		// fetch the active users in room (via a thunk perhaps). this will change the users property on the state to make sure that usersInRoom is ready to display it without making
 		// the AJAX request there
 		this.props.fetchUsers(this.state.user.room);
-
 		this.setState({ isLoaded: true });
 	}
 
@@ -136,7 +139,12 @@ class Chat extends React.Component {
 									roomName={this.props.roomFromStore || this.getUserRoom()}
 									user={this.state.user}
 								/>
-								<MessageList socket={this.state.clientSocket} user={this.state.user} room={this.state.room} />
+								<MessageList
+									socket={this.state.clientSocket}
+									user={this.state.user}
+									room={this.state.room}
+									activeUsers={this.state.activeUsers}
+								/>
 								<Input socket={this.state.clientSocket} user={this.state.user} />
 							</div>
 						</div>
