@@ -12,8 +12,6 @@ class SelectMode extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			redirectToChatAsGuest: false,
-			redirectToRegisterAsUser: false,
 			activeUsers: 0,
 			isLoaded: false,
 			intervalFunction: async () => {
@@ -48,10 +46,8 @@ class SelectMode extends React.Component {
 	}
 
 	render() {
-		if (this.state.redirectToChatAsGuest) return <Redirect to="/guestsignin" />;
-		if (this.state.redirectToRegisterAsUser) return <Redirect to="/register" />; // Need to create register component, change isGuest user status here.
 		if (window.localStorage.getItem('user')) {
-			// to ensure that the same user is 'logged in' other rooms
+			// to ensure that the same user is 'logged in' other rooms. use redirect here to ignore browser history.
 			return <Redirect to="/chat" />;
 		}
 		if (!this.state.isLoaded) {
@@ -86,7 +82,7 @@ class SelectMode extends React.Component {
 						<div className="select-mode-container">
 							{!this.props.isTriggered && (
 								<div className="select-panel">
-									<button className="ui basic button black" onClick={this.handleGuest}>
+									<button className="ui basic button black" onClick={() => this.props.history.push('/guestsignin')}>
 										JOIN CHATTERLY AS GUEST
 									</button>
 
@@ -96,10 +92,7 @@ class SelectMode extends React.Component {
 										} online`}</h3>
 									</div>
 
-									<button
-										className="ui basic button black"
-										onClick={() => this.setState({ redirectToRegisterAsUser: true })}
-									>
+									<button className="ui basic button black" onClick={() => this.props.history.push('/register')}>
 										REGISTER AND KEEP USERNAME
 									</button>
 								</div>
