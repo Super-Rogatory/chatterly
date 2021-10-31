@@ -38,7 +38,7 @@ class GuestSignIn extends React.Component {
 		const nameIsTaken = await this.isNameFaulty(name);
 		this.setState({ errMessage: '' }); // resets err message input every time
 		if (nameIsTaken || !name || !room) {
-			this.state.errorHandler.customComponentErrorHandler(nameIsTaken, name, room);
+			this.state.errorHandler.guestErrorHandler(nameIsTaken, name, room);
 		} else {
 			// at this point, our name and room fields are populated AND the name is not taken. Great. createUser now.
 			try {

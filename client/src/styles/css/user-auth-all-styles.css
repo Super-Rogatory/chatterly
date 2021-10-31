@@ -8,3 +8,36 @@
 	max-width: 50%;
 	background-color: blanchedalmond;
 }
+
+.user-auth-form-background {
+	background-color: blanchedalmond;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	max-width: 600px;
+	max-height: 500px;
+	height: 30vh;
+	padding: 16px 20px; /* top and bottom - 16px left and right 5 percent */
+	border-radius: 5px;
+	background-color: blanchedalmond;
+}
+
+.user-auth-form-background label {
+	text-align: center;
+}
+
+.ui.form input[type='password'] {
+	background: blanchedalmond;
+	border-color: black;
+}
+
+.ui.form input[type='password']:focus {
+	background: blanchedalmond;
+	border-color: black;
+}
+
+.ui.form .field.error input[type='password'],
+.ui.form .fields.error .field input[type='password'] {
+	background: blanchedalmond;
+	border-color: red;
+}

@@ -75,13 +75,13 @@ export const updateInactiveUser = async (user) => {
 	return status;
 };
 
-//  -------------------------------------------------------------------------------------------
+//  -------------------------------------------------------------------------------------------------------
 export class ErrorHandlerForSignIns {
 	constructor(context) {
 		this.componentContext = context;
 	}
 
-	customComponentErrorHandler(nameIsTaken, name, room) {
+	guestErrorHandler(nameIsTaken, name, room) {
 		if (!name && !room) this.handleErrorCases('nameandroomempty');
 		// if the name is populated but is taken, then check the conditions of the room field
 		else if (nameIsTaken) {
