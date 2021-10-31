@@ -1,6 +1,7 @@
 @import url('../src/styles/css/app-styles.css');
 @import url('../src/styles/css/select-mode-styles.css');
-@import url('../src/styles/css/home-styles.css');
+@import url('../src/styles/css/guest-signin-styles.css');
+@import url('../src/styles/css/user-auth-all-styles.css');
 @import url('../src/styles/css/chat-styles.css');
 @import url('../src/styles/css/message-styles.css');
 @import url('../src/styles/css/users-in-room-styles.css');

@@ -10,7 +10,7 @@ body {
 	width: 100%;
 }
 
-.home-background-container {
+.guest-login-background-container {
 	display: flex;
 	flex-direction: column;
 	background-color: blanchedalmond;
@@ -21,11 +21,11 @@ body {
 	box-shadow: 0px -4px 10px #4c463d;
 }
 
-.home-background-container label {
+.guest-login-background-container label {
 	text-align: center;
 }
 
-.home-background-container input {
+.guest-login-background-container input {
 	border: none;
 }
 

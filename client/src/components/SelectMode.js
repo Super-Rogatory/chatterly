@@ -13,7 +13,7 @@ class SelectMode extends React.Component {
 		super();
 		this.state = {
 			redirectToChatAsGuest: false,
-			redirectToChatAsUser: false,
+			redirectToRegisterAsUser: false,
 			activeUsers: 0,
 			isLoaded: false,
 			intervalFunction: async () => {
@@ -48,8 +48,8 @@ class SelectMode extends React.Component {
 	}
 
 	render() {
-		if (this.state.redirectToChatAsGuest) return <Redirect to="/home" />;
-		if (this.state.redirectToChatAsGuest) return <Redirect to="/register" />; // Need to create register component, change isGuest user status here.
+		if (this.state.redirectToChatAsGuest) return <Redirect to="/guestsignin" />;
+		if (this.state.redirectToRegisterAsUser) return <Redirect to="/register" />; // Need to create register component, change isGuest user status here.
 		if (window.localStorage.getItem('user')) {
 			// to ensure that the same user is 'logged in' other rooms
 			return <Redirect to="/chat" />;
@@ -98,7 +98,7 @@ class SelectMode extends React.Component {
 
 									<button
 										className="ui basic button black"
-										onClick={() => this.setState({ redirectToChatAsUser: true })}
+										onClick={() => this.setState({ redirectToRegisterAsUser: true })}
 									>
 										REGISTER AND KEEP USERNAME
 									</button>

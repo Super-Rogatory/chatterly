@@ -1,0 +1,10 @@
+.center-content {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.register-form-container {
+	max-height: 30%;
+	max-width: 50%;
+	background-color: blanchedalmond;
+}

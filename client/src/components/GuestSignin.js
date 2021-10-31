@@ -2,10 +2,10 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { setRoom, setName, updateChatterlyStatus } from '../store/effects/thunks';
 import { connect } from 'react-redux';
-import { createUser, doesUserExist } from '../store/effects/utils';
+import { createUser, doesUserExist, ErrorHandlerForSignIns } from '../store/effects/utils';
 import '../../src/index.scss';
 
-class Home extends React.Component {
+class GuestSignIn extends React.Component {
 	// keeping track of name, room, and whether or not the input fields for name and room are false (handling the error in a boolean)
 	constructor() {
 		super();
@@ -15,10 +15,10 @@ class Home extends React.Component {
 			nameError: false,
 			roomError: false,
 			errMessage: '',
+			errorHandler: new ErrorHandlerForSignIns(this),
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handleErrorCases = this.handleErrorCases.bind(this);
 	}
 
 	handleChange(e) {
@@ -38,17 +38,7 @@ class Home extends React.Component {
 		const nameIsTaken = await this.isNameFaulty(name);
 		this.setState({ errMessage: '' }); // resets err message input every time
 		if (nameIsTaken || !name || !room) {
-			if (!name && !room) this.handleErrorCases('nameandroomempty');
-			// if the name is populated but is taken, then check the conditions of the room field
-			else if (nameIsTaken) {
-				if (!room) this.handleErrorCases('nametakenandroomempty');
-				if (room) this.handleErrorCases('nametakenandroomfull');
-				this.setState({ errMessage: 'Sorry, this username is already taken. Choose another one!' });
-			}
-			// if the name is not taken, then we are going to default to two other possible issues. meaning, the name input field is empty or the room input field is empty
-			else if (!name) this.handleErrorCases('nameempty');
-			// if the name is not taken AND the name input field is populated, this means that the room input field is empty
-			else if (!room) this.handleErrorCases('roomempty');
+			this.state.errorHandler.customComponentErrorHandler(nameIsTaken, name, room);
 		} else {
 			// at this point, our name and room fields are populated AND the name is not taken. Great. createUser now.
 			try {
@@ -70,29 +60,6 @@ class Home extends React.Component {
 		return (await doesUserExist(name)) || name.toLowerCase() === 'chatbot';
 	}
 
-	handleErrorCases(flag) {
-		// if the name input is populated, check to see if room is
-		switch (flag) {
-			case 'nameandroomempty':
-			case 'nametakenandroomempty':
-				this.setState({ roomError: true, nameError: true });
-				break;
-			case 'nameempty':
-			case 'nametakenandroomfull':
-				this.setState({ roomError: false, nameError: true });
-				break;
-			case 'roomempty':
-				this.setState({
-					nameError: false,
-					roomError: true,
-				});
-				break;
-			default:
-				this.setState({ roomError: false, nameError: false });
-				break;
-		}
-	}
-
 	render() {
 		const { name, room, nameError, roomError } = this.state;
 		if (window.localStorage.getItem('user')) {
@@ -101,7 +68,7 @@ class Home extends React.Component {
 		} else {
 			return (
 				<div id="vertical-container" className="middle">
-					<div className="home-background-container middle">
+					<div className="guest-login-background-container middle">
 						<div className="ui centered large header">Join Chatterly</div>
 						<form className="ui attached form" onSubmit={this.handleSubmit}>
 							<div className={`field ${nameError ? 'error' : ''}`}>
@@ -144,7 +111,7 @@ const mapStateToProps = (state) => ({
 	room: state.room,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(GuestSignIn);
 
 // TODOS:
 

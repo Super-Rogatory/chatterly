@@ -74,3 +74,47 @@ export const updateInactiveUser = async (user) => {
 	const { data: status } = await axios.post(`${url}/api/users/misc/decreaseUserCount`, { name: user.name });
 	return status;
 };
+
+//  -------------------------------------------------------------------------------------------
+export class ErrorHandlerForSignIns {
+	constructor(context) {
+		this.componentContext = context;
+	}
+
+	customComponentErrorHandler(nameIsTaken, name, room) {
+		if (!name && !room) this.handleErrorCases('nameandroomempty');
+		// if the name is populated but is taken, then check the conditions of the room field
+		else if (nameIsTaken) {
+			if (!room) this.handleErrorCases('nametakenandroomempty');
+			if (room) this.handleErrorCases('nametakenandroomfull');
+			this.setState({ errMessage: 'Sorry, this username is already taken. Choose another one!' });
+		}
+		// if the name is not taken, then we are going to default to two other possible issues. meaning, the name input field is empty or the room input field is empty
+		else if (!name) this.handleErrorCases('nameempty');
+		// if the name is not taken AND the name input field is populated, this means that the room input field is empty
+		else if (!room) this.handleErrorCases('roomempty');
+	}
+
+	handleErrorCases(flag) {
+		// if the name input is populated, check to see if room is
+		switch (flag) {
+			case 'nameandroomempty':
+			case 'nametakenandroomempty':
+				this.componentContext.setState({ roomError: true, nameError: true });
+				break;
+			case 'nameempty':
+			case 'nametakenandroomfull':
+				this.componentContext.setState({ roomError: false, nameError: true });
+				break;
+			case 'roomempty':
+				this.componentContext.setState({
+					nameError: false,
+					roomError: true,
+				});
+				break;
+			default:
+				this.componentContext.setState({ roomError: false, nameError: false });
+				break;
+		}
+	}
+}
