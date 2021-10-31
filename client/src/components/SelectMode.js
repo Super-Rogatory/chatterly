@@ -20,6 +20,7 @@ class SelectMode extends React.Component {
 			},
 		};
 		this.handleGuest = this.handleGuest.bind(this);
+		this.handleAuth = this.handleAuth.bind(this);
 	}
 
 	async componentDidMount() {
@@ -45,6 +46,10 @@ class SelectMode extends React.Component {
 		this.props.updateComponent('toggleGuestWarningPopup', true);
 	}
 
+	handleAuth() {
+		this.props.updateUserCount('clearInterval', this.props.intervalId);
+		this.props.history.push('/register');
+	}
 	render() {
 		if (window.localStorage.getItem('user')) {
 			// to ensure that the same user is 'logged in' other rooms. use redirect here to ignore browser history.
@@ -52,10 +57,8 @@ class SelectMode extends React.Component {
 		}
 		if (!this.state.isLoaded) {
 			return (
-				<div id="vertical-container" className="ui grid middle aligned">
-					<div className="middle">
-						<Loader type="ThreeDots" color="#d5a26c" />;
-					</div>
+				<div id="vertical-container" className="center-content">
+					<Loader type="ThreeDots" color="#d5a26c" />;
 				</div>
 			);
 		} else
@@ -82,7 +85,7 @@ class SelectMode extends React.Component {
 						<div className="select-mode-container">
 							{!this.props.isTriggered && (
 								<div className="select-panel">
-									<button className="ui basic button black" onClick={() => this.props.history.push('/guestsignin')}>
+									<button className="ui basic button black" onClick={this.handleGuest}>
 										JOIN CHATTERLY AS GUEST
 									</button>
 
@@ -92,7 +95,7 @@ class SelectMode extends React.Component {
 										} online`}</h3>
 									</div>
 
-									<button className="ui basic button black" onClick={() => this.props.history.push('/register')}>
+									<button className="ui basic button black" onClick={this.handleAuth}>
 										REGISTER AND KEEP USERNAME
 									</button>
 								</div>

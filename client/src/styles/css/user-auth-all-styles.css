@@ -3,27 +3,41 @@
 	justify-content: center;
 	align-items: center;
 }
-.register-form-container {
-	max-height: 30%;
-	max-width: 50%;
-	background-color: blanchedalmond;
-}
 
 .user-auth-form-background {
-	background-color: blanchedalmond;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	background-color: blanchedalmond;
 	max-width: 600px;
-	max-height: 500px;
-	height: 30vh;
+	min-height: 30vh;
 	padding: 16px 20px; /* top and bottom - 16px left and right 5 percent */
 	border-radius: 5px;
-	background-color: blanchedalmond;
+}
+.user-auth-guest-wrapper {
+	display: inline-flex;
+	max-width: 100%;
 }
 
-.user-auth-form-background label {
-	text-align: center;
+.user-auth-input {
+	margin: 20px 10px;
+}
+
+.lowered {
+	display: flex;
+	flex-direction: column;
+	width: 50%;
+}
+
+/* image with form is a flex item/container that exists in an inline-flex parent container (user-auth-guest-container) */
+div.img-with-form {
+	display: flex;
+	justify-content: center;
+	max-width: 50%;
+}
+
+div.img-with-form > img {
+	height: 75%;
+	max-width: 100%;
 }
 
 .ui.form input[type='password'] {

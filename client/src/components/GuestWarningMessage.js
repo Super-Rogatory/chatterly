@@ -1,20 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { updateChatterlyStatus } from '../store/effects/thunks';
 
 class GuestWarningPopup extends React.Component {
+	// eslint-disable-next-line no-useless-constructor
 	constructor(props) {
 		super(props);
-		this.state = {
-			redirectToChatAsGuest: false,
-		};
 	}
 
 	render() {
-		if (this.state.redirectToChatAsGuest) {
-			return <Redirect to="/guestsignin" />;
-		}
 		if (this.props.isTriggered) {
 			return (
 				<div className="warning-message-container">
@@ -27,7 +22,7 @@ class GuestWarningPopup extends React.Component {
 							>
 								I am not ready to rock and roll.
 							</button>
-							<button className="ui basic black button" onClick={() => this.setState({ redirectToChatAsGuest: true })}>
+							<button className="ui basic black button" onClick={() => this.props.history.push('/guestsignin')}>
 								I am ready to rock and roll.
 							</button>
 						</div>
@@ -47,4 +42,5 @@ const mapDispatchToProps = (dispatch) => ({
 	updateComponent: (type, status) => dispatch(updateChatterlyStatus(type, status)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(GuestWarningPopup);
+const GuestWarningWithRouter = withRouter(GuestWarningPopup);
+export default connect(mapStateToProps, mapDispatchToProps)(GuestWarningWithRouter);

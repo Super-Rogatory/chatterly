@@ -21,6 +21,10 @@ class GuestSignIn extends React.Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
+	componentDidMount() {
+		window.localStorage.clear();
+	}
+
 	handleChange(e) {
 		this.setState({
 			[e.target.name]: e.target.value,
@@ -33,7 +37,7 @@ class GuestSignIn extends React.Component {
 		// cancels normal behavior of the submit - does not submit
 
 		e.preventDefault();
-		window.localStorage.clear();
+
 		const { name, room } = this.state;
 		const nameIsTaken = await this.isNameFaulty(name);
 		this.setState({ errMessage: '' }); // resets err message input every time
@@ -76,7 +80,7 @@ class GuestSignIn extends React.Component {
 								<input placeholder="Enter Name" name="name" type="text" value={name} onChange={this.handleChange} />
 							</div>
 							<div className={`field ${roomError ? 'error' : ''}`}>
-								<label>Join a room!</label>
+								<label>Enter a room name!</label>
 								<input placeholder="Enter Room" name="room" type="text" value={room} onChange={this.handleChange} />
 							</div>
 							<Link to="/" onClick={() => this.props.updateComponent('toggleGuestWarningPopup', false)}>
