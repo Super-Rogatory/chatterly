@@ -4,7 +4,8 @@ import { updateUserCount } from '../store/effects/thunks';
 import people from '../icons/people.png';
 import { Link } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
-import { ErrorHandlerForSignIns } from '../store/effects/utils';
+import { ErrorHandlerForSignIns, registerUser } from '../store/effects/utils';
+import { Redirect } from 'react-router';
 
 class Register extends React.Component {
 	constructor() {
@@ -17,6 +18,7 @@ class Register extends React.Component {
 			isLoaded: false,
 			errMessages: [''],
 			errorHandler: new ErrorHandlerForSignIns(this),
+			redirectToLogin: false,
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -62,11 +64,17 @@ class Register extends React.Component {
 			// turns on flags for erroneous input
 			errorHandler.checkUserErrorInput(isUsernameTaken, isPasswordValid, username, password);
 		} else {
+			await registerUser(username, password);
+			this.setState({ redirectToLogin: true });
 		}
 	}
 
 	render() {
 		const { username, password, usernameError, passwordError } = this.state;
+		if (this.state.redirectToLogin) {
+			// actually redirect to login
+			return <Redirect to="/login" />;
+		}
 		if (!this.state.isLoaded) {
 			return (
 				<div id="vertical-container" className="center-content">

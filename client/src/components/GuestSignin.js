@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { setRoom, setName, updateChatterlyStatus } from '../store/effects/thunks';
+import { updateChatterlyStatus } from '../store/effects/thunks';
 import { connect } from 'react-redux';
 import { createUser, ErrorHandlerForSignIns } from '../store/effects/utils';
 import '../../src/index.scss';
@@ -14,6 +14,7 @@ class GuestSignIn extends React.Component {
 			room: '',
 			nameError: false,
 			roomError: false,
+			redirectToChat: false,
 			errMessage: '',
 			errorHandler: new ErrorHandlerForSignIns(this),
 		};
@@ -50,9 +51,7 @@ class GuestSignIn extends React.Component {
 			try {
 				const user = await createUser(name, room);
 				window.localStorage.setItem('user', JSON.stringify({ id: user.id, name, room }));
-				this.props.setName(name);
-				this.props.setRoom(room);
-				// recall that the component will rerender when props changes
+				this.setState({ redirectToChat: true });
 			} catch (err) {
 				console.error('AN ERROR HAS OCCURED. => ', err.stack);
 				// this.setState({ errMessage: 'Sorry, an error has occured while creating user' });
@@ -65,8 +64,8 @@ class GuestSignIn extends React.Component {
 	}
 
 	render() {
-		const { name, room, nameError, roomError } = this.state;
-		if (window.localStorage.getItem('user')) {
+		const { name, room, nameError, roomError, redirectToChat } = this.state;
+		if (window.localStorage.getItem('user') || redirectToChat) {
 			// to ensure that the same user is 'logged in' other rooms
 			return <Redirect to="/chat" />;
 		} else {
@@ -105,30 +104,13 @@ class GuestSignIn extends React.Component {
 	}
 }
 const mapDispatchToProps = (dispatch) => ({
-	setRoom: (room) => dispatch(setRoom(room)),
-	setName: (name) => dispatch(setName(name)),
 	updateComponent: (type, status) => dispatch(updateChatterlyStatus(type, status)),
 });
 
-const mapStateToProps = (state) => ({
-	name: state.name,
-	room: state.room,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(GuestSignIn);
+export default connect(null, mapDispatchToProps)(GuestSignIn);
 
 // TODOS:
 
 // Final fishing touches!
 
-// NOTE: if chatbot exists in room don't create another new one?
-// Consider creating a chatbot ASSOCIATED to a user.
-
 // NOTE: might consider removing all messages in a room when the chat room is empty.
-
-// NOTE: fix formatting issues, not completely centered.
-// NOTE: Optimize the program (way too much overhead from AJAX)
-
-// MVP
-// NOTE: ensure that new messages pop up correctly - DONE
-// NOTE: might consider limiting character to 150 max (255) is the max on the server.

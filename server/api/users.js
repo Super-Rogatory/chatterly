@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../db/models/Users');
+const bcrypt = require('bcrypt');
 
+const SALTROUNDS = 10;
 router.get('/', async (req, res, next) => {
 	try {
 		const users = await User.findAll();
@@ -67,6 +69,24 @@ router.post('/', async (req, res, next) => {
 		next(err);
 	}
 });
+
+router.post('/register', async (req, res, next) => {
+	try {
+		const userFromDb = await User.findOne({ where: { name: req.body.username } });
+		if (userFromDb || !req.body.username || !req.body.password) {
+			res.status(404).send('something went wrong');
+			return;
+		}
+		const salt = bcrypt.genSaltSync(SALTROUNDS);
+		const hash = bcrypt.hashSync(req.body.password, salt);
+		const user = await User.create({ name: req.body.username, isGuest: false, salt, hash });
+		console.log(user);
+		res.send(user);
+	} catch (err) {
+		next(err);
+	}
+});
+
 router.delete('/:id', async (req, res, next) => {
 	try {
 		const user = await User.findByPk(req.params.id);

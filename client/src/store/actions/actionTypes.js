@@ -1,5 +1,3 @@
-export const SET_NAME = 'SET_NAME';
-export const SET_ROOM = 'SET_ROOM';
 export const GET_USERS_IN_ROOM = 'GET_USERS_IN_ROOM';
 export const TOGGLE_POPUP = 'TOGGLE_POPUP';
 export const TOGGLE_PARTICIPANTS_TAB = 'TOGGLE_PARTICIPANTS_TAB';

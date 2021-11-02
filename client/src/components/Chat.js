@@ -136,7 +136,7 @@ class Chat extends React.Component {
 							<div className="white-background-container">
 								<ChatHeader
 									socket={this.state.clientSocket}
-									roomName={this.props.roomFromStore || this.getUserRoom()}
+									roomName={this.state.user.room || this.getUserRoom()}
 									user={this.state.user}
 								/>
 								<MessageList
@@ -156,8 +156,6 @@ class Chat extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-	nameFromStore: state.name,
-	roomFromStore: state.room,
 	intervalId: state.intervalId,
 	users: state.users,
 });

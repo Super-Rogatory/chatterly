@@ -75,6 +75,10 @@ export const updateInactiveUser = async (user) => {
 	return status;
 };
 
+export const registerUser = async (username, password) => {
+	const { data: user } = await axios.post(`${url}/api/users/register`, { username, password });
+	return user;
+};
 //  -------------------------------------------------------------------------------------------------------
 export class ErrorHandlerForSignIns {
 	constructor(context) {

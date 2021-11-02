@@ -13,9 +13,14 @@ const User = db.define('user', {
 	},
 	room: {
 		type: Sequelize.STRING,
-		allowNull: false,
 		validate: {
-			notEmpty: true,
+			guestCheck(room) {
+				if (this.isGuest) {
+					if (!room) {
+						throw new Error('Guests must fill out a room name');
+					}
+				}
+			},
 		},
 	},
 	isGuest: {
