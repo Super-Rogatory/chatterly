@@ -37,10 +37,14 @@ class GuestSignIn extends React.Component {
 		// cancels normal behavior of the submit - does not submit
 		e.preventDefault();
 		const { name, room, errorHandler } = this.state;
-		const nameIsTaken = await errorHandler.isNameFaulty(name);
+		const isNameTaken = await errorHandler.isNameFaulty(name);
 		this.setState({ errMessage: '' }); // resets err message input every time
-		if (nameIsTaken || !name || !room) {
-			this.state.errorHandler.checkGuestErrorInput(nameIsTaken, name, room);
+		// handles error message
+		if (isNameTaken || !name || !room) {
+			if (isNameTaken) {
+				this.setState({ errMessage: 'Sorry, this username is already taken. Choose another one!' });
+			}
+			this.state.errorHandler.checkGuestErrorInput(isNameTaken, name, room);
 		} else {
 			// at this point, our name and room fields are populated AND the name is not taken. Great. createUser now.
 			try {

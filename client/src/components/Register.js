@@ -42,6 +42,7 @@ class Register extends React.Component {
 		const isUsernameTaken = await errorHandler.isNameFaulty(username);
 		const isPasswordValid = errorHandler.basic8(password);
 		this.setState({ errMessages: [] }); // resets err message input every time
+		// handles error messages
 		if (isUsernameTaken || !isPasswordValid || !username || !password) {
 			if (!username) {
 				this.setState({
@@ -58,7 +59,7 @@ class Register extends React.Component {
 					errMessages: [...this.state.errMessages, 'Password must have at least eight characters in it.'],
 				});
 			}
-			// highlights erroneous input boxes
+			// turns on flags for erroneous input
 			errorHandler.checkUserErrorInput(isUsernameTaken, isPasswordValid, username, password);
 		} else {
 		}

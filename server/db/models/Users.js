@@ -26,6 +26,12 @@ const User = db.define('user', {
 		type: Sequelize.BOOLEAN,
 		defaultValue: true,
 	},
+	salt: {
+		type: Sequelize.STRING,
+	},
+	hash: {
+		type: Sequelize.STRING,
+	},
 });
 
 User.getActiveUserCount = async function () {

@@ -81,7 +81,7 @@ export class ErrorHandlerForSignIns {
 		this.componentContext = context;
 	}
 
-	// handles red outline of invalid inputs
+	// handles red outline of invalid inputs. tl: sends message flag.
 	checkUserErrorInput(isUsernameTaken, isPasswordValid, username, password) {
 		if (!username && !password) this.handleErrorCases('usernameandpasswordempty');
 		else if (isUsernameTaken) {
@@ -98,7 +98,6 @@ export class ErrorHandlerForSignIns {
 		else if (nameIsTaken) {
 			if (!room) this.handleErrorCases('nametakenandroomempty');
 			if (room) this.handleErrorCases('nametakenandroomfull');
-			this.componentContext.setState({ errMessage: 'Sorry, this username is already taken. Choose another one!' });
 		}
 		// if the name is not taken, then we are going to default to two other possible issues. meaning, the name input field is empty or the room input field is empty
 		else if (!name) this.handleErrorCases('nameempty');
@@ -106,6 +105,7 @@ export class ErrorHandlerForSignIns {
 		else if (!room) this.handleErrorCases('roomempty');
 	}
 
+	// determines error status to conditionally render red outline in respective component inputs. tl turns certain flags on/off
 	handleErrorCases(flag) {
 		// if the name input is populated, check to see if room is
 		switch (flag) {
