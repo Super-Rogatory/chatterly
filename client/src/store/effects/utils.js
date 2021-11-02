@@ -81,13 +81,24 @@ export class ErrorHandlerForSignIns {
 		this.componentContext = context;
 	}
 
-	guestErrorHandler(nameIsTaken, name, room) {
+	// handles red outline of invalid inputs
+	checkUserErrorInput(isUsernameTaken, isPasswordValid, username, password) {
+		if (!username && !password) this.handleErrorCases('usernameandpasswordempty');
+		else if (isUsernameTaken) {
+			if (!password || !isPasswordValid) this.handleErrorCases('usernametakenandpasswordinvalid');
+			if (isPasswordValid) this.handleErrorCases('usernametakenandpasswordvalid');
+		} else if (!username) this.handleErrorCases('usernameempty');
+		else if (!isPasswordValid) this.handleErrorCases('passwordempty');
+	}
+
+	// handles red outline of invalid inputs
+	checkGuestErrorInput(nameIsTaken, name, room) {
 		if (!name && !room) this.handleErrorCases('nameandroomempty');
 		// if the name is populated but is taken, then check the conditions of the room field
 		else if (nameIsTaken) {
 			if (!room) this.handleErrorCases('nametakenandroomempty');
 			if (room) this.handleErrorCases('nametakenandroomfull');
-			this.setState({ errMessage: 'Sorry, this username is already taken. Choose another one!' });
+			this.componentContext.setState({ errMessage: 'Sorry, this username is already taken. Choose another one!' });
 		}
 		// if the name is not taken, then we are going to default to two other possible issues. meaning, the name input field is empty or the room input field is empty
 		else if (!name) this.handleErrorCases('nameempty');
@@ -112,9 +123,29 @@ export class ErrorHandlerForSignIns {
 					roomError: true,
 				});
 				break;
+			case 'usernameandpasswordempty':
+			case 'usernametakenandpasswordinvalid':
+				this.componentContext.setState({ usernameError: true, passwordError: true });
+				break;
+			case 'usernametakenandpasswordvalid':
+			case 'usernameempty':
+				this.componentContext.setState({ usernameError: true, passwordError: false });
+				break;
+			case 'passwordempty':
+				this.componentContext.setState({ usernameError: false, passwordError: true });
+				break;
 			default:
-				this.componentContext.setState({ roomError: false, nameError: false });
 				break;
 		}
+	}
+
+	async isNameFaulty(name) {
+		// if we hit the api and determine that we already have a name in the database then return true, else return false
+		// OR. if the user enters a name that is equal to the name of the moderator also return
+		return (await doesUserExist(name)) || name.toLowerCase() === 'chatbot';
+	}
+
+	basic8(password) {
+		return password.length >= 8;
 	}
 }

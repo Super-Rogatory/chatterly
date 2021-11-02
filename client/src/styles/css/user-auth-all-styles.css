@@ -8,7 +8,7 @@
 	display: flex;
 	flex-direction: column;
 	background-color: blanchedalmond;
-	max-width: 600px;
+	width: 600px;
 	min-height: 30vh;
 	padding: 16px 20px; /* top and bottom - 16px left and right 5 percent */
 	border-radius: 5px;
@@ -28,6 +28,10 @@
 	width: 50%;
 }
 
+.register-buttons-wrapper {
+	display: flex;
+	justify-content: space-between;
+}
 /* image with form is a flex item/container that exists in an inline-flex parent container (user-auth-guest-container) */
 div.img-with-form {
 	display: flex;

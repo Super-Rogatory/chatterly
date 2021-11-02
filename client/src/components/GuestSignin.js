@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { setRoom, setName, updateChatterlyStatus } from '../store/effects/thunks';
 import { connect } from 'react-redux';
-import { createUser, doesUserExist, ErrorHandlerForSignIns } from '../store/effects/utils';
+import { createUser, ErrorHandlerForSignIns } from '../store/effects/utils';
 import '../../src/index.scss';
 
 class GuestSignIn extends React.Component {
@@ -35,14 +35,12 @@ class GuestSignIn extends React.Component {
 		// handles erroneous input, if inputs check out - we can call setName and setRoom which will set name and room in the redux store
 		// clears localStorage before sending
 		// cancels normal behavior of the submit - does not submit
-
 		e.preventDefault();
-
-		const { name, room } = this.state;
-		const nameIsTaken = await this.isNameFaulty(name);
+		const { name, room, errorHandler } = this.state;
+		const nameIsTaken = await errorHandler.isNameFaulty(name);
 		this.setState({ errMessage: '' }); // resets err message input every time
 		if (nameIsTaken || !name || !room) {
-			this.state.errorHandler.guestErrorHandler(nameIsTaken, name, room);
+			this.state.errorHandler.checkGuestErrorInput(nameIsTaken, name, room);
 		} else {
 			// at this point, our name and room fields are populated AND the name is not taken. Great. createUser now.
 			try {
@@ -58,10 +56,8 @@ class GuestSignIn extends React.Component {
 		}
 	}
 
-	async isNameFaulty(name) {
-		// if we hit the api and determine that we already have a name in the database then return true, else return false
-		// OR. if the user enters a name that is equal to the name of the moderator also return
-		return (await doesUserExist(name)) || name.toLowerCase() === 'chatbot';
+	componentWillUnmount() {
+		this.props.updateComponent('toggleGuestWarningPopup', false);
 	}
 
 	render() {
@@ -83,7 +79,7 @@ class GuestSignIn extends React.Component {
 								<label>Enter a room name!</label>
 								<input placeholder="Enter Room" name="room" type="text" value={room} onChange={this.handleChange} />
 							</div>
-							<Link to="/" onClick={() => this.props.updateComponent('toggleGuestWarningPopup', false)}>
+							<Link to="/">
 								<button type="button" className="ui basic left floated black button">
 									Back
 								</button>

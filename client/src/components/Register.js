@@ -4,6 +4,7 @@ import { updateUserCount } from '../store/effects/thunks';
 import people from '../icons/people.png';
 import { Link } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
+import { ErrorHandlerForSignIns } from '../store/effects/utils';
 
 class Register extends React.Component {
 	constructor() {
@@ -11,7 +12,11 @@ class Register extends React.Component {
 		this.state = {
 			username: '',
 			password: '',
+			usernameError: false,
+			passwordError: false,
 			isLoaded: false,
+			errMessages: [''],
+			errorHandler: new ErrorHandlerForSignIns(this),
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,7 +38,30 @@ class Register extends React.Component {
 
 	async handleSubmit(e) {
 		e.preventDefault();
-		const { username, password } = this.state;
+		const { username, password, errorHandler } = this.state;
+		const isUsernameTaken = await errorHandler.isNameFaulty(username);
+		const isPasswordValid = errorHandler.basic8(password);
+		this.setState({ errMessages: [] }); // resets err message input every time
+		if (isUsernameTaken || !isPasswordValid || !username || !password) {
+			if (!username) {
+				this.setState({
+					errMessages: [...this.state.errMessages, "Don't forget to enter both username and password."],
+				});
+			}
+			if (isUsernameTaken) {
+				this.setState({
+					errMessages: [...this.state.errMessages, 'Sorry, this username is already taken. Choose another one!'],
+				});
+			}
+			if (!isPasswordValid || !password) {
+				this.setState({
+					errMessages: [...this.state.errMessages, 'Password must have at least eight characters in it.'],
+				});
+			}
+			// highlights erroneous input boxes
+			errorHandler.checkUserErrorInput(isUsernameTaken, isPasswordValid, username, password);
+		} else {
+		}
 	}
 
 	render() {
@@ -50,28 +78,32 @@ class Register extends React.Component {
 				<div className="user-auth-form-background">
 					<div className="ui centered large header">Create your Chatterly Account</div>
 					<div className="user-auth-guest-wrapper">
-						<form className="ui attached form lowered" autoComplete="off" onSubmit={this.handleSubmit}>
+						<form className="ui attached form error lowered" autoComplete="off" onSubmit={this.handleSubmit}>
 							<div className="user-auth-input">
-								<label>Enter your username!</label>
-								<input
-									placeholder="Username"
-									name="username"
-									type="text"
-									value={username}
-									onChange={this.handleChange}
-								/>
+								<div className={`field ${usernameError ? 'error' : ''}`}>
+									<label>Enter your username!</label>
+									<input
+										placeholder="Username"
+										name="username"
+										type="text"
+										value={username}
+										onChange={this.handleChange}
+									/>
+								</div>
 							</div>
 							<div className="user-auth-input">
-								<label>Enter your password!</label>
-								<input
-									placeholder="Password"
-									name="password"
-									type="password"
-									value={password}
-									onChange={this.handleChange}
-								/>
+								<div className={`field ${passwordError ? 'error' : ''}`}>
+									<label>Enter your password!</label>
+									<input
+										placeholder="Password"
+										name="password"
+										type="password"
+										value={password}
+										onChange={this.handleChange}
+									/>
+								</div>
 							</div>
-							<div>
+							<div className="register-buttons-wrapper">
 								<Link to="/">
 									<button type="button" className="ui basic left floated black button">
 										Back
@@ -86,6 +118,13 @@ class Register extends React.Component {
 							<img src={people} alt="Participants button" />
 						</div>
 					</div>
+					{(usernameError || passwordError) && (
+						<div className="ui bottom warning message">
+							{this.state.errMessages.map((errMessage, index) => (
+								<p key={index}>{errMessage}</p>
+							))}
+						</div>
+					)}
 				</div>
 			</div>
 		);
