@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const User = require('../db/models/Users');
 const bcrypt = require('bcrypt');
+require('dotenv').config();
 
-const SALTROUNDS = 10;
 router.get('/', async (req, res, next) => {
 	try {
 		const users = await User.findAll();
@@ -77,10 +77,9 @@ router.post('/register', async (req, res, next) => {
 			res.status(404).send('something went wrong');
 			return;
 		}
-		const salt = bcrypt.genSaltSync(SALTROUNDS);
+		const salt = bcrypt.genSaltSync(process.env.SALT_ROUNDS);
 		const hash = bcrypt.hashSync(req.body.password, salt);
-		const user = await User.create({ name: req.body.username, isGuest: false, salt, hash });
-		console.log(user);
+		const user = await User.create({ name: req.body.username, isGuest: false, active: false, salt, hash });
 		res.send(user);
 	} catch (err) {
 		next(err);
