@@ -20,7 +20,6 @@ class SelectMode extends React.Component {
 			},
 		};
 		this.handleGuest = this.handleGuest.bind(this);
-		this.handleAuth = this.handleAuth.bind(this);
 	}
 
 	async componentDidMount() {
@@ -46,9 +45,18 @@ class SelectMode extends React.Component {
 		this.props.updateComponent('toggleGuestWarningPopup', true);
 	}
 
-	handleAuth() {
+	handleAuth(flag) {
 		this.props.updateUserCount('clearInterval', this.props.intervalId);
-		this.props.history.push('/register');
+		switch (flag) {
+			case 'register':
+				this.props.history.push('/register');
+				break;
+			case 'signin':
+				this.props.history.push('/signin');
+				break;
+			default:
+				break;
+		}
 	}
 	render() {
 		if (window.localStorage.getItem('user')) {
@@ -95,9 +103,14 @@ class SelectMode extends React.Component {
 										} online`}</h3>
 									</div>
 
-									<button className="ui basic button black" onClick={this.handleAuth}>
-										REGISTER AND KEEP USERNAME
-									</button>
+									<div className="user-auth-buttons-container">
+										<button className="ui basic button black" onClick={() => this.handleAuth('register')}>
+											REGISTER
+										</button>
+										<button className="ui basic button black" onClick={() => this.handleAuth('signin')}>
+											SIGN IN
+										</button>
+									</div>
 								</div>
 							)}
 						</div>

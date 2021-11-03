@@ -1,3 +1,4 @@
+/* Styles applied to register component */
 .center-content {
 	display: flex;
 	justify-content: center;
@@ -20,6 +21,12 @@
 
 .user-auth-input {
 	margin: 20px 10px;
+}
+
+.user-auth-buttons-container {
+	display: flex;
+	justify-content: space-around;
+	width: 100%;
 }
 
 .lowered {
@@ -58,4 +65,27 @@ div.img-with-form > img {
 .ui.form .fields.error .field input[type='password'] {
 	background: blanchedalmond;
 	border-color: red;
+}
+
+/* Styles applied to login component */
+
+.user-auth-form-background-login {
+	display: flex;
+	flex-direction: column;
+	background-color: blanchedalmond;
+	min-width: 368px;
+	min-height: 416px;
+	width: 44vh;
+	height: 50vh;
+	padding: 16px 20px; /* top and bottom - 16px left and right 5 percent */
+	border-radius: 5px;
+}
+
+.auth-form-typewriter-text {
+	font-size: 2em;
+}
+
+.typewriter-container {
+	display: flex;
+	justify-content: center;
 }

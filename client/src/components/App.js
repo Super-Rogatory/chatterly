@@ -4,6 +4,7 @@ import GuestSignin from './GuestSignin';
 import Chat from './Chat';
 import SelectMode from './SelectMode';
 import Register from './Register';
+import Login from './Login';
 
 function App() {
 	return (
@@ -12,6 +13,7 @@ function App() {
 				<Route path="/" exact component={SelectMode} />
 				<Route path="/guestsignin" component={GuestSignin} />
 				<Route path="/register" component={Register} />
+				<Route path="/signin" component={Login} />
 				<Route path="/chat" component={Chat} />
 			</Switch>
 		</Router>
