@@ -95,13 +95,16 @@ router.post(
 
 router.post('/login', async (req, res, next) => {
 	try {
+		if (!req.body.username) {
+			return res.json({ msg: 'Whoops! You forget to add a username!', isUserValid: false, errorType: 'nameError' });
+		}
 		const userFromDb = await User.findOne({ where: { name: req.body.username } });
 		if (!userFromDb) {
-			return res.json({ msg: 'Account does not exist!', isUserValid: false });
+			return res.json({ msg: 'Account does not exist!', isUserValid: false, errorType: 'nameError' });
 		}
 		const isValidPassword = await bcrypt.compare(req.body.password, userFromDb.hash);
 		if (!isValidPassword) {
-			return res.json({ msg: 'Invalid username or password!', isUserValid: false });
+			return res.json({ msg: 'Invalid username or password!', isUserValid: false, errorType: 'passwordError' });
 		}
 		const tokenObject = issueJWT(userFromDb);
 		res.send({ tokenObj: tokenObject, isUserValid: true });
