@@ -1,9 +1,9 @@
 import React from 'react';
+import people from '../icons/people.png';
+import Loader from 'react-loader-spinner';
 import { connect } from 'react-redux';
 import { updateUserCount } from '../store/effects/thunks';
-import people from '../icons/people.png';
 import { Link } from 'react-router-dom';
-import Loader from 'react-loader-spinner';
 import { ErrorHandlerForSignIns, registerUser } from '../store/effects/utils';
 import { Redirect } from 'react-router';
 
@@ -26,9 +26,7 @@ class Register extends React.Component {
 
 	componentDidMount() {
 		window.localStorage.clear();
-		if (!this.props.intervalId.isClear) {
-			this.props.updateUserCount('clearInterval', this.props.intervalId);
-		}
+		this.props.updateUserCount('clearInterval', this.props.intervalId);
 		this.setState({ isLoaded: true });
 	}
 
@@ -73,7 +71,7 @@ class Register extends React.Component {
 		const { username, password, usernameError, passwordError } = this.state;
 		if (this.state.redirectToLogin) {
 			// actually redirect to login
-			return <Redirect to="/login" />;
+			return <Redirect to="/signin" />;
 		}
 		if (!this.state.isLoaded) {
 			return (
@@ -114,7 +112,7 @@ class Register extends React.Component {
 							</div>
 							<div className="register-buttons-wrapper">
 								<Link to="/">
-									<button type="button" className="ui basic left floated black button">
+									<button type="button" className="ui basic left floated brown button">
 										Back
 									</button>
 								</Link>

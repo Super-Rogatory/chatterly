@@ -7,5 +7,7 @@ npm-debug.log
 # Local development
 *.env
 *.dev
+/server/auth
+/server/keys/id_rsa_priv.pem
 .DS_Store
 node_modules

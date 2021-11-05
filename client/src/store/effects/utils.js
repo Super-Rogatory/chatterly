@@ -79,6 +79,12 @@ export const registerUser = async (username, password) => {
 	const { data: user } = await axios.post(`${url}/api/users/register`, { username, password });
 	return user;
 };
+
+export const validateUser = async (username, password) => {
+	const { data } = await axios.post(`${url}/api/users/login`, { username, password });
+	return data;
+};
+
 //  -------------------------------------------------------------------------------------------------------
 export class ErrorHandlerForSignIns {
 	constructor(context) {

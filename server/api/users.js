@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const User = require('../db/models/Users');
 const bcrypt = require('bcrypt');
+const { check, validationResult } = require('express-validator');
+const { issueJWT, authMiddleware } = require('../auth/utils');
 require('dotenv').config();
 
 router.get('/', async (req, res, next) => {
@@ -70,32 +72,39 @@ router.post('/', async (req, res, next) => {
 	}
 });
 
-router.post('/register', async (req, res, next) => {
-	try {
-		const userFromDb = await User.findOne({ where: { name: req.body.username } });
-		if (userFromDb || !req.body.username || !req.body.password) {
-			res.status(404).send('something went wrong');
-			return;
+router.post(
+	'/register',
+	[check('password', 'Password must be longer than eight characters').isLength({ min: 8 })],
+	async (req, res, next) => {
+		try {
+			const userFromDb = await User.findOne({ where: { name: req.body.username } });
+			const errors = validationResult(req);
+
+			if (!errors.isEmpty() || userFromDb || !req.body.username || !req.body.password) {
+				return res.status(404).send('something went wrong');
+			}
+			const salt = await bcrypt.genSalt(process.env.SALT_ROUNDS);
+			const hash = await bcrypt.hash(req.body.password, salt);
+			const user = await User.create({ name: req.body.username, isGuest: false, active: false, salt, hash });
+			res.send(user);
+		} catch (err) {
+			next(err);
 		}
-		const salt = bcrypt.genSaltSync(process.env.SALT_ROUNDS);
-		const hash = bcrypt.hashSync(req.body.password, salt);
-		const user = await User.create({ name: req.body.username, isGuest: false, active: false, salt, hash });
-		res.send(user);
-	} catch (err) {
-		next(err);
 	}
-});
+);
 
 router.post('/login', async (req, res, next) => {
 	try {
 		const userFromDb = await User.findOne({ where: { name: req.body.username } });
 		if (!userFromDb) {
-			return res.json({ msg: 'Account does not exist!' });
+			return res.json({ msg: 'Account does not exist!', isUserValid: false });
 		}
-		const salt = bcrypt.genSaltSync(process.env.SALT_ROUNDS);
-		const hash = bcrypt.hashSync(req.body.password, salt);
-		const user = await User.create({ name: req.body.username, isGuest: false, active: false, salt, hash });
-		res.send(user);
+		const isValidPassword = await bcrypt.compare(req.body.password, userFromDb.hash);
+		if (!isValidPassword) {
+			return res.json({ msg: 'Invalid username or password!', isUserValid: false });
+		}
+		const tokenObject = issueJWT(userFromDb);
+		res.send({ tokenObj: tokenObject, isUserValid: true });
 	} catch (err) {
 		next(err);
 	}
