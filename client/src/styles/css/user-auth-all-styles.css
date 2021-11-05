@@ -35,6 +35,11 @@
 	width: 50%;
 }
 
+.lowered-auth {
+	display: flex;
+	flex-direction: column;
+	width: 65%;
+}
 .register-buttons-wrapper {
 	display: flex;
 	justify-content: space-between;
@@ -75,17 +80,73 @@ div.img-with-form > img {
 	background-color: blanchedalmond;
 	min-width: 368px;
 	min-height: 416px;
-	width: 44vh;
-	height: 50vh;
+	width: 35.2vh;
+	height: 40vh;
 	padding: 16px 20px; /* top and bottom - 16px left and right 5 percent */
-	border-radius: 5px;
+	border-radius: 20px;
+	overflow: hidden;
 }
 
-.auth-form-typewriter-text {
-	font-size: 2em;
-}
-
-.typewriter-container {
+.typewriter-container-login {
 	display: flex;
 	justify-content: center;
+	align-items: center;
+	max-width: 100%;
+	height: calc(20px + 1.5vh);
+}
+.chatterly-logo-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 60px;
+}
+
+.chatterly-logo-wrapper > img {
+	max-width: 100%;
+	height: 100%;
+}
+
+.auth-form-login-title-wrapper {
+	display: flex;
+	justify-content: center;
+	margin-top: 5vh;
+}
+
+.user-auth-input-login {
+	width: 100%;
+}
+.auth-form-typewriter-title {
+	text-align: center;
+	font-size: 2em;
+	height: 26px;
+	font-weight: 900;
+}
+
+.user-auth-login-form-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	margin-top: 16px;
+}
+
+.login-buttons-container {
+	max-width: 60%;
+}
+
+.login-buttons-wrapper {
+	display: flex;
+	justify-content: space-around;
+	max-width: 100%;
+	margin-top: 16px;
+}
+
+.typewriter-container-login {
+	margin: auto;
+}
+@media only screen and (max-height: 1204px) {
+	.auth-form-typewriter-title {
+		font-size: 1.5em;
+	}
 }

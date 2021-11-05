@@ -6,11 +6,6 @@
 	font-style: normal;
 }
 
-Typewriter {
-	display: inline-flex;
-	min-height: 30px;
-}
-
 .select-mode-outerContainer {
 	display: flex;
 	width: 100%;
