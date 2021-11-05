@@ -86,6 +86,21 @@ router.post('/register', async (req, res, next) => {
 	}
 });
 
+router.post('/login', async (req, res, next) => {
+	try {
+		const userFromDb = await User.findOne({ where: { name: req.body.username } });
+		if (!userFromDb) {
+			return res.json({ msg: 'Account does not exist!' });
+		}
+		const salt = bcrypt.genSaltSync(process.env.SALT_ROUNDS);
+		const hash = bcrypt.hashSync(req.body.password, salt);
+		const user = await User.create({ name: req.body.username, isGuest: false, active: false, salt, hash });
+		res.send(user);
+	} catch (err) {
+		next(err);
+	}
+});
+
 router.delete('/:id', async (req, res, next) => {
 	try {
 		const user = await User.findByPk(req.params.id);
