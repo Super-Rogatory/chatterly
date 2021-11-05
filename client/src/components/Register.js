@@ -3,7 +3,6 @@ import people from '../icons/people.png';
 import Loader from 'react-loader-spinner';
 import { connect } from 'react-redux';
 import { updateUserCount } from '../store/effects/thunks';
-import { Link } from 'react-router-dom';
 import { ErrorHandlerForSignIns, registerUser } from '../store/effects/utils';
 import { Redirect } from 'react-router';
 
@@ -60,7 +59,7 @@ class Register extends React.Component {
 				});
 			}
 			// turns on flags for erroneous input
-			errorHandler.checkUserErrorInput(isUsernameTaken, isPasswordValid, username, password);
+			errorHandler.checkUserRegisterInput(isUsernameTaken, isPasswordValid, username, password);
 		} else {
 			await registerUser(username, password);
 			this.setState({ redirectToLogin: true });
@@ -111,11 +110,14 @@ class Register extends React.Component {
 								</div>
 							</div>
 							<div className="register-buttons-wrapper">
-								<Link to="/">
-									<button type="button" className="ui basic left floated brown button">
-										Back
-									</button>
-								</Link>
+								<button
+									type="button"
+									className="ui basic left floated brown button"
+									onClick={() => this.props.history.push('/')}
+								>
+									Back
+								</button>
+
 								<button type="submit" className="ui basic right floated black button">
 									Register
 								</button>

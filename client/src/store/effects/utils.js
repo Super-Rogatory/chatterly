@@ -91,8 +91,22 @@ export class ErrorHandlerForSignIns {
 		this.componentContext = context;
 	}
 
+	checkUserLoginInput(flag) {
+		// reusing username and password empty for login. Login is only going to validate one at a time. Server-side validation.
+		switch (flag) {
+			case 'nameError':
+				this.handleErrorCases('usernameempty');
+				break;
+			case 'passwordError':
+				this.handleErrorCases('passwordempty');
+				break;
+			default:
+				break;
+		}
+	}
+
 	// handles red outline of invalid inputs. tl: sends message flag.
-	checkUserErrorInput(isUsernameTaken, isPasswordValid, username, password) {
+	checkUserRegisterInput(isUsernameTaken, isPasswordValid, username, password) {
 		if (!username && !password) this.handleErrorCases('usernameandpasswordempty');
 		else if (isUsernameTaken) {
 			if (!password || !isPasswordValid) this.handleErrorCases('usernametakenandpasswordinvalid');
@@ -116,6 +130,7 @@ export class ErrorHandlerForSignIns {
 	}
 
 	// determines error status to conditionally render red outline in respective component inputs. tl turns certain flags on/off
+	// ** HELPER METHOD **
 	handleErrorCases(flag) {
 		// if the name input is populated, check to see if room is
 		switch (flag) {

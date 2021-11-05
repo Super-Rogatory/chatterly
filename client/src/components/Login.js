@@ -4,7 +4,7 @@ import chatterlylogo from '../icons/favicon.png';
 import Loader from 'react-loader-spinner';
 import { updateUserCount } from '../store/effects/thunks';
 import { connect } from 'react-redux';
-import { validateUser } from '../store/effects/utils';
+import { ErrorHandlerForSignIns, validateUser } from '../store/effects/utils';
 
 class Login extends React.Component {
 	constructor(props) {
@@ -13,7 +13,11 @@ class Login extends React.Component {
 			isLoaded: false,
 			username: '',
 			password: '',
-			errMessage: '',
+			usernameError: false,
+			passwordError: false,
+			errMessages: '',
+			errorHandler: new ErrorHandlerForSignIns(this),
+			formFinishedLoading: true,
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,15 +37,22 @@ class Login extends React.Component {
 
 	async handleSubmit(e) {
 		e.preventDefault();
-		const data = await validateUser(this.state.username, this.state.password);
-		if (data.isUserValid) {
+		const { username, password, errorHandler } = this.state;
+		const data = await validateUser(username, password);
+		this.setState({ errMessage: '' }); // resets err message input every time
+		if (!data.isUserValid) {
+			// messages are handled server-side. checkUserLogin will flag input boxes based on information coming back from the server
+			errorHandler.checkUserLoginInput(data.errorType);
+			this.setState({ errMessage: data.msg });
+		} else {
 			// set local storage, etc, etc, load room selection page.
+			const { token } = data.tokenObj;
+			window.localStorage.setItem('token', JSON.stringify({ token }));
+			this.props.history.push('/home');
 		}
-		console.log(data.msg);
-		this.setState({ errMessage: data.msg });
 	}
 	render() {
-		const { username, password, errMessage } = this.state;
+		const { username, password, usernameError, passwordError, errMessage } = this.state;
 
 		if (!this.state.isLoaded) {
 			return (
@@ -65,7 +76,7 @@ class Login extends React.Component {
 					<div className="user-auth-login-form-wrapper">
 						<form className="ui form error lowered-auth" autoComplete="off" onSubmit={this.handleSubmit}>
 							<div className="user-auth-input-login">
-								<div>
+								<div className={`field ${usernameError ? 'error' : ''}`}>
 									<label>Enter your username!</label>
 									<input
 										placeholder="Username"
@@ -77,7 +88,7 @@ class Login extends React.Component {
 								</div>
 							</div>
 							<div className="user-auth-input-login">
-								<div>
+								<div className={`field ${passwordError ? 'error' : ''}`}>
 									<label>Enter your password!</label>
 									<input
 										placeholder="Password"
@@ -99,7 +110,11 @@ class Login extends React.Component {
 							</div>
 						</form>
 					</div>
-					{errMessage && <div className="ui bottom warning message">{errMessage}</div>}
+					{(usernameError || passwordError) && (
+						<div className="ui bottom warning message">
+							<p>{errMessage}</p>
+						</div>
+					)}
 
 					<div className="typewriter-container-login">
 						<Typewriter
