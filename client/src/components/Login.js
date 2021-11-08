@@ -5,6 +5,7 @@ import Loader from 'react-loader-spinner';
 import { updateUserCount } from '../store/effects/thunks';
 import { connect } from 'react-redux';
 import { ErrorHandlerForSignIns, validateUser } from '../store/effects/utils';
+import { Redirect } from 'react-router';
 
 class Login extends React.Component {
 	constructor(props) {
@@ -18,6 +19,7 @@ class Login extends React.Component {
 			errMessages: '',
 			errorHandler: new ErrorHandlerForSignIns(this),
 			formFinishedLoading: true,
+			redirectToLogin: false,
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,16 +41,16 @@ class Login extends React.Component {
 		e.preventDefault();
 		const { username, password, errorHandler } = this.state;
 		const data = await validateUser(username, password);
-		this.setState({ errMessage: '' }); // resets err message input every time
+		this.setState({ errMessage: '', formFinishedLoading: false }); // resets err message input every time
 		if (!data.isUserValid) {
 			// messages are handled server-side. checkUserLogin will flag input boxes based on information coming back from the server
 			errorHandler.checkUserLoginInput(data.errorType);
-			this.setState({ errMessage: data.msg });
+			this.setState({ errMessage: data.msg, formFinishedLoading: true });
 		} else {
 			// set local storage, etc, etc, load room selection page.
 			const { token } = data.tokenObj;
 			window.localStorage.setItem('token', JSON.stringify({ token }));
-			this.props.history.push('/home');
+			this.setState({ redirectToLogin: true });
 		}
 	}
 	render() {
@@ -61,7 +63,9 @@ class Login extends React.Component {
 				</div>
 			);
 		}
-
+		if (this.state.redirectToLogin) {
+			return <Redirect to="/home" />;
+		}
 		return (
 			<div id="vertical-container" className="center-content">
 				<div className="user-auth-form-background-login">
@@ -74,7 +78,11 @@ class Login extends React.Component {
 					</div>
 
 					<div className="user-auth-login-form-wrapper">
-						<form className="ui form error lowered-auth" autoComplete="off" onSubmit={this.handleSubmit}>
+						<form
+							className={`ui ${!this.state.formFinishedLoading ? 'loading' : ''}form error lowered-auth`}
+							autoComplete="off"
+							onSubmit={this.handleSubmit}
+						>
 							<div className="user-auth-input-login">
 								<div className={`field ${usernameError ? 'error' : ''}`}>
 									<label>Enter your username!</label>

@@ -83,6 +83,7 @@ div.img-with-form > img {
 	background-color: blanchedalmond;
 	min-width: 368px;
 	min-height: 416px;
+	max-width: 40vh;
 	padding: 16px 32px; /* top and bottom - 16px left and right 5 percent */
 	border-radius: 20px;
 	overflow: hidden;

@@ -99,13 +99,28 @@ router.post('/login', async (req, res, next) => {
 			return res.json({ msg: 'Whoops! You forget to add a username!', isUserValid: false, errorType: 'nameError' });
 		}
 		const userFromDb = await User.findOne({ where: { name: req.body.username } });
+		// if there is not user existing in the db, or if the user that exists in the db is a guest, throw name error.
 		if (!userFromDb) {
 			return res.json({ msg: 'Account does not exist!', isUserValid: false, errorType: 'nameError' });
 		}
+		if (userFromDb.isGuest) {
+			return res.json({
+				msg: 'This username is already taken by a guest.',
+				isUserValid: false,
+				errorType: 'nameError',
+			});
+		}
 		const isValidPassword = await bcrypt.compare(req.body.password, userFromDb.hash);
 		if (!isValidPassword) {
-			return res.json({ msg: 'Invalid username or password!', isUserValid: false, errorType: 'passwordError' });
+			return res.json({
+				msg: 'Invalid username or password!',
+				isUserValid: false,
+				errorType: 'passwordError',
+			});
 		}
+		// the user is not authenticate and can be active.
+		userFromDb.active = true;
+		await userFromDb.save();
 		const tokenObject = issueJWT(userFromDb);
 		res.send({ tokenObj: tokenObject, isUserValid: true });
 	} catch (err) {
