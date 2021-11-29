@@ -20,6 +20,7 @@ class Login extends React.Component {
 			errorHandler: new ErrorHandlerForSignIns(this),
 			formFinishedLoading: true,
 			redirectToLogin: false,
+			isLogoReady: false,
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,6 +28,11 @@ class Login extends React.Component {
 
 	componentDidMount() {
 		window.localStorage.clear();
+		const logo = new Image();
+		logo.onload = () => {
+			this.setState({ isLogoReady: true });
+		};
+		logo.src = chatterlylogo;
 		this.props.updateUserCount('clearInterval', this.props.intervalId);
 		this.setState({ isLoaded: true });
 	}
@@ -56,7 +62,7 @@ class Login extends React.Component {
 	render() {
 		const { username, password, usernameError, passwordError, errMessage } = this.state;
 
-		if (!this.state.isLoaded) {
+		if (!this.state.isLoaded || !this.state.isLogoReady) {
 			return (
 				<div id="vertical-container" className="center-content">
 					<Loader type="ThreeDots" color="#d5a26c" />;
