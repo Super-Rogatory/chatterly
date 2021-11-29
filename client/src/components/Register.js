@@ -18,6 +18,7 @@ class Register extends React.Component {
 			errMessages: [''],
 			errorHandler: new ErrorHandlerForSignIns(this),
 			redirectToLogin: false,
+			isImgReady: false,
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,6 +26,14 @@ class Register extends React.Component {
 
 	componentDidMount() {
 		window.localStorage.clear();
+		// this functionality ensures that the register panel loads with the image.
+		// when the picture is finished loading, update component state.
+		const img = new Image();
+		img.onload = () => {
+			this.setState({ isImgReady: true });
+		};
+		img.src = people;
+
 		this.props.updateUserCount('clearInterval', this.props.intervalId);
 		this.setState({ isLoaded: true });
 	}
@@ -72,7 +81,7 @@ class Register extends React.Component {
 			// actually redirect to login
 			return <Redirect to="/signin" />;
 		}
-		if (!this.state.isLoaded) {
+		if (!this.state.isLoaded || !this.state.isImgReady) {
 			return (
 				<div id="vertical-container" className="center-content">
 					<Loader type="ThreeDots" color="#d5a26c" />;
