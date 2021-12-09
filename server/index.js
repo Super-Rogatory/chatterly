@@ -1,12 +1,15 @@
-const http = require('http');
-const socket = require('socket.io');
-const express = require('express');
-const path = require('path');
+import http from 'http';
+import socket from 'socket.io';
+import express from 'express';
+import path from 'path';
+import cors from 'cors';
+import indexOfDatabase from '../server/db/index';
+import morgan from 'morgan';
+import serverRouter from './router';
+
 const app = express();
-const cors = require('cors');
 const server = http.createServer(app);
-const db = require('../server/db/index').db; // need to actually run the index, that's where the associations lie.
-const morgan = require('morgan');
+const db = indexOfDatabase.db;
 
 const PORT = process.env.PORT || 5000;
 
@@ -22,8 +25,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// serves static files from the React app
-app.use(express.static(path.resolve(__dirname, '../client/build')));
+// allow the public folders content to be available (important for bundle being available to component-injected HTML markup)
+app.use(express.static(path.resolve(__dirname, '../public')));
 
 // logging middleware
 app.use(morgan(`${process.env.NODE_ENV === 'production' ? 'common' : 'dev'}`));
@@ -82,6 +85,9 @@ io.on('connection', (socket) => {
 // mounted on api per usual
 app.use('/api', require('../server/api/index'));
 
+// handles all possible valid routes. server-side rendering
+app.use('*', serverRouter);
+
 // handling 404
 app.use((req, res, next) => {
 	res.status(404).send('SORRY. Could not find the information you are looking for!');
@@ -91,10 +97,6 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
 	console.error(err.stack);
 	res.status(500).send('An error has occured!');
-});
-
-app.get('*', (req, res) => {
-	res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
 });
 
 server.listen(PORT, () => console.log(`server: listening on PORT ${PORT}`));
