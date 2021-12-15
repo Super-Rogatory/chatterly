@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import Typewriter from 'typewriter-effect';
 import { updateChatterlyStatus, updateUserCount } from '../store/effects/thunks';
 import GuestWarningPopup from './GuestWarningMessage';

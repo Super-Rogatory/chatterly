@@ -5,7 +5,7 @@ import Loader from 'react-loader-spinner';
 import { updateUserCount } from '../store/effects/thunks';
 import { connect } from 'react-redux';
 import { ErrorHandlerForSignIns, validateUser } from '../store/effects/utils';
-import { Redirect } from 'react-router';
+import { Redirect } from 'react-router-dom';
 
 class Login extends React.Component {
 	constructor(props) {

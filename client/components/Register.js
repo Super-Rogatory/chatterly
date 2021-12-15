@@ -4,7 +4,7 @@ import Loader from 'react-loader-spinner';
 import { connect } from 'react-redux';
 import { updateUserCount } from '../store/effects/thunks';
 import { ErrorHandlerForSignIns, registerUser } from '../store/effects/utils';
-import { Redirect } from 'react-router';
+import { Redirect } from 'react-router-dom';
 
 class Register extends React.Component {
 	constructor() {

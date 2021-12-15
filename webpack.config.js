@@ -1,9 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
-const nodeExternals = require('webpack-node-externals');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const browserConfig = {
-	entry: './client/src/index.js',
+	entry: './client/index.js',
 	output: {
 		path: path.join(__dirname, '/public'),
 		filename: 'clientbundle.js',
@@ -17,6 +18,7 @@ const browserConfig = {
 				options: {
 					presets: ['@babel/preset-react'],
 				},
+				exclude: /node_modules/,
 			},
 			{
 				test: /\.(png|jpe?g|gif)$/i,
@@ -32,27 +34,19 @@ const browserConfig = {
 			},
 		],
 	},
-	mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
-};
-
-const serverConfig = {
-	entry: './server/index.js',
-	target: 'node',
-	externals: [nodeExternals()], // externals, modules that should not be bundled. when bundling for the backend, you don't want to bundle its node_modules.
-	output: {
-		path: path.join(__dirname, '/public'),
-		filename: 'serverbundle.js',
-		publicPath: '/',
-	},
-	module: {
-		rules: [
-			{
-				test: /\.jsx?$/,
-				loader: 'babel-loader',
-			},
-		],
+	plugins: [
+		// ...
+		new webpack.DefinePlugin({
+			'process.env': JSON.stringify(process.env),
+		}),
+		// ...
+	],
+	resolve: {
+		alias: {
+			process: 'process/browser',
+		},
 	},
 	mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
 };
 
-module.exports = [browserConfig, serverConfig];
+module.exports = browserConfig;

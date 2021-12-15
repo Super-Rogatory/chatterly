@@ -1,12 +1,10 @@
-import http from 'http';
-import socket from 'socket.io';
-import express from 'express';
-import path from 'path';
-import cors from 'cors';
-import indexOfDatabase from '../server/db/index';
-import morgan from 'morgan';
-import serverRouter from './router';
-
+const http = require('http');
+const socket = require('socket.io');
+const express = require('express');
+const path = require('path');
+const cors = require('cors');
+const indexOfDatabase = require('../server/db/index');
+const morgan = require('morgan');
 const app = express();
 const server = http.createServer(app);
 const db = indexOfDatabase.db;
@@ -24,6 +22,12 @@ app.use(cors());
 // body parsing middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// mounted on api per usual
+app.use('/api', require('../server/api/index'));
+
+// sends the index.html on EVERY SINGLE request that is made outside of the interal React history API (refresh, direct url request)
+app.get('/', (req, res) => res.sendFile(path.resolve(__dirname, '../client/index.html')));
 
 // allow the public folders content to be available (important for bundle being available to component-injected HTML markup)
 app.use(express.static(path.resolve(__dirname, '../public')));
@@ -82,11 +86,10 @@ io.on('connection', (socket) => {
 	});
 });
 
-// mounted on api per usual
-app.use('/api', require('../server/api/index'));
-
 // handles all possible valid routes. server-side rendering
-app.use('*', serverRouter);
+app.use('*', (req, res) => {
+	res.sendFile(path.resolve(__dirname, '../client/index.html'));
+});
 
 // handling 404
 app.use((req, res, next) => {

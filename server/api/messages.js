@@ -4,6 +4,7 @@ const path = require('path');
 const Message = require('../db/models/Messages');
 const User = require('../db/models/Users');
 const Room = require('../db/models/Rooms');
+
 router.get('/', async (req, res, next) => {
 	try {
 		const messages = await Message.findAll();

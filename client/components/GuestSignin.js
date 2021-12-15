@@ -3,7 +3,6 @@ import { Link, Redirect } from 'react-router-dom';
 import { updateChatterlyStatus } from '../store/effects/thunks';
 import { connect } from 'react-redux';
 import { createUser, ErrorHandlerForSignIns } from '../store/effects/utils';
-import '../../src/index.scss';
 
 class GuestSignIn extends React.Component {
 	// keeping track of name, room, and whether or not the input fields for name and room are false (handling the error in a boolean)

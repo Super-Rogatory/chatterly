@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import { addMessage } from '../store/effects/utils';
 
 class Input extends React.Component {
