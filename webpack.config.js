@@ -10,6 +10,7 @@ const browserConfig = {
 		filename: 'clientbundle.js',
 		publicPath: '/',
 	},
+	devtool: 'source-map',
 	module: {
 		rules: [
 			{
