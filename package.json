@@ -39,7 +39,8 @@
 		"node": "10.x"
 	},
 	"scripts": {
-		"start": "webpack -w & node server"
+		"start": "NODE_ENV=production webpack -w & node server",
+		"test": "webpack -w & node server"
 	},
 	"cacheDirectories": [
 		"node_modules",
