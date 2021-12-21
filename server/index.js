@@ -10,6 +10,7 @@ const server = http.createServer(app);
 const db = indexOfDatabase.db;
 const routes = ['/', '/guestsignin', '/register', '/signin', '/home', '/chat'];
 const PORT = process.env.PORT || 5000;
+require('dotenv').config();
 
 // syncing the db
 db.sync({ force: true })
@@ -92,19 +93,9 @@ io.on('connection', (socket) => {
 
 // handling 404
 app.use((req, res, next) => {
-	// path.extname(req.path).length is testing to see if that url path has an extension on it .js .css .html etc. If yes, error. If no, proceed to next express middleware.
-	if (path.extname(req.path).length) {
-		const err = new Error("Sorry, could not find the information that you're looking for");
-		err.status = 404;
-		next(err);
-	} else {
-		next();
-	}
-});
-
-// handles all possible valid routes.
-app.use('*', (req, res) => {
-	res.sendFile(path.resolve(__dirname, '../client/index.html'));
+	const err = new Error("Sorry, could not find the information that you're looking for");
+	err.status = 404;
+	next(err);
 });
 
 // error handler

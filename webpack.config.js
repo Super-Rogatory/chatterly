@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const dotenv = require('dotenv');
-dotenv.config();
+const Dotenv = require('dotenv-webpack');
 
 const browserConfig = {
 	entry: './client/index.js',
@@ -36,17 +35,10 @@ const browserConfig = {
 		],
 	},
 	plugins: [
-		// ...
-		new webpack.DefinePlugin({
-			'process.env': JSON.stringify(process.env),
+		new Dotenv({
+			path: './server/.env',
 		}),
-		// ...
 	],
-	resolve: {
-		alias: {
-			process: 'process/browser',
-		},
-	},
 	mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
 };
 
