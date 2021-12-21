@@ -39,7 +39,7 @@
 		"node": "10.x"
 	},
 	"scripts": {
-		"start": "webpack -w & nodemon server"
+		"start": "webpack -w & node server"
 	},
 	"cacheDirectories": [
 		"node_modules",
