@@ -8,7 +8,7 @@ const morgan = require('morgan');
 const app = express();
 const server = http.createServer(app);
 const db = indexOfDatabase.db;
-
+const routes = ['/', '/guestsignin', '/register', '/signin', '/home', '/chat'];
 const PORT = process.env.PORT || 5000;
 
 // syncing the db
@@ -23,14 +23,18 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// mounted on api per usual
-app.use('/api', require('../server/api/index'));
-
-// sends the index.html on EVERY SINGLE request that is made outside of the interal React history API (refresh, direct url request)
-app.get('/', (req, res) => res.sendFile(path.resolve(__dirname, '../client/index.html')));
+// sends the index.html on every request that is made to the specified routes
+routes.forEach((route) =>
+	app.get(route, (req, res, next) => {
+		res.sendFile(path.resolve(__dirname, '../client/index.html'));
+	})
+);
 
 // allow the public folders content to be available (important for bundle being available to component-injected HTML markup)
 app.use(express.static(path.resolve(__dirname, '../public')));
+
+// mounted on api per usual
+app.use('/api', require('../server/api/index'));
 
 // logging middleware
 app.use(morgan(`${process.env.NODE_ENV === 'production' ? 'common' : 'dev'}`));
@@ -86,14 +90,21 @@ io.on('connection', (socket) => {
 	});
 });
 
-// handles all possible valid routes. server-side rendering
-app.use('*', (req, res) => {
-	res.sendFile(path.resolve(__dirname, '../client/index.html'));
-});
-
 // handling 404
 app.use((req, res, next) => {
-	res.status(404).send('SORRY. Could not find the information you are looking for!');
+	// path.extname(req.path).length is testing to see if that url path has an extension on it .js .css .html etc. If yes, error. If no, proceed to next express middleware.
+	if (path.extname(req.path).length) {
+		const err = new Error("Sorry, could not find the information that you're looking for");
+		err.status = 404;
+		next(err);
+	} else {
+		next();
+	}
+});
+
+// handles all possible valid routes.
+app.use('*', (req, res) => {
+	res.sendFile(path.resolve(__dirname, '../client/index.html'));
 });
 
 // error handler
