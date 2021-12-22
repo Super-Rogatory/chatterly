@@ -33,16 +33,18 @@ function authMiddleware(req, res, next) {
 	const [bearer, jsonToken] = req.headers.authorization
 		? req.headers.authorization.split(' ')
 		: ['no bearer', 'no token'];
+	// to start 12/21/21 - we want to make sure that the token is getting passed into this middleware and verified from Home.js. the type of req.header.authorization is a string.
+	// We need to make sure ensure data integrity and proper functionality
 	if (bearer === 'Bearer' && jsonToken.match(/\S+\.\S+\.\S+/) !== null) {
 		try {
 			const verification = jwt.verify(jsonToken, PUB_KEY, { algorithms: ['RS256'] });
 			req.jwt = verification;
 			next();
 		} catch (err) {
-			res.status(401).json({ msg: 'you are not authorized to visit this route' });
+			res.status(401).json({ msg: 'you are not authorized to visit this route', status: false });
 		}
 	} else {
-		res.status(401).json({ msg: 'you are not authorized to visit this route' });
+		res.status(401).json({ msg: 'you are not authorized to visit this route', status: false });
 	}
 }
 

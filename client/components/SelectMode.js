@@ -23,9 +23,13 @@ class SelectMode extends React.Component {
 	}
 
 	async componentDidMount() {
-		this.setState({ activeUsers: (await getActiveUsers()) || 0 });
-		// updateUserCount is fed a type, and an intervalId (returned from the setInterval function)
-		this.props.updateUserCount('saveInterval', setInterval(this.state.intervalFunction, 5000));
+		// if there is something in localStorage then we don't want to subscribe to the intervalFunction.
+		const localStoragePopulated = window.localStorage.getItem('user') || window.localStorage.getItem('token');
+		if (!localStoragePopulated) {
+			this.setState({ activeUsers: (await getActiveUsers()) || 0 });
+			// updateUserCount is fed a type, and an intervalId (returned from the setInterval function)
+			this.props.updateUserCount('saveInterval', setInterval(this.state.intervalFunction, 5000));
+		}
 		this.setState({ isLoaded: true });
 	}
 
@@ -40,13 +44,15 @@ class SelectMode extends React.Component {
 		}
 	}
 
-	handleGuest() {
+	componentWillUnmount() {
 		this.props.updateUserCount('clearInterval', this.props.intervalId);
+	}
+
+	handleGuest() {
 		this.props.updateComponent('toggleGuestWarningPopup', true);
 	}
 
 	handleAuth(flag) {
-		this.props.updateUserCount('clearInterval', this.props.intervalId);
 		switch (flag) {
 			case 'register':
 				this.props.history.push('/register');
@@ -62,6 +68,9 @@ class SelectMode extends React.Component {
 		if (window.localStorage.getItem('user')) {
 			// to ensure that the same user is 'logged in' other rooms. use redirect here to ignore browser history.
 			return <Redirect to="/chat" />;
+		}
+		if (window.localStorage.getItem('token')) {
+			return <Redirect to="/home" />;
 		}
 		if (!this.state.isLoaded) {
 			return (

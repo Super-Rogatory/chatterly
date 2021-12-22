@@ -62,6 +62,10 @@ router.get('/misc/:name', async (req, res, next) => {
 	}
 });
 
+router.post('/misc/testingValidToken', authMiddleware, (req, res, next) => {
+	res.send({ status: true });
+});
+
 router.post('/', async (req, res, next) => {
 	try {
 		const user = await User.create({ name: req.body.name, room: req.body.room });

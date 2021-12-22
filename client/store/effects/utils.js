@@ -85,6 +85,14 @@ export const validateUser = async (username, password) => {
 	return data;
 };
 
+export const isTokenValid = async (token) => {
+	const { data: status } = await axios.post(`${url}/api/users/misc/testingValidToken`, token, {
+		headers: {
+			Authorization: token,
+		},
+	});
+	return status;
+};
 //  -------------------------------------------------------------------------------------------------------
 export class ErrorHandlerForSignIns {
 	constructor(context) {
@@ -174,3 +182,4 @@ export class ErrorHandlerForSignIns {
 		return password.length >= 8;
 	}
 }
+//  -------------------------------------------------------------------------------------------------------
