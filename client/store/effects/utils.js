@@ -10,7 +10,7 @@ export const createUser = async (name, room) => {
 		const { data: user } = await axios.post(`${url}/api/users`, { name, room });
 		return user;
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 	}
 };
 
@@ -19,7 +19,16 @@ export const getUser = async (id) => {
 		const { data: user } = await axios.get(`${url}/api/users/${id}`);
 		return user;
 	} catch (err) {
-		console.log(err);
+		console.error(err);
+	}
+};
+
+export const getUserByName = async (name) => {
+	try {
+		const { data: user } = await axios.get(`${url}/api/users/misc/getUserByName/${name}`);
+		return user;
+	} catch (err) {
+		console.error(err);
 	}
 };
 

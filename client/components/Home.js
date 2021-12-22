@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { isTokenValid } from '../store/effects/utils';
+import { getUserByName, isTokenValid } from '../store/effects/utils';
 
 class Home extends React.Component {
 	constructor() {
@@ -8,15 +8,20 @@ class Home extends React.Component {
 		this.state = {
 			isLoggedIn: !!window.localStorage.getItem('token'), // recall that null is returned if the key does not exist !!{} is true !!null is false
 			invalidToken: false,
+			user: {},
 		};
 	}
 
 	async componentDidMount() {
 		// if there is a token we need to verify it somehow.
+		const localStorageName = window.localStorage.getItem('username');
 		const localStorageToken = window.localStorage.getItem('token');
 		const { token } = JSON.parse(localStorageToken); // localStorageToken is an object with the token property in it.
 		try {
 			await isTokenValid(token); // isTokenValid is a function that returns an object with the status property, if there is an error we can catch it and then redirect to home.
+			const user = await getUserByName(localStorageName);
+			if (!user) throw new Error('failed to find user');
+			else this.setState({ user });
 		} catch (err) {
 			this.setState({ invalidToken: true });
 		}

@@ -53,8 +53,9 @@ class Login extends React.Component {
 			errorHandler.checkUserLoginInput(data.errorType);
 			this.setState({ errMessage: data.msg, formFinishedLoading: true });
 		} else {
-			// set local storage, etc, etc, load room selection page.
+			// set local storage, etc, etc, load room selection page. recall local storage only stores strings.
 			const { token } = data.tokenObj;
+			window.localStorage.setItem('username', username);
 			window.localStorage.setItem('token', JSON.stringify({ token }));
 			this.setState({ redirectToLogin: true });
 		}
