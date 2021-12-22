@@ -7038,9 +7038,10 @@ var getActiveUsers = /*#__PURE__*/function () {
           case 2:
             _yield$axios$get7 = _context12.sent;
             count = _yield$axios$get7.data;
+            console.log(count);
             return _context12.abrupt("return", count);
 
-          case 5:
+          case 6:
           case "end":
             return _context12.stop();
         }

@@ -41,7 +41,7 @@ const User = db.define('user', {
 
 User.getActiveUserCount = async function () {
 	const players = await this.findAll({ where: { active: true } });
-	return players.length;
+	return players.length || 0;
 };
 // if the user is a guest user, their messages will be destroyed in 30 min, also their record in the database will get destroyed.
 User.afterCreate((user) => {

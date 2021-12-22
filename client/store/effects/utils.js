@@ -76,6 +76,7 @@ export const disassociateUserAndRoom = async (user) => {
 
 export const getActiveUsers = async () => {
 	const { data: count } = await axios.get(`${url}/api/users/misc/getUserCount`);
+	console.log(count);
 	return count;
 };
 

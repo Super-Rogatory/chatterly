@@ -26,21 +26,21 @@ router.get('/:id', async (req, res, next) => {
 	}
 });
 
-router.get('/misc/:name', async (req, res, next) => {
-	try {
-		const user = await User.findOne({ where: { name: req.params.name } });
-		if (!user) res.send(false);
-		else res.send(true);
-	} catch (err) {
-		next(err);
-	}
-});
-
 router.get('/misc/getUserCount', async (req, res, next) => {
 	try {
 		const count = await User.getActiveUserCount();
 		if (!count) res.status(200).send({ count: 0 });
 		else res.send({ count });
+	} catch (err) {
+		next(err);
+	}
+});
+
+router.get('/misc/:name', async (req, res, next) => {
+	try {
+		const user = await User.findOne({ where: { name: req.params.name } });
+		if (!user) res.send(false);
+		else res.send(true);
 	} catch (err) {
 		next(err);
 	}
