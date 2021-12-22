@@ -39,8 +39,9 @@
 		"node": "10.x"
 	},
 	"scripts": {
-		"start": "NODE_ENV=production webpack -w & node server",
-		"test": "webpack -w & node server"
+		"start": "NODE_ENV=production npm run build & node server",
+		"test": "webpack -w & node server",
+		"build": "webpack --mode production"
 	},
 	"cacheDirectories": [
 		"node_modules",
@@ -63,6 +64,8 @@
 		"css-loader": "^6.5.1",
 		"dotenv-webpack": "^7.0.3",
 		"file-loader": "^6.2.0",
+		"html-loader": "^3.0.1",
+		"html-webpack-plugin": "^4.5.0",
 		"process": "^0.11.10",
 		"style-loader": "^3.3.1",
 		"webpack": "^5.65.0",

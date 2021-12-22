@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 const browserConfig = {
 	entry: './client/index.js',
@@ -31,6 +32,14 @@ const browserConfig = {
 			{
 				test: /\.css$/i,
 				use: ['style-loader', 'css-loader'],
+			},
+			{
+				test: /\.html$/,
+				use: [
+					{
+						loader: 'html-loader',
+					},
+				],
 			},
 		],
 	},
