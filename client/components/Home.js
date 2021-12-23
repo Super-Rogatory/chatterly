@@ -32,7 +32,11 @@ class Home extends React.Component {
 			window.localStorage.clear();
 			return <Redirect to="/" />;
 		}
-		return 'hi';
+		return (
+			<div id="vertical-container" className="center-content">
+				<div className="home-user-interface-container">{/*content*/}</div>
+			</div>
+		);
 	}
 }
 
