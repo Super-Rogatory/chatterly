@@ -4140,7 +4140,7 @@ var Chat = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8__.createElement("div", {
           className: "ui container"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8__.createElement("div", {
-          className: "white-background-container"
+          className: "brown-background-container"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8__.createElement(_ChatHeader__WEBPACK_IMPORTED_MODULE_12__["default"], {
           socket: this.state.clientSocket,
           roomName: this.state.user.room || this.getUserRoom(),
@@ -4918,8 +4918,21 @@ var Home = /*#__PURE__*/function (_React$Component) {
         id: "vertical-container",
         className: "center-content"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
-        className: "home-user-interface-container"
-      }));
+        className: "chatroom-wrapper",
+        align: "middle"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+        className: "ui container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+        className: "brown-background-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+        className: "inline-flexed-content-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+        className: "vertical-static-menu"
+      }, "Hi"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+        className: "ui-sandbox"
+      }, "Hello")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+        className: "logged-in-username-footer"
+      }, "Chuck")))));
     }
   }]);
 
@@ -12705,7 +12718,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_styles_css_chat_styles_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! -!../node_modules/css-loader/dist/cjs.js!./styles/css/chat-styles.css */ "./node_modules/css-loader/dist/cjs.js!./client/styles/css/chat-styles.css");
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_styles_css_message_styles_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! -!../node_modules/css-loader/dist/cjs.js!./styles/css/message-styles.css */ "./node_modules/css-loader/dist/cjs.js!./client/styles/css/message-styles.css");
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_styles_css_users_in_room_styles_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! -!../node_modules/css-loader/dist/cjs.js!./styles/css/users-in-room-styles.css */ "./node_modules/css-loader/dist/cjs.js!./client/styles/css/users-in-room-styles.css");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_styles_css_home_styles_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! -!../node_modules/css-loader/dist/cjs.js!./styles/css/home-styles.css */ "./node_modules/css-loader/dist/cjs.js!./client/styles/css/home-styles.css");
 // Imports
+
 
 
 
@@ -12723,6 +12738,7 @@ ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_styles_css_user_a
 ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_styles_css_chat_styles_css__WEBPACK_IMPORTED_MODULE_6__["default"]);
 ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_styles_css_message_styles_css__WEBPACK_IMPORTED_MODULE_7__["default"]);
 ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_styles_css_users_in_room_styles_css__WEBPACK_IMPORTED_MODULE_8__["default"]);
+___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_styles_css_home_styles_css__WEBPACK_IMPORTED_MODULE_9__["default"]);
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "\n", "",{"version":3,"sources":[],"names":[],"mappings":"","sourceRoot":""}]);
 // Exports
@@ -12778,7 +12794,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".chatroom-container {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n.chatroom-wrapper {\n\tdisplay: inline-flex;\n}\n\n.white-background-container {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-between;\n\tbackground-color: blanchedalmond;\n\theight: 55vh;\n\twidth: 85%;\n\tborder-radius: 5px;\n}\n\n.chat-header-flex-container {\n\tdisplay: inline-flex;\n\tmin-height: 10%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-radius: 5px 5px 0 0;\n}\n\n.chat-header-wrapper {\n\tdisplay: flex;\n\tjustify-content: space-between;\n\tbackground-color: rgb(121, 108, 89);\n\twidth: 100%;\n\tmin-height: 10%;\n\tflex: none;\n\tborder-bottom: 2px solid black;\n}\n\n.left-side-header-container {\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: flex-start;\n\twidth: 50%;\n\tmargin-left: 2%;\n}\n\n.right-side-header-container {\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: space-between;\n\twidth: 50%;\n\tmargin-right: 2%;\n}\n\n.right-side-header-container img {\n\twidth: 24px;\n\theight: 24px;\n}\n\n.no-style {\n\tbackground-color: transparent;\n\tborder: none;\n\tcursor: pointer;\n}\n\n.middle {\n\tdisplay: flex;\n\tjustify-content: center;\n\tmargin: auto;\n}\n\nform.ui.action.input.chat > input {\n\tbackground: #fff3e1;\n}\n", "",{"version":3,"sources":["webpack://./client/styles/css/chat-styles.css"],"names":[],"mappings":"AAAA;CACC,aAAa;CACb,sBAAsB;CACtB,uBAAuB;CACvB,mBAAmB;AACpB;;AAEA;CACC,oBAAoB;AACrB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,8BAA8B;CAC9B,gCAAgC;CAChC,YAAY;CACZ,UAAU;CACV,kBAAkB;AACnB;;AAEA;CACC,oBAAoB;CACpB,eAAe;CACf,mCAAmC;CACnC,0BAA0B;AAC3B;;AAEA;CACC,aAAa;CACb,8BAA8B;CAC9B,mCAAmC;CACnC,WAAW;CACX,eAAe;CACf,UAAU;CACV,8BAA8B;AAC/B;;AAEA;CACC,aAAa;CACb,mBAAmB;CACnB,2BAA2B;CAC3B,UAAU;CACV,eAAe;AAChB;;AAEA;CACC,aAAa;CACb,mBAAmB;CACnB,8BAA8B;CAC9B,UAAU;CACV,gBAAgB;AACjB;;AAEA;CACC,WAAW;CACX,YAAY;AACb;;AAEA;CACC,6BAA6B;CAC7B,YAAY;CACZ,eAAe;AAChB;;AAEA;CACC,aAAa;CACb,uBAAuB;CACvB,YAAY;AACb;;AAEA;CACC,mBAAmB;AACpB","sourcesContent":[".chatroom-container {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n.chatroom-wrapper {\n\tdisplay: inline-flex;\n}\n\n.white-background-container {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-between;\n\tbackground-color: blanchedalmond;\n\theight: 55vh;\n\twidth: 85%;\n\tborder-radius: 5px;\n}\n\n.chat-header-flex-container {\n\tdisplay: inline-flex;\n\tmin-height: 10%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-radius: 5px 5px 0 0;\n}\n\n.chat-header-wrapper {\n\tdisplay: flex;\n\tjustify-content: space-between;\n\tbackground-color: rgb(121, 108, 89);\n\twidth: 100%;\n\tmin-height: 10%;\n\tflex: none;\n\tborder-bottom: 2px solid black;\n}\n\n.left-side-header-container {\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: flex-start;\n\twidth: 50%;\n\tmargin-left: 2%;\n}\n\n.right-side-header-container {\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: space-between;\n\twidth: 50%;\n\tmargin-right: 2%;\n}\n\n.right-side-header-container img {\n\twidth: 24px;\n\theight: 24px;\n}\n\n.no-style {\n\tbackground-color: transparent;\n\tborder: none;\n\tcursor: pointer;\n}\n\n.middle {\n\tdisplay: flex;\n\tjustify-content: center;\n\tmargin: auto;\n}\n\nform.ui.action.input.chat > input {\n\tbackground: #fff3e1;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".chatroom-container {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n.chatroom-wrapper {\n\tdisplay: inline-flex;\n}\n\n.brown-background-container {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-between;\n\tbackground-color: blanchedalmond;\n\theight: 55vh;\n\twidth: 85%;\n\tborder-radius: 5px;\n}\n\n.chat-header-flex-container {\n\tdisplay: inline-flex;\n\tmin-height: 10%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-radius: 5px 5px 0 0;\n}\n\n.chat-header-wrapper {\n\tdisplay: flex;\n\tjustify-content: space-between;\n\tbackground-color: rgb(121, 108, 89);\n\twidth: 100%;\n\tmin-height: 10%;\n\tflex: none;\n\tborder-bottom: 2px solid black;\n}\n\n.left-side-header-container {\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: flex-start;\n\twidth: 50%;\n\tmargin-left: 2%;\n}\n\n.right-side-header-container {\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: space-between;\n\twidth: 50%;\n\tmargin-right: 2%;\n}\n\n.right-side-header-container img {\n\twidth: 24px;\n\theight: 24px;\n}\n\n.no-style {\n\tbackground-color: transparent;\n\tborder: none;\n\tcursor: pointer;\n}\n\n.middle {\n\tdisplay: flex;\n\tjustify-content: center;\n\tmargin: auto;\n}\n\nform.ui.action.input.chat > input {\n\tbackground: #fff3e1;\n}\n", "",{"version":3,"sources":["webpack://./client/styles/css/chat-styles.css"],"names":[],"mappings":"AAAA;CACC,aAAa;CACb,sBAAsB;CACtB,uBAAuB;CACvB,mBAAmB;AACpB;;AAEA;CACC,oBAAoB;AACrB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,8BAA8B;CAC9B,gCAAgC;CAChC,YAAY;CACZ,UAAU;CACV,kBAAkB;AACnB;;AAEA;CACC,oBAAoB;CACpB,eAAe;CACf,mCAAmC;CACnC,0BAA0B;AAC3B;;AAEA;CACC,aAAa;CACb,8BAA8B;CAC9B,mCAAmC;CACnC,WAAW;CACX,eAAe;CACf,UAAU;CACV,8BAA8B;AAC/B;;AAEA;CACC,aAAa;CACb,mBAAmB;CACnB,2BAA2B;CAC3B,UAAU;CACV,eAAe;AAChB;;AAEA;CACC,aAAa;CACb,mBAAmB;CACnB,8BAA8B;CAC9B,UAAU;CACV,gBAAgB;AACjB;;AAEA;CACC,WAAW;CACX,YAAY;AACb;;AAEA;CACC,6BAA6B;CAC7B,YAAY;CACZ,eAAe;AAChB;;AAEA;CACC,aAAa;CACb,uBAAuB;CACvB,YAAY;AACb;;AAEA;CACC,mBAAmB;AACpB","sourcesContent":[".chatroom-container {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n.chatroom-wrapper {\n\tdisplay: inline-flex;\n}\n\n.brown-background-container {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-between;\n\tbackground-color: blanchedalmond;\n\theight: 55vh;\n\twidth: 85%;\n\tborder-radius: 5px;\n}\n\n.chat-header-flex-container {\n\tdisplay: inline-flex;\n\tmin-height: 10%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-radius: 5px 5px 0 0;\n}\n\n.chat-header-wrapper {\n\tdisplay: flex;\n\tjustify-content: space-between;\n\tbackground-color: rgb(121, 108, 89);\n\twidth: 100%;\n\tmin-height: 10%;\n\tflex: none;\n\tborder-bottom: 2px solid black;\n}\n\n.left-side-header-container {\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: flex-start;\n\twidth: 50%;\n\tmargin-left: 2%;\n}\n\n.right-side-header-container {\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: space-between;\n\twidth: 50%;\n\tmargin-right: 2%;\n}\n\n.right-side-header-container img {\n\twidth: 24px;\n\theight: 24px;\n}\n\n.no-style {\n\tbackground-color: transparent;\n\tborder: none;\n\tcursor: pointer;\n}\n\n.middle {\n\tdisplay: flex;\n\tjustify-content: center;\n\tmargin: auto;\n}\n\nform.ui.action.input.chat > input {\n\tbackground: #fff3e1;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12806,6 +12822,33 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "* {\n\tfont-family: 'stampwriter' !important;\n}\nbody {\n\tbackground-color: #191714;\n}\n\n#vertical-container {\n\theight: 100vh;\n\twidth: 100%;\n}\n\n.guest-login-background-container {\n\tdisplay: flex;\n\tflex-direction: column;\n\tbackground-color: blanchedalmond;\n\twidth: 45%;\n\tmargin: 1em 0;\n\tpadding: 1em;\n\tborder-radius: 0.3rem;\n\tbox-shadow: 0px -4px 10px #4c463d;\n}\n\n.guest-login-background-container label {\n\ttext-align: center;\n}\n\n.guest-login-background-container input {\n\tborder: none;\n}\n\n.ui.form input[type='text'] {\n\tbackground: blanchedalmond;\n\tborder-color: black;\n}\n\n.ui.form input[type='text']:focus {\n\tbackground: blanchedalmond;\n\tborder-color: black;\n}\n\n.ui.form .field.error input[type='text'],\n.ui.form .fields.error .field input[type='text'] {\n\tbackground: blanchedalmond;\n\tborder-color: red;\n}\n\n.ui.warning.message {\n\tbackground-color: #ecdeca;\n\tcolor: black;\n\ttext-align: center;\n}\n", "",{"version":3,"sources":["webpack://./client/styles/css/guest-signin-styles.css"],"names":[],"mappings":"AAAA;CACC,qCAAqC;AACtC;AACA;CACC,yBAAyB;AAC1B;;AAEA;CACC,aAAa;CACb,WAAW;AACZ;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,gCAAgC;CAChC,UAAU;CACV,aAAa;CACb,YAAY;CACZ,qBAAqB;CACrB,iCAAiC;AAClC;;AAEA;CACC,kBAAkB;AACnB;;AAEA;CACC,YAAY;AACb;;AAEA;CACC,0BAA0B;CAC1B,mBAAmB;AACpB;;AAEA;CACC,0BAA0B;CAC1B,mBAAmB;AACpB;;AAEA;;CAEC,0BAA0B;CAC1B,iBAAiB;AAClB;;AAEA;CACC,yBAAyB;CACzB,YAAY;CACZ,kBAAkB;AACnB","sourcesContent":["* {\n\tfont-family: 'stampwriter' !important;\n}\nbody {\n\tbackground-color: #191714;\n}\n\n#vertical-container {\n\theight: 100vh;\n\twidth: 100%;\n}\n\n.guest-login-background-container {\n\tdisplay: flex;\n\tflex-direction: column;\n\tbackground-color: blanchedalmond;\n\twidth: 45%;\n\tmargin: 1em 0;\n\tpadding: 1em;\n\tborder-radius: 0.3rem;\n\tbox-shadow: 0px -4px 10px #4c463d;\n}\n\n.guest-login-background-container label {\n\ttext-align: center;\n}\n\n.guest-login-background-container input {\n\tborder: none;\n}\n\n.ui.form input[type='text'] {\n\tbackground: blanchedalmond;\n\tborder-color: black;\n}\n\n.ui.form input[type='text']:focus {\n\tbackground: blanchedalmond;\n\tborder-color: black;\n}\n\n.ui.form .field.error input[type='text'],\n.ui.form .fields.error .field input[type='text'] {\n\tbackground: blanchedalmond;\n\tborder-color: red;\n}\n\n.ui.warning.message {\n\tbackground-color: #ecdeca;\n\tcolor: black;\n\ttext-align: center;\n}\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./client/styles/css/home-styles.css":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./client/styles/css/home-styles.css ***!
+  \*********************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n}\n", "",{"version":3,"sources":["webpack://./client/styles/css/home-styles.css"],"names":[],"mappings":"AAAA;CACC,YAAY;CACZ,WAAW;CACX,uBAAuB;AACxB;;AAEA;CACC,oBAAoB;CACpB,WAAW;CACX,eAAe;CACf,8BAA8B;AAC/B;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,UAAU;CACV,YAAY;CACZ,mCAAmC;CACnC,6BAA6B;AAC9B;;AAEA;CACC,aAAa;CACb,UAAU;AACX;;AAEA;CACC,UAAU,EAAE,6EAA6E;AAC1F","sourcesContent":[".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

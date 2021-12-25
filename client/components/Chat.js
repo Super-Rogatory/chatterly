@@ -133,7 +133,7 @@ class Chat extends React.Component {
 				<div id="vertical-container" className="chatroom-container">
 					<div className="chatroom-wapper" align="middle">
 						<div className="ui container">
-							<div className="white-background-container">
+							<div className="brown-background-container">
 								<ChatHeader
 									socket={this.state.clientSocket}
 									roomName={this.state.user.room || this.getUserRoom()}

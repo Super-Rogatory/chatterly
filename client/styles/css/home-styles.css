@@ -1,0 +1,30 @@
+.home-user-interface-container {
+	height: 50px;
+	width: 100%;
+	background-color: white;
+}
+
+.inline-flexed-content-container {
+	display: inline-flex;
+	height: 95%;
+	max-width: 100%;
+	border-bottom: 2px solid black;
+}
+
+.vertical-static-menu {
+	display: flex;
+	flex-direction: column;
+	width: 20%;
+	height: 100%;
+	background-color: rgb(121, 108, 89);
+	border-right: 2px solid black;
+}
+
+.ui-sandbox {
+	display: flex;
+	width: 80%;
+}
+
+.logged-in-username-footer {
+	height: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */
+}
