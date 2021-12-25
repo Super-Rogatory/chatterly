@@ -15,6 +15,8 @@
 .vertical-static-menu {
 	display: flex;
 	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
 	width: 20%;
 	height: 100%;
 	background-color: rgb(121, 108, 89);
@@ -48,6 +50,10 @@
 	width: 45px;
 	height: 45px;
 	margin-right: -10px;
+}
+
+.username-wrapper-name {
+	font-weight: 800;
 }
 
 .status-icon-center {

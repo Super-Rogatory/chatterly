@@ -52,7 +52,11 @@ class Home extends React.Component {
 						<div className="ui container">
 							<div className="brown-background-container">
 								<div className="inline-flexed-content-container">
-									<div className="vertical-static-menu">Hi</div>
+									<div className="vertical-static-menu">
+										<div className="ui basic large black button">Join Room</div>
+										<div className="ui basic large black button">Room List</div>
+										<div className="ui basic black button">Change Status</div>
+									</div>
 									<div className="ui-sandbox">Hello</div>
 								</div>
 								<div className="logged-in-username-footer">
@@ -60,7 +64,7 @@ class Home extends React.Component {
 										<div className="username-wrapper-img">
 											<img src={crownlogo} alt="crown-logo" />
 										</div>
-										{`Chuck`}
+										<div className="username-wrapper-name">{this.state.user.name}</div>
 									</div>
 									<div className="status-icon-container status-icon-center">
 										<div className="circle green"></div>
