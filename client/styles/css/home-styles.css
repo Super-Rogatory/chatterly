@@ -9,6 +9,7 @@
 	height: 95%;
 	max-width: 100%;
 	border-bottom: 2px solid black;
+	font-size: 18px;
 }
 
 .vertical-static-menu {
@@ -26,5 +27,40 @@
 }
 
 .logged-in-username-footer {
+	display: flex;
+	width: 100%;
 	height: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */
+	justify-content: space-between;
+	align-items: center;
+	font-size: 24px;
+}
+
+.username-wrapper {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 50%;
+	max-height: 100%;
+	padding-left: 18px;
+}
+
+.username-wrapper-img > img {
+	width: 45px;
+	height: 45px;
+	margin-right: -10px;
+}
+
+.status-icon-center {
+	justify-content: center;
+}
+
+@media only screen and (max-height: 745px) {
+	.logged-in-username-footer {
+		font-size: 16px;
+	}
+	.username-wrapper-img > img {
+		width: 30px;
+		height: 30px;
+		margin-right: -7px;
+	}
 }

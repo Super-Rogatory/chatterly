@@ -4803,8 +4803,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var _store_effects_utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../store/effects/utils */ "./client/store/effects/utils.js");
+/* harmony import */ var _icons_crown_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../icons/crown.png */ "./client/icons/crown.png");
 
 
 
@@ -4816,6 +4817,7 @@ __webpack_require__.r(__webpack_exports__);
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__["default"])(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
 
 
 
@@ -4836,7 +4838,9 @@ var Home = /*#__PURE__*/function (_React$Component) {
       isLoggedIn: !!window.localStorage.getItem('token'),
       // recall that null is returned if the key does not exist !!{} is true !!null is false
       invalidToken: false,
-      user: {}
+      user: {},
+      isLogoReady: false,
+      isLoaded: false
     };
     return _this;
   }
@@ -4845,7 +4849,9 @@ var Home = /*#__PURE__*/function (_React$Component) {
     key: "componentDidMount",
     value: function () {
       var _componentDidMount = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().mark(function _callee() {
-        var localStorageName, localStorageToken, _JSON$parse, token, user;
+        var _this2 = this;
+
+        var localStorageName, localStorageToken, _JSON$parse, token, user, logo;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().wrap(function _callee$(_context) {
           while (1) {
@@ -4880,22 +4886,35 @@ var Home = /*#__PURE__*/function (_React$Component) {
                 });
 
               case 14:
-                _context.next = 19;
+                /* ensure that the logo is ready to display */
+                logo = new Image();
+
+                logo.onload = function () {
+                  _this2.setState({
+                    isLogoReady: true
+                  });
+                };
+
+                logo.src = _icons_crown_png__WEBPACK_IMPORTED_MODULE_9__["default"];
+                this.setState({
+                  isLoaded: true
+                });
+                _context.next = 23;
                 break;
 
-              case 16:
-                _context.prev = 16;
+              case 20:
+                _context.prev = 20;
                 _context.t0 = _context["catch"](3);
                 this.setState({
                   invalidToken: true
                 });
 
-              case 19:
+              case 23:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[3, 16]]);
+        }, _callee, this, [[3, 20]]);
       }));
 
       function componentDidMount() {
@@ -4909,12 +4928,14 @@ var Home = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       if (!this.state.isLoggedIn || this.state.invalidToken) {
         window.localStorage.clear();
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Redirect, {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Redirect, {
           to: "/"
         });
       }
 
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      if (!this.state.isLoaded || !this.state.isLogoReady) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", null, "Loading");
+      } else return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         id: "vertical-container",
         className: "center-content"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
@@ -4932,7 +4953,18 @@ var Home = /*#__PURE__*/function (_React$Component) {
         className: "ui-sandbox"
       }, "Hello")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "logged-in-username-footer"
-      }, "Chuck")))));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+        className: "username-wrapper"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+        className: "username-wrapper-img"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("img", {
+        src: _icons_crown_png__WEBPACK_IMPORTED_MODULE_9__["default"],
+        alt: "crown-logo"
+      })), "Chuck"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+        className: "status-icon-container status-icon-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+        className: "circle green"
+      })))))));
     }
   }]);
 
@@ -12848,7 +12880,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n}\n", "",{"version":3,"sources":["webpack://./client/styles/css/home-styles.css"],"names":[],"mappings":"AAAA;CACC,YAAY;CACZ,WAAW;CACX,uBAAuB;AACxB;;AAEA;CACC,oBAAoB;CACpB,WAAW;CACX,eAAe;CACf,8BAA8B;AAC/B;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,UAAU;CACV,YAAY;CACZ,mCAAmC;CACnC,6BAA6B;AAC9B;;AAEA;CACC,aAAa;CACb,UAAU;AACX;;AAEA;CACC,UAAU,EAAE,6EAA6E;AAC1F","sourcesContent":[".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n", "",{"version":3,"sources":["webpack://./client/styles/css/home-styles.css"],"names":[],"mappings":"AAAA;CACC,YAAY;CACZ,WAAW;CACX,uBAAuB;AACxB;;AAEA;CACC,oBAAoB;CACpB,WAAW;CACX,eAAe;CACf,8BAA8B;CAC9B,eAAe;AAChB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,UAAU;CACV,YAAY;CACZ,mCAAmC;CACnC,6BAA6B;AAC9B;;AAEA;CACC,aAAa;CACb,UAAU;AACX;;AAEA;CACC,aAAa;CACb,WAAW;CACX,UAAU,EAAE,6EAA6E;CACzF,8BAA8B;CAC9B,mBAAmB;CACnB,eAAe;AAChB;;AAEA;CACC,oBAAoB;CACpB,mBAAmB;CACnB,uBAAuB;CACvB,cAAc;CACd,gBAAgB;CAChB,kBAAkB;AACnB;;AAEA;CACC,WAAW;CACX,YAAY;CACZ,mBAAmB;AACpB;;AAEA;CACC,uBAAuB;AACxB;;AAEA;CACC;EACC,eAAe;CAChB;CACA;EACC,WAAW;EACX,YAAY;EACZ,kBAAkB;CACnB;AACD","sourcesContent":[".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -13154,6 +13186,21 @@ module.exports = function (item) {
 
   return [content].join("\n");
 };
+
+/***/ }),
+
+/***/ "./client/icons/crown.png":
+/*!********************************!*\
+  !*** ./client/icons/crown.png ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "2e264b9835f7e32874d903610bb3cbf5.png");
 
 /***/ }),
 
