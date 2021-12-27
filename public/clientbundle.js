@@ -4839,6 +4839,7 @@ var Home = /*#__PURE__*/function (_React$Component) {
       // recall that null is returned if the key does not exist !!{} is true !!null is false
       invalidToken: false,
       user: {},
+      isUserOnline: undefined,
       isLogoReady: false,
       isLoaded: false,
       canChangeUserStatusAgain: true,
@@ -4884,7 +4885,8 @@ var Home = /*#__PURE__*/function (_React$Component) {
 
               case 13:
                 this.setState({
-                  user: user
+                  user: user,
+                  isUserOnline: user.active
                 });
 
               case 14:
@@ -4941,7 +4943,8 @@ var Home = /*#__PURE__*/function (_React$Component) {
 
               case 3:
                 this.setState({
-                  canChangeUserStatusAgain: false
+                  canChangeUserStatusAgain: false,
+                  isUserOnline: !this.state.isUserOnline
                 });
                 setTimeout(function () {
                   return _this3.setState({
@@ -4977,7 +4980,8 @@ var Home = /*#__PURE__*/function (_React$Component) {
 
       var _this$state = this.state,
           user = _this$state.user,
-          canChangeUserStatusAgain = _this$state.canChangeUserStatusAgain;
+          canChangeUserStatusAgain = _this$state.canChangeUserStatusAgain,
+          isUserOnline = _this$state.isUserOnline;
 
       if (!this.state.isLoggedIn || this.state.invalidToken) {
         window.localStorage.clear();
@@ -5026,10 +5030,10 @@ var Home = /*#__PURE__*/function (_React$Component) {
         alt: "crown-logo"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "username-wrapper-name"
-      }, this.state.user.name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      }, user.name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "status-icon-container status-icon-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
-        className: "circle ".concat(user.active ? 'green' : 'greyed')
+        className: "circle ".concat(isUserOnline ? 'green' : 'greyed')
       })))))));
     }
   }]);

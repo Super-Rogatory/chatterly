@@ -64,7 +64,7 @@ router.post('/misc/updateUserStatus', async (req, res, next) => {
 			return;
 		} else {
 			user.active = user.active ? false : true;
-			user.save();
+			await user.save();
 			res.status(200).send({ success: true });
 		}
 	} catch (err) {

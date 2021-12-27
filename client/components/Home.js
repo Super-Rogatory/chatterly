@@ -10,6 +10,7 @@ class Home extends React.Component {
 			isLoggedIn: !!window.localStorage.getItem('token'), // recall that null is returned if the key does not exist !!{} is true !!null is false
 			invalidToken: false,
 			user: {},
+			isUserOnline: undefined,
 			isLogoReady: false,
 			isLoaded: false,
 			canChangeUserStatusAgain: true,
@@ -27,7 +28,7 @@ class Home extends React.Component {
 			await isTokenValid(token); // isTokenValid is a function that returns an object with the status property, if there is an error we can catch it and then redirect to home.
 			const user = await getUserByName(localStorageName);
 			if (!user) throw new Error('failed to find user');
-			else this.setState({ user });
+			else this.setState({ user, isUserOnline: user.active });
 			/* ensure that the logo is ready to display */
 			const logo = new Image();
 			logo.onload = () => {
@@ -43,7 +44,7 @@ class Home extends React.Component {
 	async updateUserStatusWithTimeout(user) {
 		try {
 			await updateUserStatus(user);
-			this.setState({ canChangeUserStatusAgain: false });
+			this.setState({ canChangeUserStatusAgain: false, isUserOnline: !this.state.isUserOnline });
 			setTimeout(() => this.setState({ canChangeUserStatusAgain: true }), 3000);
 		} catch (err) {
 			console.error(err);
@@ -51,7 +52,7 @@ class Home extends React.Component {
 	}
 
 	render() {
-		const { user, canChangeUserStatusAgain } = this.state;
+		const { user, canChangeUserStatusAgain, isUserOnline } = this.state;
 		if (!this.state.isLoggedIn || this.state.invalidToken) {
 			window.localStorage.clear();
 			return <Redirect to="/" />;
@@ -83,10 +84,10 @@ class Home extends React.Component {
 										<div className="username-wrapper-img">
 											<img src={crownlogo} alt="crown-logo" />
 										</div>
-										<div className="username-wrapper-name">{this.state.user.name}</div>
+										<div className="username-wrapper-name">{user.name}</div>
 									</div>
 									<div className="status-icon-container status-icon-center">
-										<div className={`circle ${user.active ? 'green' : 'greyed'}`}></div>
+										<div className={`circle ${isUserOnline ? 'green' : 'greyed'}`}></div>
 									</div>
 								</div>
 							</div>
