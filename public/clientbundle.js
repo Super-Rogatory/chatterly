@@ -4080,7 +4080,7 @@ var Chat = /*#__PURE__*/function (_React$Component) {
             switch (_context5.prev = _context5.next) {
               case 0:
                 _context5.next = 2;
-                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_15__.updateInactiveUser)(this.state.user);
+                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_15__.updateUserStatus)(this.state.user);
 
               case 2:
                 this.state.clientSocket.disconnect();
@@ -4840,7 +4840,9 @@ var Home = /*#__PURE__*/function (_React$Component) {
       invalidToken: false,
       user: {},
       isLogoReady: false,
-      isLoaded: false
+      isLoaded: false,
+      canChangeUserStatusAgain: true,
+      statusTimerId: null
     };
     return _this;
   }
@@ -4924,8 +4926,59 @@ var Home = /*#__PURE__*/function (_React$Component) {
       return componentDidMount;
     }()
   }, {
+    key: "updateUserStatusWithTimeout",
+    value: function () {
+      var _updateUserStatusWithTimeout = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().mark(function _callee2(user) {
+        var _this3 = this;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_8__.updateUserStatus)(user);
+
+              case 3:
+                this.setState({
+                  canChangeUserStatusAgain: false
+                });
+                setTimeout(function () {
+                  return _this3.setState({
+                    canChangeUserStatusAgain: true
+                  });
+                }, 3000);
+                _context2.next = 10;
+                break;
+
+              case 7:
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](0);
+                console.error(_context2.t0);
+
+              case 10:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[0, 7]]);
+      }));
+
+      function updateUserStatusWithTimeout(_x) {
+        return _updateUserStatusWithTimeout.apply(this, arguments);
+      }
+
+      return updateUserStatusWithTimeout;
+    }()
+  }, {
     key: "render",
     value: function render() {
+      var _this4 = this;
+
+      var _this$state = this.state,
+          user = _this$state.user,
+          canChangeUserStatusAgain = _this$state.canChangeUserStatusAgain;
+
       if (!this.state.isLoggedIn || this.state.invalidToken) {
         window.localStorage.clear();
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Redirect, {
@@ -4954,8 +5007,13 @@ var Home = /*#__PURE__*/function (_React$Component) {
       }, "Join Room"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "ui basic large black button"
       }, "Room List"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
-        className: "ui basic black button"
-      }, "Change Status")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+        className: "ui basic ".concat(canChangeUserStatusAgain ? '' : 'disabled', " black button"),
+        onClick: function onClick() {
+          return _this4.updateUserStatusWithTimeout(user);
+        }
+      }, "Change Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+        className: "ui basic large black button"
+      }, "Logout")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "ui-sandbox"
       }, "Hello")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "logged-in-username-footer"
@@ -4971,7 +5029,7 @@ var Home = /*#__PURE__*/function (_React$Component) {
       }, this.state.user.name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "status-icon-container status-icon-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
-        className: "circle green"
+        className: "circle ".concat(user.active ? 'green' : 'greyed')
       })))))));
     }
   }]);
@@ -6720,7 +6778,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "associateUserAndRoom": () => (/* binding */ associateUserAndRoom),
 /* harmony export */   "disassociateUserAndRoom": () => (/* binding */ disassociateUserAndRoom),
 /* harmony export */   "getActiveUsers": () => (/* binding */ getActiveUsers),
-/* harmony export */   "updateInactiveUser": () => (/* binding */ updateInactiveUser),
+/* harmony export */   "updateUserStatus": () => (/* binding */ updateUserStatus),
 /* harmony export */   "registerUser": () => (/* binding */ registerUser),
 /* harmony export */   "validateUser": () => (/* binding */ validateUser),
 /* harmony export */   "isTokenValid": () => (/* binding */ isTokenValid),
@@ -7096,10 +7154,9 @@ var getActiveUsers = /*#__PURE__*/function () {
           case 2:
             _yield$axios$get7 = _context12.sent;
             count = _yield$axios$get7.data;
-            console.log(count);
             return _context12.abrupt("return", count);
 
-          case 6:
+          case 5:
           case "end":
             return _context12.stop();
         }
@@ -7111,7 +7168,7 @@ var getActiveUsers = /*#__PURE__*/function () {
     return _ref12.apply(this, arguments);
   };
 }();
-var updateInactiveUser = /*#__PURE__*/function () {
+var updateUserStatus = /*#__PURE__*/function () {
   var _ref13 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee13(user) {
     var _yield$axios$post4, status;
 
@@ -7120,7 +7177,7 @@ var updateInactiveUser = /*#__PURE__*/function () {
         switch (_context13.prev = _context13.next) {
           case 0:
             _context13.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_4___default().post("".concat(url, "/api/users/misc/decreaseUserCount"), {
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().post("".concat(url, "/api/users/misc/updateUserStatus"), {
               name: user.name
             });
 
@@ -7137,7 +7194,7 @@ var updateInactiveUser = /*#__PURE__*/function () {
     }, _callee13);
   }));
 
-  return function updateInactiveUser(_x14) {
+  return function updateUserStatus(_x14) {
     return _ref13.apply(this, arguments);
   };
 }();

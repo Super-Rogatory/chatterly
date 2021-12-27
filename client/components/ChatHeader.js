@@ -29,7 +29,6 @@ class ChatHeader extends React.Component {
 	}
 
 	async handleRedirect() {
-		// what if I used updateInactiveUser to change some property that forces rerender of count.
 		await disassociateUserAndRoom(this.props.user);
 		this.props.updateComponent('toggleGuestWarningPopup', false);
 		this.props.socket.emit('sendDisconnectMessage', this.props.user);

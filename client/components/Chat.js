@@ -6,7 +6,7 @@ import ChatHeader from './ChatHeader';
 import Input from './Input';
 import MessageList from './MessageList';
 import { Redirect } from 'react-router-dom';
-import { addMessage, associateUserAndRoom, openRoom, updateInactiveUser } from '../store/effects/utils';
+import { addMessage, associateUserAndRoom, openRoom, updateUserStatus } from '../store/effects/utils';
 import { getUser } from '../store/effects/utils';
 import Loader from 'react-loader-spinner';
 
@@ -101,7 +101,7 @@ class Chat extends React.Component {
 	}
 
 	async componentWillUnmount() {
-		await updateInactiveUser(this.state.user);
+		await updateUserStatus(this.state.user);
 		this.state.clientSocket.disconnect();
 		this.state.clientSocket.off();
 	}

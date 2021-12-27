@@ -48,7 +48,7 @@ router.get('/misc/:name', async (req, res, next) => {
 
 router.get('/misc/getUserByName/:name', async (req, res, next) => {
 	try {
-		const user = await User.findOne({ where: { name: req.params.name }, attributes: ['id', 'name', 'room'] });
+		const user = await User.findOne({ where: { name: req.params.name }, attributes: ['id', 'name', 'room', 'active'] });
 		if (!user) res.status(404).send('failed to find user');
 		else res.send(user);
 	} catch (err) {
@@ -56,14 +56,14 @@ router.get('/misc/getUserByName/:name', async (req, res, next) => {
 	}
 });
 
-router.post('/misc/decreaseUserCount', async (req, res, next) => {
+router.post('/misc/updateUserStatus', async (req, res, next) => {
 	try {
 		const user = await User.findOne({ where: { name: req.body.name } });
 		if (!user) {
 			res.status(404).send('failed to find user');
 			return;
 		} else {
-			user.active = false;
+			user.active = user.active ? false : true;
 			user.save();
 			res.status(200).send({ success: true });
 		}

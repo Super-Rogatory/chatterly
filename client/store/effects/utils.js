@@ -76,12 +76,11 @@ export const disassociateUserAndRoom = async (user) => {
 
 export const getActiveUsers = async () => {
 	const { data: count } = await axios.get(`${url}/api/users/misc/getUserCount`);
-	console.log(count);
 	return count;
 };
 
-export const updateInactiveUser = async (user) => {
-	const { data: status } = await axios.post(`${url}/api/users/misc/decreaseUserCount`, { name: user.name });
+export const updateUserStatus = async (user) => {
+	const { data: status } = await axios.post(`${url}/api/users/misc/updateUserStatus`, { name: user.name });
 	return status;
 };
 

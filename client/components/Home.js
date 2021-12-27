@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { getUserByName, isTokenValid } from '../store/effects/utils';
+import { getUserByName, isTokenValid, updateUserStatus } from '../store/effects/utils';
 import crownlogo from '../icons/crown.png';
 
 class Home extends React.Component {
@@ -12,6 +12,8 @@ class Home extends React.Component {
 			user: {},
 			isLogoReady: false,
 			isLoaded: false,
+			canChangeUserStatusAgain: true,
+			statusTimerId: null,
 		};
 	}
 
@@ -38,7 +40,18 @@ class Home extends React.Component {
 		}
 	}
 
+	async updateUserStatusWithTimeout(user) {
+		try {
+			await updateUserStatus(user);
+			this.setState({ canChangeUserStatusAgain: false });
+			setTimeout(() => this.setState({ canChangeUserStatusAgain: true }), 3000);
+		} catch (err) {
+			console.error(err);
+		}
+	}
+
 	render() {
+		const { user, canChangeUserStatusAgain } = this.state;
 		if (!this.state.isLoggedIn || this.state.invalidToken) {
 			window.localStorage.clear();
 			return <Redirect to="/" />;
@@ -55,7 +68,13 @@ class Home extends React.Component {
 									<div className="vertical-static-menu">
 										<div className="ui basic large black button">Join Room</div>
 										<div className="ui basic large black button">Room List</div>
-										<div className="ui basic black button">Change Status</div>
+										<div
+											className={`ui basic ${canChangeUserStatusAgain ? '' : 'disabled'} black button`}
+											onClick={() => this.updateUserStatusWithTimeout(user)}
+										>
+											Change Status
+										</div>
+										<div className="ui basic large black button">Logout</div>
 									</div>
 									<div className="ui-sandbox">Hello</div>
 								</div>
@@ -67,7 +86,7 @@ class Home extends React.Component {
 										<div className="username-wrapper-name">{this.state.user.name}</div>
 									</div>
 									<div className="status-icon-container status-icon-center">
-										<div className="circle green"></div>
+										<div className={`circle ${user.active ? 'green' : 'greyed'}`}></div>
 									</div>
 								</div>
 							</div>
