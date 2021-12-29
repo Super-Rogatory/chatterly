@@ -79,10 +79,10 @@ export const getActiveUsers = async () => {
 	return count;
 };
 
-export const updateUserStatus = async (user, typeObject) => {
+export const updateUserStatus = async (user, typeObject = null) => {
 	const { data: status } = await axios.post(`${url}/api/users/misc/updateUserStatus`, {
 		name: user.name,
-		type: typeObject.type,
+		type: typeObject ? typeObject.type : typeObject,
 	});
 	return status;
 };

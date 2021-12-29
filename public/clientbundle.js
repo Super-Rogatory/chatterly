@@ -7216,25 +7216,29 @@ var getActiveUsers = /*#__PURE__*/function () {
   };
 }();
 var updateUserStatus = /*#__PURE__*/function () {
-  var _ref13 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee13(user, typeObject) {
-    var _yield$axios$post4, status;
+  var _ref13 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee13(user) {
+    var typeObject,
+        _yield$axios$post4,
+        status,
+        _args13 = arguments;
 
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee13$(_context13) {
       while (1) {
         switch (_context13.prev = _context13.next) {
           case 0:
-            _context13.next = 2;
+            typeObject = _args13.length > 1 && _args13[1] !== undefined ? _args13[1] : null;
+            _context13.next = 3;
             return axios__WEBPACK_IMPORTED_MODULE_4___default().post("".concat(url, "/api/users/misc/updateUserStatus"), {
               name: user.name,
-              type: typeObject.type
+              type: typeObject ? typeObject.type : typeObject
             });
 
-          case 2:
+          case 3:
             _yield$axios$post4 = _context13.sent;
             status = _yield$axios$post4.data;
             return _context13.abrupt("return", status);
 
-          case 5:
+          case 6:
           case "end":
             return _context13.stop();
         }
@@ -7242,7 +7246,7 @@ var updateUserStatus = /*#__PURE__*/function () {
     }, _callee13);
   }));
 
-  return function updateUserStatus(_x14, _x15) {
+  return function updateUserStatus(_x14) {
     return _ref13.apply(this, arguments);
   };
 }();
@@ -7273,7 +7277,7 @@ var registerUser = /*#__PURE__*/function () {
     }, _callee14);
   }));
 
-  return function registerUser(_x16, _x17) {
+  return function registerUser(_x15, _x16) {
     return _ref14.apply(this, arguments);
   };
 }();
@@ -7304,7 +7308,7 @@ var validateUser = /*#__PURE__*/function () {
     }, _callee15);
   }));
 
-  return function validateUser(_x18, _x19) {
+  return function validateUser(_x17, _x18) {
     return _ref15.apply(this, arguments);
   };
 }();
@@ -7336,7 +7340,7 @@ var isTokenValid = /*#__PURE__*/function () {
     }, _callee16);
   }));
 
-  return function isTokenValid(_x20) {
+  return function isTokenValid(_x19) {
     return _ref16.apply(this, arguments);
   };
 }(); //  -------------------------------------------------------------------------------------------------------
@@ -7475,7 +7479,7 @@ var ErrorHandlerForSignIns = /*#__PURE__*/function () {
         }, _callee17);
       }));
 
-      function isNameFaulty(_x21) {
+      function isNameFaulty(_x20) {
         return _isNameFaulty.apply(this, arguments);
       }
 
