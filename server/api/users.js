@@ -59,11 +59,14 @@ router.get('/misc/getUserByName/:name', async (req, res, next) => {
 router.post('/misc/updateUserStatus', async (req, res, next) => {
 	try {
 		const user = await User.findOne({ where: { name: req.body.name } });
+		const type = req.body.type;
+
 		if (!user) {
 			res.status(404).send('failed to find user');
 			return;
 		} else {
-			user.active = user.active ? false : true;
+			if (!type) user.active = user.active ? false : true;
+			else user.active = false;
 			await user.save();
 			res.status(200).send({ success: true });
 		}

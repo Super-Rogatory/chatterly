@@ -51,6 +51,15 @@ class Home extends React.Component {
 		}
 	}
 
+	async updateUserStatusAndLogout(user, typeObject) {
+		try {
+			await updateUserStatus(user, typeObject);
+			this.setState({ isLoggedIn: false });
+		} catch (err) {
+			console.error(err);
+		}
+	}
+
 	render() {
 		const { user, canChangeUserStatusAgain, isUserOnline } = this.state;
 		if (!this.state.isLoggedIn || this.state.invalidToken) {
@@ -75,7 +84,12 @@ class Home extends React.Component {
 										>
 											Change Status
 										</div>
-										<div className="ui basic large black button">Logout</div>
+										<div
+											className="ui basic large black button"
+											onClick={() => this.updateUserStatusAndLogout(user, { type: 'logout' })}
+										>
+											Logout
+										</div>
 									</div>
 									<div className="ui-sandbox">Hello</div>
 								</div>

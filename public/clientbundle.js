@@ -4974,6 +4974,44 @@ var Home = /*#__PURE__*/function (_React$Component) {
       return updateUserStatusWithTimeout;
     }()
   }, {
+    key: "updateUserStatusAndLogout",
+    value: function () {
+      var _updateUserStatusAndLogout = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().mark(function _callee3(user, typeObject) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+                _context3.next = 3;
+                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_8__.updateUserStatus)(user, typeObject);
+
+              case 3:
+                this.setState({
+                  isLoggedIn: false
+                });
+                _context3.next = 9;
+                break;
+
+              case 6:
+                _context3.prev = 6;
+                _context3.t0 = _context3["catch"](0);
+                console.error(_context3.t0);
+
+              case 9:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this, [[0, 6]]);
+      }));
+
+      function updateUserStatusAndLogout(_x2, _x3) {
+        return _updateUserStatusAndLogout.apply(this, arguments);
+      }
+
+      return updateUserStatusAndLogout;
+    }()
+  }, {
     key: "render",
     value: function render() {
       var _this4 = this;
@@ -5016,7 +5054,12 @@ var Home = /*#__PURE__*/function (_React$Component) {
           return _this4.updateUserStatusWithTimeout(user);
         }
       }, "Change Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
-        className: "ui basic large black button"
+        className: "ui basic large black button",
+        onClick: function onClick() {
+          return _this4.updateUserStatusAndLogout(user, {
+            type: 'logout'
+          });
+        }
       }, "Logout")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "ui-sandbox"
       }, "Hello")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
@@ -7173,7 +7216,7 @@ var getActiveUsers = /*#__PURE__*/function () {
   };
 }();
 var updateUserStatus = /*#__PURE__*/function () {
-  var _ref13 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee13(user) {
+  var _ref13 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee13(user, typeObject) {
     var _yield$axios$post4, status;
 
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee13$(_context13) {
@@ -7182,7 +7225,8 @@ var updateUserStatus = /*#__PURE__*/function () {
           case 0:
             _context13.next = 2;
             return axios__WEBPACK_IMPORTED_MODULE_4___default().post("".concat(url, "/api/users/misc/updateUserStatus"), {
-              name: user.name
+              name: user.name,
+              type: typeObject.type
             });
 
           case 2:
@@ -7198,7 +7242,7 @@ var updateUserStatus = /*#__PURE__*/function () {
     }, _callee13);
   }));
 
-  return function updateUserStatus(_x14) {
+  return function updateUserStatus(_x14, _x15) {
     return _ref13.apply(this, arguments);
   };
 }();
@@ -7229,7 +7273,7 @@ var registerUser = /*#__PURE__*/function () {
     }, _callee14);
   }));
 
-  return function registerUser(_x15, _x16) {
+  return function registerUser(_x16, _x17) {
     return _ref14.apply(this, arguments);
   };
 }();
@@ -7260,7 +7304,7 @@ var validateUser = /*#__PURE__*/function () {
     }, _callee15);
   }));
 
-  return function validateUser(_x17, _x18) {
+  return function validateUser(_x18, _x19) {
     return _ref15.apply(this, arguments);
   };
 }();
@@ -7292,7 +7336,7 @@ var isTokenValid = /*#__PURE__*/function () {
     }, _callee16);
   }));
 
-  return function isTokenValid(_x19) {
+  return function isTokenValid(_x20) {
     return _ref16.apply(this, arguments);
   };
 }(); //  -------------------------------------------------------------------------------------------------------
@@ -7431,7 +7475,7 @@ var ErrorHandlerForSignIns = /*#__PURE__*/function () {
         }, _callee17);
       }));
 
-      function isNameFaulty(_x20) {
+      function isNameFaulty(_x21) {
         return _isNameFaulty.apply(this, arguments);
       }
 
