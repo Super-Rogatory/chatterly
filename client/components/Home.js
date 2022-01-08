@@ -1,7 +1,10 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
-import { getUserByName, isTokenValid, updateUserStatus } from '../store/effects/utils';
+import Typewriter from 'typewriter-effect';
 import crownlogo from '../icons/crown.png';
+import chatterlylogo from '../icons/favicon.png';
+import { Redirect } from 'react-router-dom';
+import Loader from 'react-loader-spinner';
+import { getUserByName, isTokenValid, updateUserStatus } from '../store/effects/utils';
 
 class Home extends React.Component {
 	constructor() {
@@ -11,10 +14,12 @@ class Home extends React.Component {
 			invalidToken: false,
 			user: {},
 			isUserOnline: undefined,
+			isCrownReady: false,
 			isLogoReady: false,
 			isLoaded: false,
 			canChangeUserStatusAgain: true,
 			statusTimerId: null,
+			roomError: false,
 		};
 	}
 
@@ -29,12 +34,17 @@ class Home extends React.Component {
 			const user = await getUserByName(localStorageName);
 			if (!user) throw new Error('failed to find user');
 			else this.setState({ user, isUserOnline: user.active });
-			/* ensure that the logo is ready to display */
+			/* ensure that the logo is ready to display. */
 			const logo = new Image();
+			const logo2 = new Image();
 			logo.onload = () => {
+				this.setState({ isCrownReady: true });
+			};
+			logo2.onload = () => {
 				this.setState({ isLogoReady: true });
 			};
-			logo.src = crownlogo;
+			logo.src = crownlogo; // triggers browser download of image
+			logo2.src = chatterlylogo;
 			this.setState({ isLoaded: true });
 		} catch (err) {
 			this.setState({ invalidToken: true });
@@ -61,13 +71,17 @@ class Home extends React.Component {
 	}
 
 	render() {
-		const { user, canChangeUserStatusAgain, isUserOnline } = this.state;
+		const { user, canChangeUserStatusAgain, isUserOnline, roomError } = this.state;
 		if (!this.state.isLoggedIn || this.state.invalidToken) {
 			window.localStorage.clear();
 			return <Redirect to="/" />;
 		}
-		if (!this.state.isLoaded || !this.state.isLogoReady) {
-			return <div>Loading</div>;
+		if (!this.state.isLoaded || !this.state.isLogoReady || !this.state.isCrownReady) {
+			return (
+				<div id="vertical-container" className="center-content">
+					<Loader type="ThreeDots" color="#d5a26c" />;
+				</div>
+			);
 		} else
 			return (
 				<div id="vertical-container" className="center-content">
@@ -76,7 +90,6 @@ class Home extends React.Component {
 							<div className="brown-background-container">
 								<div className="inline-flexed-content-container">
 									<div className="vertical-static-menu">
-										<div className="ui basic large black button">Join Room</div>
 										<div className="ui basic large black button">Room List</div>
 										<div
 											className={`ui basic ${canChangeUserStatusAgain ? '' : 'disabled'} black button`}
@@ -91,8 +104,22 @@ class Home extends React.Component {
 											Logout
 										</div>
 									</div>
-									<div className="ui-sandbox">Hello</div>
+									<div className="ui-sandbox">
+										<div className="chatterly-logo-wrapper">
+											<img src={chatterlylogo} alt="logo" />
+										</div>
+										<form className="ui attached form">
+											<div className={`field ${roomError ? 'error' : ''}`}>
+												<label>Enter a room name!</label>
+												<input placeholder="Enter Room" name="room" type="text" />
+											</div>
+										</form>
+										<button type="submit" className="ui basic black button">
+											JOIN!
+										</button>
+									</div>
 								</div>
+
 								<div className="logged-in-username-footer">
 									<div className="username-wrapper">
 										<div className="username-wrapper-img">
