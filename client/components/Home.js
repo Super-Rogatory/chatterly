@@ -6,6 +6,7 @@ import Loader from 'react-loader-spinner';
 import { getUserByName, isTokenValid, updateUserStatus } from '../store/effects/utils';
 import { connect } from 'react-redux';
 import { updateChatterlyStatus } from '../store/effects/thunks';
+import RoomList from './RoomList';
 
 class Home extends React.Component {
 	constructor() {
@@ -110,8 +111,8 @@ class Home extends React.Component {
 											Logout
 										</div>
 									</div>
-									<div className="ui-sandbox">
-										<div className="ui-sandbox-top-container">
+									<div className={this.props.openRoomListTab ? 'ui-sandbox split' : 'ui-sandbox'}>
+										<div className="ui-sandbox-top">
 											<div className="chatterly-logo-wrapper">
 												<img src={chatterlylogo} alt="logo" />
 											</div>
@@ -128,7 +129,8 @@ class Home extends React.Component {
 												<div className="ui bottom warning message">{"Don't forget to enter the room name."}</div>
 											)}
 										</div>
-										<div className="ui-sandbox-room-list">{this.props.openRoomListTab && 'tab opened'}</div>
+										{/* will render out the roomlist when the room list button is toggled */}
+										<div className="ui-sandbox-bottom">{this.props.openRoomListTab && <RoomList />}</div>
 									</div>
 								</div>
 

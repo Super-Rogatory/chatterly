@@ -4805,11 +4805,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _icons_crown_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../icons/crown.png */ "./client/icons/crown.png");
 /* harmony import */ var _icons_favicon_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../icons/favicon.png */ "./client/icons/favicon.png");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var react_loader_spinner__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-loader-spinner */ "./node_modules/react-loader-spinner/dist/index.js");
 /* harmony import */ var _store_effects_utils__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../store/effects/utils */ "./client/store/effects/utils.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _store_effects_thunks__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../store/effects/thunks */ "./client/store/effects/thunks.js");
+/* harmony import */ var _RoomList__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./RoomList */ "./client/components/RoomList.js");
 
 
 
@@ -4821,6 +4822,7 @@ __webpack_require__.r(__webpack_exports__);
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__["default"])(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
 
 
 
@@ -5043,7 +5045,7 @@ var Home = /*#__PURE__*/function (_React$Component) {
 
       if (!this.state.isLoggedIn || this.state.invalidToken) {
         window.localStorage.clear();
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Redirect, {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Redirect, {
           to: "/"
         });
       }
@@ -5088,9 +5090,9 @@ var Home = /*#__PURE__*/function (_React$Component) {
           });
         }
       }, "Logout")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
-        className: "ui-sandbox"
+        className: this.props.openRoomListTab ? 'ui-sandbox split' : 'ui-sandbox'
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
-        className: "ui-sandbox-top-container"
+        className: "ui-sandbox-top"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "chatterly-logo-wrapper"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("img", {
@@ -5110,8 +5112,8 @@ var Home = /*#__PURE__*/function (_React$Component) {
       }, "JOIN!"), roomError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "ui bottom warning message"
       }, "Don't forget to enter the room name.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
-        className: "ui-sandbox-room-list"
-      }, this.props.openRoomListTab && 'tab opened'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+        className: "ui-sandbox-bottom"
+      }, this.props.openRoomListTab && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(_RoomList__WEBPACK_IMPORTED_MODULE_14__["default"], null)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "logged-in-username-footer"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "username-wrapper"
@@ -6260,6 +6262,60 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_13__.connect)(mapStateToProps, mapDispatchToProps)(Register));
+
+/***/ }),
+
+/***/ "./client/components/RoomList.js":
+/*!***************************************!*\
+  !*** ./client/components/RoomList.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+
+
+
+
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+
+
+var RoomList = /*#__PURE__*/function (_React$Component) {
+  (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__["default"])(RoomList, _React$Component);
+
+  var _super = _createSuper(RoomList);
+
+  function RoomList() {
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, RoomList);
+
+    return _super.apply(this, arguments);
+  }
+
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(RoomList, [{
+    key: "render",
+    value: function render() {
+      return 'Heyo';
+    }
+  }]);
+
+  return RoomList;
+}(react__WEBPACK_IMPORTED_MODULE_5__.Component);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RoomList);
 
 /***/ }),
 
@@ -13087,7 +13143,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\nform.ui {\n\tpadding: 1rem;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n", "",{"version":3,"sources":["webpack://./client/styles/css/home-styles.css"],"names":[],"mappings":"AAAA;CACC,YAAY;CACZ,WAAW;CACX,uBAAuB;AACxB;;AAEA;CACC,oBAAoB;CACpB,WAAW;CACX,eAAe;CACf,8BAA8B;CAC9B,eAAe;AAChB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,6BAA6B;CAC7B,mBAAmB;CACnB,UAAU;CACV,YAAY;CACZ,mCAAmC;CACnC,6BAA6B;AAC9B;;AAEA;CACC,aAAa;CACb,UAAU;AACX;;AAEA;CACC,aAAa;CACb,WAAW;CACX,UAAU,EAAE,6EAA6E;CACzF,gBAAgB;CAChB,8BAA8B;CAC9B,mBAAmB;CACnB,eAAe;AAChB;;AAEA;CACC,oBAAoB;CACpB,mBAAmB;CACnB,uBAAuB;CACvB,cAAc;CACd,gBAAgB;CAChB,kBAAkB;AACnB;;AAEA;CACC,WAAW;CACX,YAAY;CACZ,mBAAmB;AACpB;;AAEA;CACC,gBAAgB;AACjB;;AAEA;CACC,eAAe;AAChB;;AAEA;CACC,uBAAuB;AACxB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,uBAAuB;CACvB,mBAAmB;AACpB;;AAEA;CACC,aAAa;AACd;;AAEA;;;CAGC,iBAAiB;AAClB;;AAEA;CACC;EACC,eAAe;CAChB;CACA;EACC,WAAW;EACX,YAAY;EACZ,kBAAkB;CACnB;AACD","sourcesContent":[".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\nform.ui {\n\tpadding: 1rem;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n.split {\n\tjustify-content: space-around;\n}\n\nform.ui {\n\tpadding: 1rem;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n", "",{"version":3,"sources":["webpack://./client/styles/css/home-styles.css"],"names":[],"mappings":"AAAA;CACC,YAAY;CACZ,WAAW;CACX,uBAAuB;AACxB;;AAEA;CACC,oBAAoB;CACpB,WAAW;CACX,eAAe;CACf,8BAA8B;CAC9B,eAAe;AAChB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,6BAA6B;CAC7B,mBAAmB;CACnB,UAAU;CACV,YAAY;CACZ,mCAAmC;CACnC,6BAA6B;AAC9B;;AAEA;CACC,aAAa;CACb,UAAU;AACX;;AAEA;CACC,aAAa;CACb,WAAW;CACX,UAAU,EAAE,6EAA6E;CACzF,gBAAgB;CAChB,8BAA8B;CAC9B,mBAAmB;CACnB,eAAe;AAChB;;AAEA;CACC,oBAAoB;CACpB,mBAAmB;CACnB,uBAAuB;CACvB,cAAc;CACd,gBAAgB;CAChB,kBAAkB;AACnB;;AAEA;CACC,WAAW;CACX,YAAY;CACZ,mBAAmB;AACpB;;AAEA;CACC,gBAAgB;AACjB;;AAEA;CACC,eAAe;AAChB;;AAEA;CACC,uBAAuB;AACxB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,uBAAuB;CACvB,mBAAmB;AACpB;;AAEA;CACC,6BAA6B;AAC9B;;AAEA;CACC,aAAa;AACd;;AAEA;;;CAGC,iBAAiB;AAClB;;AAEA;CACC;EACC,eAAe;CAChB;CACA;EACC,WAAW;EACX,YAAY;EACZ,kBAAkB;CACnB;AACD","sourcesContent":[".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n.split {\n\tjustify-content: space-around;\n}\n\nform.ui {\n\tpadding: 1rem;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

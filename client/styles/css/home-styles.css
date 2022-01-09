@@ -72,6 +72,10 @@
 	align-items: center;
 }
 
+.split {
+	justify-content: space-around;
+}
+
 form.ui {
 	padding: 1rem;
 }
