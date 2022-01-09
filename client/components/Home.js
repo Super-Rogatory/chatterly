@@ -1,10 +1,11 @@
 import React from 'react';
-import Typewriter from 'typewriter-effect';
 import crownlogo from '../icons/crown.png';
 import chatterlylogo from '../icons/favicon.png';
 import { Redirect } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
 import { getUserByName, isTokenValid, updateUserStatus } from '../store/effects/utils';
+import { connect } from 'react-redux';
+import { updateChatterlyStatus } from '../store/effects/thunks';
 
 class Home extends React.Component {
 	constructor() {
@@ -90,7 +91,12 @@ class Home extends React.Component {
 							<div className="brown-background-container">
 								<div className="inline-flexed-content-container">
 									<div className="vertical-static-menu">
-										<div className="ui basic large black button">Room List</div>
+										<div
+											className="ui basic large black button"
+											onClick={() => this.props.updateComponent('openRoomListInHomePage', !this.props.openRoomListTab)}
+										>
+											Room List
+										</div>
 										<div
 											className={`ui basic ${canChangeUserStatusAgain ? '' : 'disabled'} black button`}
 											onClick={() => this.updateUserStatusWithTimeout(user)}
@@ -105,18 +111,24 @@ class Home extends React.Component {
 										</div>
 									</div>
 									<div className="ui-sandbox">
-										<div className="chatterly-logo-wrapper">
-											<img src={chatterlylogo} alt="logo" />
-										</div>
-										<form className="ui attached form">
-											<div className={`field ${roomError ? 'error' : ''}`}>
-												<label>Enter a room name!</label>
-												<input placeholder="Enter Room" name="room" type="text" />
+										<div className="ui-sandbox-top-container">
+											<div className="chatterly-logo-wrapper">
+												<img src={chatterlylogo} alt="logo" />
 											</div>
-										</form>
-										<button type="submit" className="ui basic black button">
-											JOIN!
-										</button>
+											<form className="ui attached form">
+												<div className={`field ${roomError ? 'error' : ''}`}>
+													<label>Enter a room name!</label>
+													<input placeholder="Enter Room" name="room" type="text" />
+												</div>
+											</form>
+											<button type="submit" className="ui basic black button">
+												JOIN!
+											</button>
+											{roomError && (
+												<div className="ui bottom warning message">{"Don't forget to enter the room name."}</div>
+											)}
+										</div>
+										<div className="ui-sandbox-room-list">{this.props.openRoomListTab && 'tab opened'}</div>
 									</div>
 								</div>
 
@@ -139,4 +151,12 @@ class Home extends React.Component {
 	}
 }
 
-export default Home;
+const mapStateToProps = (state) => ({
+	openRoomListTab: state.openRoomListTab,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	updateComponent: (type, status) => dispatch(updateChatterlyStatus(type, status)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

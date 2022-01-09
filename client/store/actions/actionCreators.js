@@ -6,7 +6,6 @@ export const _getUsersInRoom = (users) => {
 		users,
 	};
 };
-
 export const _togglePopup = (status) => {
 	return {
 		type: types.TOGGLE_POPUP,
@@ -16,6 +15,12 @@ export const _togglePopup = (status) => {
 export const _toggleParticipantsTab = (status) => {
 	return {
 		type: types.TOGGLE_PARTICIPANTS_TAB,
+		status,
+	};
+};
+export const _toggleRoomListInHomePage = (status) => {
+	return {
+		type: types.TOGGLE_ROOM_LIST_IN_HOME_PAGE,
 		status,
 	};
 };

@@ -4803,13 +4803,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var typewriter_effect__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! typewriter-effect */ "./node_modules/typewriter-effect/dist/react.js");
-/* harmony import */ var typewriter_effect__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(typewriter_effect__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _icons_crown_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../icons/crown.png */ "./client/icons/crown.png");
-/* harmony import */ var _icons_favicon_png__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../icons/favicon.png */ "./client/icons/favicon.png");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
-/* harmony import */ var react_loader_spinner__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-loader-spinner */ "./node_modules/react-loader-spinner/dist/index.js");
-/* harmony import */ var _store_effects_utils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../store/effects/utils */ "./client/store/effects/utils.js");
+/* harmony import */ var _icons_crown_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../icons/crown.png */ "./client/icons/crown.png");
+/* harmony import */ var _icons_favicon_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../icons/favicon.png */ "./client/icons/favicon.png");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_loader_spinner__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-loader-spinner */ "./node_modules/react-loader-spinner/dist/index.js");
+/* harmony import */ var _store_effects_utils__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../store/effects/utils */ "./client/store/effects/utils.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _store_effects_thunks__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../store/effects/thunks */ "./client/store/effects/thunks.js");
 
 
 
@@ -4821,6 +4821,7 @@ __webpack_require__.r(__webpack_exports__);
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__["default"])(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
 
 
 
@@ -4876,11 +4877,11 @@ var Home = /*#__PURE__*/function (_React$Component) {
 
                 _context.prev = 3;
                 _context.next = 6;
-                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_12__.isTokenValid)(token);
+                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_11__.isTokenValid)(token);
 
               case 6:
                 _context.next = 8;
-                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_12__.getUserByName)(localStorageName);
+                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_11__.getUserByName)(localStorageName);
 
               case 8:
                 user = _context.sent;
@@ -4915,9 +4916,9 @@ var Home = /*#__PURE__*/function (_React$Component) {
                   });
                 };
 
-                logo.src = _icons_crown_png__WEBPACK_IMPORTED_MODULE_9__["default"]; // triggers browser download of image
+                logo.src = _icons_crown_png__WEBPACK_IMPORTED_MODULE_8__["default"]; // triggers browser download of image
 
-                logo2.src = _icons_favicon_png__WEBPACK_IMPORTED_MODULE_10__["default"];
+                logo2.src = _icons_favicon_png__WEBPACK_IMPORTED_MODULE_9__["default"];
                 this.setState({
                   isLoaded: true
                 });
@@ -4957,7 +4958,7 @@ var Home = /*#__PURE__*/function (_React$Component) {
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_12__.updateUserStatus)(user);
+                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_11__.updateUserStatus)(user);
 
               case 3:
                 this.setState({
@@ -5001,7 +5002,7 @@ var Home = /*#__PURE__*/function (_React$Component) {
               case 0:
                 _context3.prev = 0;
                 _context3.next = 3;
-                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_12__.updateUserStatus)(user, typeObject);
+                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_11__.updateUserStatus)(user, typeObject);
 
               case 3:
                 this.setState({
@@ -5042,7 +5043,7 @@ var Home = /*#__PURE__*/function (_React$Component) {
 
       if (!this.state.isLoggedIn || this.state.invalidToken) {
         window.localStorage.clear();
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Redirect, {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Redirect, {
           to: "/"
         });
       }
@@ -5051,7 +5052,7 @@ var Home = /*#__PURE__*/function (_React$Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
           id: "vertical-container",
           className: "center-content"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(react_loader_spinner__WEBPACK_IMPORTED_MODULE_11__["default"], {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(react_loader_spinner__WEBPACK_IMPORTED_MODULE_10__["default"], {
           type: "ThreeDots",
           color: "#d5a26c"
         }), ";");
@@ -5070,7 +5071,10 @@ var Home = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "vertical-static-menu"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
-        className: "ui basic large black button"
+        className: "ui basic large black button",
+        onClick: function onClick() {
+          return _this4.props.updateComponent('openRoomListInHomePage', !_this4.props.openRoomListTab);
+        }
       }, "Room List"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "ui basic ".concat(canChangeUserStatusAgain ? '' : 'disabled', " black button"),
         onClick: function onClick() {
@@ -5086,9 +5090,11 @@ var Home = /*#__PURE__*/function (_React$Component) {
       }, "Logout")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "ui-sandbox"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+        className: "ui-sandbox-top-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "chatterly-logo-wrapper"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("img", {
-        src: _icons_favicon_png__WEBPACK_IMPORTED_MODULE_10__["default"],
+        src: _icons_favicon_png__WEBPACK_IMPORTED_MODULE_9__["default"],
         alt: "logo"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("form", {
         className: "ui attached form"
@@ -5101,14 +5107,18 @@ var Home = /*#__PURE__*/function (_React$Component) {
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("button", {
         type: "submit",
         className: "ui basic black button"
-      }, "JOIN!"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      }, "JOIN!"), roomError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+        className: "ui bottom warning message"
+      }, "Don't forget to enter the room name.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+        className: "ui-sandbox-room-list"
+      }, this.props.openRoomListTab && 'tab opened'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "logged-in-username-footer"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "username-wrapper"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "username-wrapper-img"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("img", {
-        src: _icons_crown_png__WEBPACK_IMPORTED_MODULE_9__["default"],
+        src: _icons_crown_png__WEBPACK_IMPORTED_MODULE_8__["default"],
         alt: "crown-logo"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "username-wrapper-name"
@@ -5123,7 +5133,21 @@ var Home = /*#__PURE__*/function (_React$Component) {
   return Home;
 }(react__WEBPACK_IMPORTED_MODULE_7__.Component);
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Home);
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    openRoomListTab: state.openRoomListTab
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    updateComponent: function updateComponent(type, status) {
+      return dispatch((0,_store_effects_thunks__WEBPACK_IMPORTED_MODULE_13__.updateChatterlyStatus)(type, status));
+    }
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_12__.connect)(mapStateToProps, mapDispatchToProps)(Home));
 
 /***/ }),
 
@@ -6645,6 +6669,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "_getUsersInRoom": () => (/* binding */ _getUsersInRoom),
 /* harmony export */   "_togglePopup": () => (/* binding */ _togglePopup),
 /* harmony export */   "_toggleParticipantsTab": () => (/* binding */ _toggleParticipantsTab),
+/* harmony export */   "_toggleRoomListInHomePage": () => (/* binding */ _toggleRoomListInHomePage),
 /* harmony export */   "_saveIntervalForUserCount": () => (/* binding */ _saveIntervalForUserCount),
 /* harmony export */   "_clearIntervalForUserCount": () => (/* binding */ _clearIntervalForUserCount),
 /* harmony export */   "_expiredGuest": () => (/* binding */ _expiredGuest),
@@ -6667,6 +6692,12 @@ var _togglePopup = function _togglePopup(status) {
 var _toggleParticipantsTab = function _toggleParticipantsTab(status) {
   return {
     type: _actionTypes__WEBPACK_IMPORTED_MODULE_0__.TOGGLE_PARTICIPANTS_TAB,
+    status: status
+  };
+};
+var _toggleRoomListInHomePage = function _toggleRoomListInHomePage(status) {
+  return {
+    type: _actionTypes__WEBPACK_IMPORTED_MODULE_0__.TOGGLE_ROOM_LIST_IN_HOME_PAGE,
     status: status
   };
 };
@@ -6709,6 +6740,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "GET_USERS_IN_ROOM": () => (/* binding */ GET_USERS_IN_ROOM),
 /* harmony export */   "TOGGLE_POPUP": () => (/* binding */ TOGGLE_POPUP),
 /* harmony export */   "TOGGLE_PARTICIPANTS_TAB": () => (/* binding */ TOGGLE_PARTICIPANTS_TAB),
+/* harmony export */   "TOGGLE_ROOM_LIST_IN_HOME_PAGE": () => (/* binding */ TOGGLE_ROOM_LIST_IN_HOME_PAGE),
 /* harmony export */   "SAVE_INTERVAL_FOR_USER_COUNT": () => (/* binding */ SAVE_INTERVAL_FOR_USER_COUNT),
 /* harmony export */   "CLEAR_INTERVAL_FOR_USER_COUNT": () => (/* binding */ CLEAR_INTERVAL_FOR_USER_COUNT),
 /* harmony export */   "EXPIRED_GUEST": () => (/* binding */ EXPIRED_GUEST),
@@ -6717,6 +6749,7 @@ __webpack_require__.r(__webpack_exports__);
 var GET_USERS_IN_ROOM = 'GET_USERS_IN_ROOM';
 var TOGGLE_POPUP = 'TOGGLE_POPUP';
 var TOGGLE_PARTICIPANTS_TAB = 'TOGGLE_PARTICIPANTS_TAB';
+var TOGGLE_ROOM_LIST_IN_HOME_PAGE = 'TOGGLE_ROOM_LIST_IN_HOME_PAGE';
 var SAVE_INTERVAL_FOR_USER_COUNT = 'SAVE_INTERVAL_FOR_USER_COUNT';
 var CLEAR_INTERVAL_FOR_USER_COUNT = 'CLEAR_INTERVAL_FOR_USER_COUNT';
 var EXPIRED_GUEST = 'EXPIRED_GUEST';
@@ -6808,6 +6841,10 @@ var updateChatterlyStatus = function updateChatterlyStatus(type, status) {
 
       case 'openParticipantsTab':
         dispatch((0,_actions_actionCreators__WEBPACK_IMPORTED_MODULE_2__._toggleParticipantsTab)(status));
+        break;
+
+      case 'openRoomListInHomePage':
+        dispatch((0,_actions_actionCreators__WEBPACK_IMPORTED_MODULE_2__._toggleRoomListInHomePage)(status));
         break;
 
       case 'missingUser':
@@ -7558,6 +7595,7 @@ var combinedReducer = (0,redux__WEBPACK_IMPORTED_MODULE_2__.combineReducers)({
   intervalId: _misc__WEBPACK_IMPORTED_MODULE_0__.saveIntervalIdStatusToState,
   isTriggered: _misc__WEBPACK_IMPORTED_MODULE_0__.toggleStatusReducer,
   openParticipantsTab: _misc__WEBPACK_IMPORTED_MODULE_0__.toggleParticipantsReducer,
+  openRoomListTab: _misc__WEBPACK_IMPORTED_MODULE_0__.toggleRoomListReducer,
   isGuestExpired: _misc__WEBPACK_IMPORTED_MODULE_0__.guestExpiredReducer,
   noUser: _misc__WEBPACK_IMPORTED_MODULE_0__.missingUserReducer
 });
@@ -7577,6 +7615,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "toggleStatusReducer": () => (/* binding */ toggleStatusReducer),
 /* harmony export */   "guestExpiredReducer": () => (/* binding */ guestExpiredReducer),
 /* harmony export */   "toggleParticipantsReducer": () => (/* binding */ toggleParticipantsReducer),
+/* harmony export */   "toggleRoomListReducer": () => (/* binding */ toggleRoomListReducer),
 /* harmony export */   "saveIntervalIdStatusToState": () => (/* binding */ saveIntervalIdStatusToState),
 /* harmony export */   "missingUserReducer": () => (/* binding */ missingUserReducer)
 /* harmony export */ });
@@ -7612,6 +7651,18 @@ var toggleParticipantsReducer = function toggleParticipantsReducer() {
 
   switch (action.type) {
     case _actions_actionTypes__WEBPACK_IMPORTED_MODULE_0__.TOGGLE_PARTICIPANTS_TAB:
+      return action.status;
+
+    default:
+      return state;
+  }
+};
+var toggleRoomListReducer = function toggleRoomListReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions_actionTypes__WEBPACK_IMPORTED_MODULE_0__.TOGGLE_ROOM_LIST_IN_HOME_PAGE:
       return action.status;
 
     default:
@@ -13036,7 +13087,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n", "",{"version":3,"sources":["webpack://./client/styles/css/home-styles.css"],"names":[],"mappings":"AAAA;CACC,YAAY;CACZ,WAAW;CACX,uBAAuB;AACxB;;AAEA;CACC,oBAAoB;CACpB,WAAW;CACX,eAAe;CACf,8BAA8B;CAC9B,eAAe;AAChB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,6BAA6B;CAC7B,mBAAmB;CACnB,UAAU;CACV,YAAY;CACZ,mCAAmC;CACnC,6BAA6B;AAC9B;;AAEA;CACC,aAAa;CACb,UAAU;AACX;;AAEA;CACC,aAAa;CACb,WAAW;CACX,UAAU,EAAE,6EAA6E;CACzF,gBAAgB;CAChB,8BAA8B;CAC9B,mBAAmB;CACnB,eAAe;AAChB;;AAEA;CACC,oBAAoB;CACpB,mBAAmB;CACnB,uBAAuB;CACvB,cAAc;CACd,gBAAgB;CAChB,kBAAkB;AACnB;;AAEA;CACC,WAAW;CACX,YAAY;CACZ,mBAAmB;AACpB;;AAEA;CACC,gBAAgB;AACjB;;AAEA;CACC,eAAe;AAChB;;AAEA;CACC,uBAAuB;AACxB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,uBAAuB;CACvB,mBAAmB;AACpB;;AAEA;;;CAGC,iBAAiB;AAClB;;AAEA;CACC;EACC,eAAe;CAChB;CACA;EACC,WAAW;EACX,YAAY;EACZ,kBAAkB;CACnB;AACD","sourcesContent":[".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\nform.ui {\n\tpadding: 1rem;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n", "",{"version":3,"sources":["webpack://./client/styles/css/home-styles.css"],"names":[],"mappings":"AAAA;CACC,YAAY;CACZ,WAAW;CACX,uBAAuB;AACxB;;AAEA;CACC,oBAAoB;CACpB,WAAW;CACX,eAAe;CACf,8BAA8B;CAC9B,eAAe;AAChB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,6BAA6B;CAC7B,mBAAmB;CACnB,UAAU;CACV,YAAY;CACZ,mCAAmC;CACnC,6BAA6B;AAC9B;;AAEA;CACC,aAAa;CACb,UAAU;AACX;;AAEA;CACC,aAAa;CACb,WAAW;CACX,UAAU,EAAE,6EAA6E;CACzF,gBAAgB;CAChB,8BAA8B;CAC9B,mBAAmB;CACnB,eAAe;AAChB;;AAEA;CACC,oBAAoB;CACpB,mBAAmB;CACnB,uBAAuB;CACvB,cAAc;CACd,gBAAgB;CAChB,kBAAkB;AACnB;;AAEA;CACC,WAAW;CACX,YAAY;CACZ,mBAAmB;AACpB;;AAEA;CACC,gBAAgB;AACjB;;AAEA;CACC,eAAe;AAChB;;AAEA;CACC,uBAAuB;AACxB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,uBAAuB;CACvB,mBAAmB;AACpB;;AAEA;CACC,aAAa;AACd;;AAEA;;;CAGC,iBAAiB;AAClB;;AAEA;CACC;EACC,eAAe;CAChB;CACA;EACC,WAAW;EACX,YAAY;EACZ,kBAAkB;CACnB;AACD","sourcesContent":[".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\nform.ui {\n\tpadding: 1rem;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

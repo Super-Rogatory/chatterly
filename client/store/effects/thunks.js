@@ -6,6 +6,7 @@ import {
 	_toggleParticipantsTab,
 	_saveIntervalForUserCount,
 	_clearIntervalForUserCount,
+	_toggleRoomListInHomePage,
 } from '../actions/actionCreators';
 import axios from 'axios';
 
@@ -41,6 +42,10 @@ export const updateChatterlyStatus = (type, status) => {
 
 			case 'openParticipantsTab':
 				dispatch(_toggleParticipantsTab(status));
+				break;
+
+			case 'openRoomListInHomePage':
+				dispatch(_toggleRoomListInHomePage(status));
 				break;
 
 			case 'missingUser':

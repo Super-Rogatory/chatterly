@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import {
 	toggleStatusReducer,
+	toggleRoomListReducer,
 	guestExpiredReducer,
 	missingUserReducer,
 	toggleParticipantsReducer,
@@ -13,6 +14,7 @@ const combinedReducer = combineReducers({
 	intervalId: saveIntervalIdStatusToState,
 	isTriggered: toggleStatusReducer,
 	openParticipantsTab: toggleParticipantsReducer,
+	openRoomListTab: toggleRoomListReducer,
 	isGuestExpired: guestExpiredReducer,
 	noUser: missingUserReducer,
 });
