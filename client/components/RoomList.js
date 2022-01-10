@@ -2,7 +2,7 @@ import React from 'react';
 
 class RoomList extends React.Component {
 	render() {
-		return 'Heyo';
+		return <div className="room-list-container">Room List</div>;
 	}
 }
 

@@ -72,12 +72,26 @@
 	align-items: center;
 }
 
-.split {
-	justify-content: space-around;
+.ui-sandbox-top {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	height: 50%;
+}
+
+.ui-sandbox-bottom {
+	height: 50%;
+	width: 100%;
 }
 
 form.ui {
 	padding: 1rem;
+}
+
+.room-list-container {
+	height: 100%;
+	background-color: rgb(121, 108, 89);
+	border-top: 2px solid black;
 }
 
 div.basic:nth-child(1),

@@ -22,6 +22,7 @@ class Home extends React.Component {
 			canChangeUserStatusAgain: true,
 			statusTimerId: null,
 			roomError: false,
+			strikes: 0,
 		};
 	}
 
@@ -72,6 +73,22 @@ class Home extends React.Component {
 		}
 	}
 
+	openRoomListInHomePage() {
+		this.props.updateComponent('openRoomListInHomePage', !this.props.openRoomListTab);
+		this.setState({ strikes: this.state.strikes + 0.5 });
+	}
+
+	deployStrikeMessage() {
+		const { strikes } = this.state;
+		if (strikes < 2) {
+			return "There's really nothing to see here ;). Adios!";
+		} else if (strikes >= 2 && strikes < 5) {
+			return 'Seriously dude. Nothing to see here :).';
+		} else if (strikes >= 5) {
+			return "You're starting to really get on my nerves here. Keep it up and I'll kick your ass out";
+		}
+	}
+
 	render() {
 		const { user, canChangeUserStatusAgain, isUserOnline, roomError } = this.state;
 		if (!this.state.isLoggedIn || this.state.invalidToken) {
@@ -92,10 +109,7 @@ class Home extends React.Component {
 							<div className="brown-background-container">
 								<div className="inline-flexed-content-container">
 									<div className="vertical-static-menu">
-										<div
-											className="ui basic large black button"
-											onClick={() => this.props.updateComponent('openRoomListInHomePage', !this.props.openRoomListTab)}
-										>
+										<div className="ui basic large black button" onClick={() => this.openRoomListInHomePage()}>
 											Room List
 										</div>
 										<div
@@ -111,26 +125,34 @@ class Home extends React.Component {
 											Logout
 										</div>
 									</div>
-									<div className={this.props.openRoomListTab ? 'ui-sandbox split' : 'ui-sandbox'}>
+									<div className="ui-sandbox">
 										<div className="ui-sandbox-top">
 											<div className="chatterly-logo-wrapper">
 												<img src={chatterlylogo} alt="logo" />
 											</div>
-											<form className="ui attached form">
-												<div className={`field ${roomError ? 'error' : ''}`}>
-													<label>Enter a room name!</label>
-													<input placeholder="Enter Room" name="room" type="text" />
-												</div>
-											</form>
-											<button type="submit" className="ui basic black button">
-												JOIN!
-											</button>
-											{roomError && (
-												<div className="ui bottom warning message">{"Don't forget to enter the room name."}</div>
-											)}
+											<div className="chatterly-home-form">
+												<form className="ui attached form">
+													<div className={`field ${roomError ? 'error' : ''}`}>
+														<label>Enter a room name!</label>
+														<input placeholder="Enter Room" name="room" type="text" />
+													</div>
+												</form>
+												<button type="submit" className="ui basic black button">
+													JOIN!
+												</button>
+												{roomError && (
+													<div className="ui bottom warning message">{"Don't forget to enter the room name."}</div>
+												)}
+											</div>
 										</div>
 										{/* will render out the roomlist when the room list button is toggled */}
-										<div className="ui-sandbox-bottom">{this.props.openRoomListTab && <RoomList />}</div>
+										<div className={'ui-sandbox-bottom'}>
+											{this.props.openRoomListTab ? (
+												<RoomList />
+											) : (
+												<div className="bold">{this.deployStrikeMessage()}</div>
+											)}
+										</div>
 									</div>
 								</div>
 
