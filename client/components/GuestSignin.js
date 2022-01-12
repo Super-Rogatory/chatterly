@@ -44,7 +44,7 @@ class GuestSignIn extends React.Component {
 			if (isNameTaken) {
 				this.setState({ errMessage: 'Sorry, this username is already taken. Choose another one!' });
 			}
-			this.state.errorHandler.checkGuestErrorInput(isNameTaken, name, room);
+			errorHandler.checkGuestErrorInput(isNameTaken, name, room);
 		} else {
 			// at this point, our name and room fields are populated AND the name is not taken. Great. createUser now.
 			try {

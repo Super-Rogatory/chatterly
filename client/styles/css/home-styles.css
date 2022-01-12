@@ -87,15 +87,10 @@
 .ui-sandbox-top {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-evenly;
 	height: 50%;
 	width: 70%;
 }
 
-.full-sandbox {
-	height: 100%;
-	width: 100%;
-}
 .ui-sandbox-bottom {
 	height: 50%;
 	width: 100%;

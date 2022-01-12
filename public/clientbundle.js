@@ -4565,7 +4565,7 @@ var GuestSignIn = /*#__PURE__*/function (_React$Component) {
                   });
                 }
 
-                this.state.errorHandler.checkGuestErrorInput(isNameTaken, name, room);
+                errorHandler.checkGuestErrorInput(isNameTaken, name, room);
                 _context.next = 22;
                 break;
 
@@ -4794,24 +4794,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js");
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _icons_crown_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../icons/crown.png */ "./client/icons/crown.png");
-/* harmony import */ var _icons_favicon_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../icons/favicon.png */ "./client/icons/favicon.png");
-/* harmony import */ var _icons_refresh_png__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../icons/refresh.png */ "./client/icons/refresh.png");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
-/* harmony import */ var react_loader_spinner__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-loader-spinner */ "./node_modules/react-loader-spinner/dist/index.js");
-/* harmony import */ var _store_effects_utils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../store/effects/utils */ "./client/store/effects/utils.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _store_effects_thunks__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../store/effects/thunks */ "./client/store/effects/thunks.js");
-/* harmony import */ var _RoomList__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./RoomList */ "./client/components/RoomList.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _icons_crown_png__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../icons/crown.png */ "./client/icons/crown.png");
+/* harmony import */ var _icons_favicon_png__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../icons/favicon.png */ "./client/icons/favicon.png");
+/* harmony import */ var _icons_refresh_png__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../icons/refresh.png */ "./client/icons/refresh.png");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_loader_spinner__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-loader-spinner */ "./node_modules/react-loader-spinner/dist/index.js");
+/* harmony import */ var _store_effects_utils__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../store/effects/utils */ "./client/store/effects/utils.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _store_effects_thunks__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../store/effects/thunks */ "./client/store/effects/thunks.js");
+/* harmony import */ var _RoomList__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./RoomList */ "./client/components/RoomList.js");
 
 
 
@@ -4820,7 +4822,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__["default"])(this, result); }; }
+
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_7__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_7__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_6__["default"])(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
@@ -4836,14 +4840,14 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 
 var Home = /*#__PURE__*/function (_React$Component) {
-  (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(Home, _React$Component);
+  (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__["default"])(Home, _React$Component);
 
   var _super = _createSuper(Home);
 
   function Home() {
     var _this;
 
-    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, Home);
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__["default"])(this, Home);
 
     _this = _super.call(this);
     _this.state = {
@@ -4851,6 +4855,7 @@ var Home = /*#__PURE__*/function (_React$Component) {
       // recall that null is returned if the key does not exist !!{} is true !!null is false
       invalidToken: false,
       user: {},
+      room: '',
       isUserOnline: undefined,
       isCrownReady: false,
       isLogoReady: false,
@@ -4861,16 +4866,18 @@ var Home = /*#__PURE__*/function (_React$Component) {
       roomError: false,
       strikes: 0
     };
+    _this.handleChange = _this.handleChange.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__["default"])(_this));
+    _this.handleSubmit = _this.handleSubmit.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__["default"])(_this));
     return _this;
   }
 
-  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__["default"])(Home, [{
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__["default"])(Home, [{
     key: "componentDidMount",
     value: function () {
-      var _componentDidMount = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().mark(function _callee() {
+      var _componentDidMount = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().mark(function _callee() {
         var localStorageName, localStorageToken, _JSON$parse, token, user;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
@@ -4881,11 +4888,11 @@ var Home = /*#__PURE__*/function (_React$Component) {
 
                 _context.prev = 3;
                 _context.next = 6;
-                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_12__.isTokenValid)(token);
+                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_14__.isTokenValid)(token);
 
               case 6:
                 _context.next = 8;
-                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_12__.getUserByName)(localStorageName);
+                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_14__.getUserByName)(localStorageName);
 
               case 8:
                 user = _context.sent;
@@ -4960,24 +4967,41 @@ var Home = /*#__PURE__*/function (_React$Component) {
         });
       };
 
-      crownIcon.src = _icons_crown_png__WEBPACK_IMPORTED_MODULE_8__["default"]; // triggers browser download of image
+      crownIcon.src = _icons_crown_png__WEBPACK_IMPORTED_MODULE_10__["default"]; // triggers browser download of image
 
-      chatIcon.src = _icons_favicon_png__WEBPACK_IMPORTED_MODULE_9__["default"];
-      refreshIcon.src = _icons_refresh_png__WEBPACK_IMPORTED_MODULE_10__["default"];
+      chatIcon.src = _icons_favicon_png__WEBPACK_IMPORTED_MODULE_11__["default"];
+      refreshIcon.src = _icons_refresh_png__WEBPACK_IMPORTED_MODULE_12__["default"];
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+
+      if (!this.state.room) {
+        this.setState({
+          roomError: true
+        });
+        return;
+      }
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(e) {
+      this.setState((0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__["default"])({}, e.target.name, e.target.value));
     }
   }, {
     key: "updateUserStatusWithTimeout",
     value: function () {
-      var _updateUserStatusWithTimeout = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().mark(function _callee2(user) {
+      var _updateUserStatusWithTimeout = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().mark(function _callee2(user) {
         var _this3 = this;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_12__.updateUserStatus)(user);
+                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_14__.updateUserStatus)(user);
 
               case 3:
                 this.setState({
@@ -5014,14 +5038,14 @@ var Home = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "updateUserStatusAndLogout",
     value: function () {
-      var _updateUserStatusAndLogout = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().mark(function _callee3(user, typeObject) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().wrap(function _callee3$(_context3) {
+      var _updateUserStatusAndLogout = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().mark(function _callee3(user, typeObject) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.prev = 0;
                 _context3.next = 3;
-                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_12__.updateUserStatus)(user, typeObject);
+                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_14__.updateUserStatus)(user, typeObject);
 
               case 3:
                 this.setState({
@@ -5075,99 +5099,101 @@ var Home = /*#__PURE__*/function (_React$Component) {
 
       if (!this.state.isLoggedIn || this.state.invalidToken) {
         window.localStorage.clear();
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Redirect, {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_18__.Redirect, {
           to: "/"
         });
       }
 
       if (!isLoaded || !isLogoReady || !isCrownReady || !isRefreshReady) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("div", {
           id: "vertical-container",
           className: "center-content"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(react_loader_spinner__WEBPACK_IMPORTED_MODULE_11__["default"], {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement(react_loader_spinner__WEBPACK_IMPORTED_MODULE_13__["default"], {
           type: "ThreeDots",
           color: "#d5a26c"
         }), ";");
-      } else return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      } else return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("div", {
         id: "vertical-container",
         className: "center-content"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("div", {
         className: "chatroom-wrapper",
         align: "middle"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("div", {
         className: "ui container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("div", {
         className: "brown-background-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("div", {
         className: "inline-flexed-content-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("div", {
         className: "vertical-static-menu"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("div", {
         className: "ui basic large black button",
         onClick: function onClick() {
           return _this4.openRoomListInHomePage();
         }
-      }, "Room List"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      }, "Room List"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("div", {
         className: "ui basic ".concat(canChangeUserStatusAgain ? '' : 'disabled', " black button"),
         onClick: function onClick() {
           return _this4.updateUserStatusWithTimeout(user);
         }
-      }, "Change Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      }, "Change Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("div", {
         className: "ui basic large black button",
         onClick: function onClick() {
           return _this4.updateUserStatusAndLogout(user, {
             type: 'logout'
           });
         }
-      }, "Logout")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      }, "Logout")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("div", {
         className: "ui-sandbox"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
-        className: "ui-sandbox-top ".concat(this.props.openRoomListTab ? '' : 'full-sandbox')
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("div", {
+        className: "ui-sandbox-top ".concat(this.props.openRoomListTab ? '' : 'center-content')
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("div", {
         className: "chatterly-logo-wrapper"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("img", {
-        src: _icons_favicon_png__WEBPACK_IMPORTED_MODULE_9__["default"],
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("img", {
+        src: _icons_favicon_png__WEBPACK_IMPORTED_MODULE_11__["default"],
         alt: "logo"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("div", {
         className: "chatterly-home-form"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("form", {
-        className: "ui attached form"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("form", {
+        className: "ui attached form",
+        onSubmit: this.handleSubmit
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("div", {
         className: "field ".concat(roomError ? 'error' : '')
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("label", null, "Enter a room name!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("input", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("label", null, "Enter a room name!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("input", {
         placeholder: "Enter Room",
         name: "room",
-        type: "text"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("button", {
+        type: "text",
+        onChange: this.handleChange
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("button", {
         type: "submit",
         className: "ui basic black button"
-      }, "JOIN!"), roomError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      }, "JOIN!")), roomError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("div", {
         className: "ui bottom warning message"
-      }, "Don't forget to enter the room name."))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
-        className: 'ui-sandbox-bottom'
-      }, this.props.openRoomListTab && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(_RoomList__WEBPACK_IMPORTED_MODULE_15__["default"], {
-        refreshIcon: _icons_refresh_png__WEBPACK_IMPORTED_MODULE_10__["default"]
-      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      }, "Don't forget to enter the room name."))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("div", {
+        className: this.props.openRoomListTab ? 'ui-sandbox-bottom' : ''
+      }, this.props.openRoomListTab && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement(_RoomList__WEBPACK_IMPORTED_MODULE_17__["default"], {
+        refreshIcon: _icons_refresh_png__WEBPACK_IMPORTED_MODULE_12__["default"]
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("div", {
         className: "logged-in-username-footer"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("div", {
         className: "username-wrapper"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("div", {
         className: "username-wrapper-img"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("img", {
-        src: _icons_crown_png__WEBPACK_IMPORTED_MODULE_8__["default"],
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("img", {
+        src: _icons_crown_png__WEBPACK_IMPORTED_MODULE_10__["default"],
         alt: "crown-logo"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("div", {
         className: "username-wrapper-name"
-      }, user.name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      }, user.name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("div", {
         className: "status-icon-container status-icon-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement("div", {
         className: "circle ".concat(isUserOnline ? 'green' : 'greyed')
       })))))));
     }
   }]);
 
   return Home;
-}(react__WEBPACK_IMPORTED_MODULE_7__.Component);
+}(react__WEBPACK_IMPORTED_MODULE_9__.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -5178,12 +5204,12 @@ var mapStateToProps = function mapStateToProps(state) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     updateComponent: function updateComponent(type, status) {
-      return dispatch((0,_store_effects_thunks__WEBPACK_IMPORTED_MODULE_14__.updateChatterlyStatus)(type, status));
+      return dispatch((0,_store_effects_thunks__WEBPACK_IMPORTED_MODULE_16__.updateChatterlyStatus)(type, status));
     }
   };
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_13__.connect)(mapStateToProps, mapDispatchToProps)(Home));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_15__.connect)(mapStateToProps, mapDispatchToProps)(Home));
 
 /***/ }),
 
@@ -13190,7 +13216,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.refresh-img {\n\tbackground-color: transparent;\n\tborder: none;\n\tcursor: pointer;\n\toutline: none;\n}\n\n.refresh-img > img {\n\twidth: 20px;\n\theight: 20px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n.ui-sandbox-top {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-evenly;\n\theight: 50%;\n\twidth: 70%;\n}\n\n.full-sandbox {\n\theight: 100%;\n\twidth: 100%;\n}\n.ui-sandbox-bottom {\n\theight: 50%;\n\twidth: 100%;\n}\n\nform.ui {\n\tpadding: 1rem;\n}\n\n.room-list-container {\n\twidth: 100%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-top: 2px solid black;\n}\n\n.room-list-title {\n\tmargin-left: 16px;\n}\n\n.room-list-icon {\n\tmargin-right: 16px;\n}\n\n.room-header-menu {\n\tdisplay: flex;\n\twidth: 100%;\n\tjustify-content: space-between;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n", "",{"version":3,"sources":["webpack://./client/styles/css/home-styles.css"],"names":[],"mappings":"AAAA;CACC,YAAY;CACZ,WAAW;CACX,uBAAuB;AACxB;;AAEA;CACC,oBAAoB;CACpB,WAAW;CACX,eAAe;CACf,8BAA8B;CAC9B,eAAe;AAChB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,6BAA6B;CAC7B,mBAAmB;CACnB,UAAU;CACV,YAAY;CACZ,mCAAmC;CACnC,6BAA6B;AAC9B;;AAEA;CACC,aAAa;CACb,UAAU;AACX;;AAEA;CACC,aAAa;CACb,WAAW;CACX,UAAU,EAAE,6EAA6E;CACzF,gBAAgB;CAChB,8BAA8B;CAC9B,mBAAmB;CACnB,eAAe;AAChB;;AAEA;CACC,oBAAoB;CACpB,mBAAmB;CACnB,uBAAuB;CACvB,cAAc;CACd,gBAAgB;CAChB,kBAAkB;AACnB;;AAEA;CACC,WAAW;CACX,YAAY;CACZ,mBAAmB;AACpB;;AAEA;CACC,6BAA6B;CAC7B,YAAY;CACZ,eAAe;CACf,aAAa;AACd;;AAEA;CACC,WAAW;CACX,YAAY;AACb;;AAEA;CACC,gBAAgB;AACjB;;AAEA;CACC,eAAe;AAChB;;AAEA;CACC,uBAAuB;AACxB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,uBAAuB;CACvB,mBAAmB;AACpB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,6BAA6B;CAC7B,WAAW;CACX,UAAU;AACX;;AAEA;CACC,YAAY;CACZ,WAAW;AACZ;AACA;CACC,WAAW;CACX,WAAW;AACZ;;AAEA;CACC,aAAa;AACd;;AAEA;CACC,WAAW;CACX,YAAY;CACZ,mCAAmC;CACnC,2BAA2B;AAC5B;;AAEA;CACC,iBAAiB;AAClB;;AAEA;CACC,kBAAkB;AACnB;;AAEA;CACC,aAAa;CACb,WAAW;CACX,8BAA8B;AAC/B;;AAEA;;;CAGC,iBAAiB;AAClB;;AAEA;CACC;EACC,eAAe;CAChB;CACA;EACC,WAAW;EACX,YAAY;EACZ,kBAAkB;CACnB;AACD","sourcesContent":[".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.refresh-img {\n\tbackground-color: transparent;\n\tborder: none;\n\tcursor: pointer;\n\toutline: none;\n}\n\n.refresh-img > img {\n\twidth: 20px;\n\theight: 20px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n.ui-sandbox-top {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-evenly;\n\theight: 50%;\n\twidth: 70%;\n}\n\n.full-sandbox {\n\theight: 100%;\n\twidth: 100%;\n}\n.ui-sandbox-bottom {\n\theight: 50%;\n\twidth: 100%;\n}\n\nform.ui {\n\tpadding: 1rem;\n}\n\n.room-list-container {\n\twidth: 100%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-top: 2px solid black;\n}\n\n.room-list-title {\n\tmargin-left: 16px;\n}\n\n.room-list-icon {\n\tmargin-right: 16px;\n}\n\n.room-header-menu {\n\tdisplay: flex;\n\twidth: 100%;\n\tjustify-content: space-between;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.refresh-img {\n\tbackground-color: transparent;\n\tborder: none;\n\tcursor: pointer;\n\toutline: none;\n}\n\n.refresh-img > img {\n\twidth: 20px;\n\theight: 20px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n.ui-sandbox-top {\n\tdisplay: flex;\n\tflex-direction: column;\n\theight: 50%;\n\twidth: 70%;\n}\n\n.ui-sandbox-bottom {\n\theight: 50%;\n\twidth: 100%;\n}\n\nform.ui {\n\tpadding: 1rem;\n}\n\n.room-list-container {\n\twidth: 100%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-top: 2px solid black;\n}\n\n.room-list-title {\n\tmargin-left: 16px;\n}\n\n.room-list-icon {\n\tmargin-right: 16px;\n}\n\n.room-header-menu {\n\tdisplay: flex;\n\twidth: 100%;\n\tjustify-content: space-between;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n", "",{"version":3,"sources":["webpack://./client/styles/css/home-styles.css"],"names":[],"mappings":"AAAA;CACC,YAAY;CACZ,WAAW;CACX,uBAAuB;AACxB;;AAEA;CACC,oBAAoB;CACpB,WAAW;CACX,eAAe;CACf,8BAA8B;CAC9B,eAAe;AAChB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,6BAA6B;CAC7B,mBAAmB;CACnB,UAAU;CACV,YAAY;CACZ,mCAAmC;CACnC,6BAA6B;AAC9B;;AAEA;CACC,aAAa;CACb,UAAU;AACX;;AAEA;CACC,aAAa;CACb,WAAW;CACX,UAAU,EAAE,6EAA6E;CACzF,gBAAgB;CAChB,8BAA8B;CAC9B,mBAAmB;CACnB,eAAe;AAChB;;AAEA;CACC,oBAAoB;CACpB,mBAAmB;CACnB,uBAAuB;CACvB,cAAc;CACd,gBAAgB;CAChB,kBAAkB;AACnB;;AAEA;CACC,WAAW;CACX,YAAY;CACZ,mBAAmB;AACpB;;AAEA;CACC,6BAA6B;CAC7B,YAAY;CACZ,eAAe;CACf,aAAa;AACd;;AAEA;CACC,WAAW;CACX,YAAY;AACb;;AAEA;CACC,gBAAgB;AACjB;;AAEA;CACC,eAAe;AAChB;;AAEA;CACC,uBAAuB;AACxB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,uBAAuB;CACvB,mBAAmB;AACpB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,WAAW;CACX,UAAU;AACX;;AAEA;CACC,WAAW;CACX,WAAW;AACZ;;AAEA;CACC,aAAa;AACd;;AAEA;CACC,WAAW;CACX,YAAY;CACZ,mCAAmC;CACnC,2BAA2B;AAC5B;;AAEA;CACC,iBAAiB;AAClB;;AAEA;CACC,kBAAkB;AACnB;;AAEA;CACC,aAAa;CACb,WAAW;CACX,8BAA8B;AAC/B;;AAEA;;;CAGC,iBAAiB;AAClB;;AAEA;CACC;EACC,eAAe;CAChB;CACA;EACC,WAAW;EACX,YAAY;EACZ,kBAAkB;CACnB;AACD","sourcesContent":[".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.refresh-img {\n\tbackground-color: transparent;\n\tborder: none;\n\tcursor: pointer;\n\toutline: none;\n}\n\n.refresh-img > img {\n\twidth: 20px;\n\theight: 20px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n.ui-sandbox-top {\n\tdisplay: flex;\n\tflex-direction: column;\n\theight: 50%;\n\twidth: 70%;\n}\n\n.ui-sandbox-bottom {\n\theight: 50%;\n\twidth: 100%;\n}\n\nform.ui {\n\tpadding: 1rem;\n}\n\n.room-list-container {\n\twidth: 100%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-top: 2px solid black;\n}\n\n.room-list-title {\n\tmargin-left: 16px;\n}\n\n.room-list-icon {\n\tmargin-right: 16px;\n}\n\n.room-header-menu {\n\tdisplay: flex;\n\twidth: 100%;\n\tjustify-content: space-between;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

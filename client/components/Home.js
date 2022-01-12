@@ -16,6 +16,7 @@ class Home extends React.Component {
 			isLoggedIn: !!window.localStorage.getItem('token'), // recall that null is returned if the key does not exist !!{} is true !!null is false
 			invalidToken: false,
 			user: {},
+			room: '',
 			isUserOnline: undefined,
 			isCrownReady: false,
 			isLogoReady: false,
@@ -26,6 +27,8 @@ class Home extends React.Component {
 			roomError: false,
 			strikes: 0,
 		};
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	async componentDidMount() {
@@ -63,6 +66,20 @@ class Home extends React.Component {
 		crownIcon.src = crownlogo; // triggers browser download of image
 		chatIcon.src = chatterlylogo;
 		refreshIcon.src = refreshlogo;
+	}
+
+	handleSubmit(e) {
+		e.preventDefault();
+		if (!this.state.room) {
+			this.setState({ roomError: true });
+			return;
+		}
+	}
+
+	handleChange(e) {
+		this.setState({
+			[e.target.name]: e.target.value,
+		});
 	}
 
 	async updateUserStatusWithTimeout(user) {
@@ -127,27 +144,28 @@ class Home extends React.Component {
 										</div>
 									</div>
 									<div className="ui-sandbox">
-										<div className={`ui-sandbox-top ${this.props.openRoomListTab ? '' : 'full-sandbox'}`}>
+										<div className={`ui-sandbox-top ${this.props.openRoomListTab ? '' : 'center-content'}`}>
 											<div className="chatterly-logo-wrapper">
 												<img src={chatterlylogo} alt="logo" />
 											</div>
 											<div className="chatterly-home-form">
-												<form className="ui attached form">
+												<form className="ui attached form" onSubmit={this.handleSubmit}>
 													<div className={`field ${roomError ? 'error' : ''}`}>
 														<label>Enter a room name!</label>
-														<input placeholder="Enter Room" name="room" type="text" />
+														<input placeholder="Enter Room" name="room" type="text" onChange={this.handleChange} />
 													</div>
+
+													<button type="submit" className="ui basic black button">
+														JOIN!
+													</button>
 												</form>
-												<button type="submit" className="ui basic black button">
-													JOIN!
-												</button>
 												{roomError && (
 													<div className="ui bottom warning message">{"Don't forget to enter the room name."}</div>
 												)}
 											</div>
 										</div>
 										{/* will render out the roomlist when the room list button is toggled */}
-										<div className={'ui-sandbox-bottom'}>
+										<div className={this.props.openRoomListTab ? 'ui-sandbox-bottom' : ''}>
 											{this.props.openRoomListTab && <RoomList refreshIcon={refreshlogo} />}
 										</div>
 									</div>
