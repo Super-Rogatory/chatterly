@@ -1,6 +1,7 @@
 import React from 'react';
 import crownlogo from '../icons/crown.png';
 import chatterlylogo from '../icons/favicon.png';
+import refreshlogo from '../icons/refresh.png';
 import { Redirect } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
 import { getUserByName, isTokenValid, updateUserStatus } from '../store/effects/utils';
@@ -18,6 +19,7 @@ class Home extends React.Component {
 			isUserOnline: undefined,
 			isCrownReady: false,
 			isLogoReady: false,
+			isRefreshReady: false,
 			isLoaded: false,
 			canChangeUserStatusAgain: true,
 			statusTimerId: null,
@@ -37,21 +39,30 @@ class Home extends React.Component {
 			const user = await getUserByName(localStorageName);
 			if (!user) throw new Error('failed to find user');
 			else this.setState({ user, isUserOnline: user.active });
-			/* ensure that the logo is ready to display. */
-			const logo = new Image();
-			const logo2 = new Image();
-			logo.onload = () => {
-				this.setState({ isCrownReady: true });
-			};
-			logo2.onload = () => {
-				this.setState({ isLogoReady: true });
-			};
-			logo.src = crownlogo; // triggers browser download of image
-			logo2.src = chatterlylogo;
+			this.loadImages();
 			this.setState({ isLoaded: true });
 		} catch (err) {
 			this.setState({ invalidToken: true });
 		}
+	}
+
+	loadImages() {
+		/* ensure that the logo is ready to display. */
+		const crownIcon = new Image();
+		const chatIcon = new Image();
+		const refreshIcon = new Image();
+		crownIcon.onload = () => {
+			this.setState({ isCrownReady: true });
+		};
+		chatIcon.onload = () => {
+			this.setState({ isLogoReady: true });
+		};
+		refreshIcon.onload = () => {
+			this.setState({ isRefreshReady: true });
+		};
+		crownIcon.src = crownlogo; // triggers browser download of image
+		chatIcon.src = chatterlylogo;
+		refreshIcon.src = refreshlogo;
 	}
 
 	async updateUserStatusWithTimeout(user) {
@@ -78,24 +89,14 @@ class Home extends React.Component {
 		this.setState({ strikes: this.state.strikes + 0.5 });
 	}
 
-	deployStrikeMessage() {
-		const { strikes } = this.state;
-		if (strikes < 2) {
-			return "There's really nothing to see here ;). Adios!";
-		} else if (strikes >= 2 && strikes < 5) {
-			return 'Seriously dude. Nothing to see here :).';
-		} else if (strikes >= 5) {
-			return "You're starting to really get on my nerves here. Keep it up and I'll kick your ass out";
-		}
-	}
-
 	render() {
 		const { user, canChangeUserStatusAgain, isUserOnline, roomError } = this.state;
+		const { isLoaded, isLogoReady, isCrownReady, isRefreshReady } = this.state;
 		if (!this.state.isLoggedIn || this.state.invalidToken) {
 			window.localStorage.clear();
 			return <Redirect to="/" />;
 		}
-		if (!this.state.isLoaded || !this.state.isLogoReady || !this.state.isCrownReady) {
+		if (!isLoaded || !isLogoReady || !isCrownReady || !isRefreshReady) {
 			return (
 				<div id="vertical-container" className="center-content">
 					<Loader type="ThreeDots" color="#d5a26c" />;
@@ -126,7 +127,7 @@ class Home extends React.Component {
 										</div>
 									</div>
 									<div className="ui-sandbox">
-										<div className="ui-sandbox-top">
+										<div className={`ui-sandbox-top ${this.props.openRoomListTab ? '' : 'full-sandbox'}`}>
 											<div className="chatterly-logo-wrapper">
 												<img src={chatterlylogo} alt="logo" />
 											</div>
@@ -147,11 +148,7 @@ class Home extends React.Component {
 										</div>
 										{/* will render out the roomlist when the room list button is toggled */}
 										<div className={'ui-sandbox-bottom'}>
-											{this.props.openRoomListTab ? (
-												<RoomList />
-											) : (
-												<div className="bold">{this.deployStrikeMessage()}</div>
-											)}
+											{this.props.openRoomListTab && <RoomList refreshIcon={refreshlogo} />}
 										</div>
 									</div>
 								</div>

@@ -4805,12 +4805,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _icons_crown_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../icons/crown.png */ "./client/icons/crown.png");
 /* harmony import */ var _icons_favicon_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../icons/favicon.png */ "./client/icons/favicon.png");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
-/* harmony import */ var react_loader_spinner__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-loader-spinner */ "./node_modules/react-loader-spinner/dist/index.js");
-/* harmony import */ var _store_effects_utils__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../store/effects/utils */ "./client/store/effects/utils.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _store_effects_thunks__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../store/effects/thunks */ "./client/store/effects/thunks.js");
-/* harmony import */ var _RoomList__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./RoomList */ "./client/components/RoomList.js");
+/* harmony import */ var _icons_refresh_png__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../icons/refresh.png */ "./client/icons/refresh.png");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_loader_spinner__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-loader-spinner */ "./node_modules/react-loader-spinner/dist/index.js");
+/* harmony import */ var _store_effects_utils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../store/effects/utils */ "./client/store/effects/utils.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _store_effects_thunks__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../store/effects/thunks */ "./client/store/effects/thunks.js");
+/* harmony import */ var _RoomList__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./RoomList */ "./client/components/RoomList.js");
 
 
 
@@ -4822,6 +4823,7 @@ __webpack_require__.r(__webpack_exports__);
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__["default"])(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
 
 
 
@@ -4852,6 +4854,7 @@ var Home = /*#__PURE__*/function (_React$Component) {
       isUserOnline: undefined,
       isCrownReady: false,
       isLogoReady: false,
+      isRefreshReady: false,
       isLoaded: false,
       canChangeUserStatusAgain: true,
       statusTimerId: null,
@@ -4865,9 +4868,7 @@ var Home = /*#__PURE__*/function (_React$Component) {
     key: "componentDidMount",
     value: function () {
       var _componentDidMount = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().mark(function _callee() {
-        var _this2 = this;
-
-        var localStorageName, localStorageToken, _JSON$parse, token, user, logo, logo2;
+        var localStorageName, localStorageToken, _JSON$parse, token, user;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().wrap(function _callee$(_context) {
           while (1) {
@@ -4880,11 +4881,11 @@ var Home = /*#__PURE__*/function (_React$Component) {
 
                 _context.prev = 3;
                 _context.next = 6;
-                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_11__.isTokenValid)(token);
+                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_12__.isTokenValid)(token);
 
               case 6:
                 _context.next = 8;
-                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_11__.getUserByName)(localStorageName);
+                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_12__.getUserByName)(localStorageName);
 
               case 8:
                 user = _context.sent;
@@ -4903,44 +4904,26 @@ var Home = /*#__PURE__*/function (_React$Component) {
                 });
 
               case 14:
-                /* ensure that the logo is ready to display. */
-                logo = new Image();
-                logo2 = new Image();
-
-                logo.onload = function () {
-                  _this2.setState({
-                    isCrownReady: true
-                  });
-                };
-
-                logo2.onload = function () {
-                  _this2.setState({
-                    isLogoReady: true
-                  });
-                };
-
-                logo.src = _icons_crown_png__WEBPACK_IMPORTED_MODULE_8__["default"]; // triggers browser download of image
-
-                logo2.src = _icons_favicon_png__WEBPACK_IMPORTED_MODULE_9__["default"];
+                this.loadImages();
                 this.setState({
                   isLoaded: true
                 });
-                _context.next = 26;
+                _context.next = 21;
                 break;
 
-              case 23:
-                _context.prev = 23;
+              case 18:
+                _context.prev = 18;
                 _context.t0 = _context["catch"](3);
                 this.setState({
                   invalidToken: true
                 });
 
-              case 26:
+              case 21:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[3, 23]]);
+        }, _callee, this, [[3, 18]]);
       }));
 
       function componentDidMount() {
@@ -4949,6 +4932,39 @@ var Home = /*#__PURE__*/function (_React$Component) {
 
       return componentDidMount;
     }()
+  }, {
+    key: "loadImages",
+    value: function loadImages() {
+      var _this2 = this;
+
+      /* ensure that the logo is ready to display. */
+      var crownIcon = new Image();
+      var chatIcon = new Image();
+      var refreshIcon = new Image();
+
+      crownIcon.onload = function () {
+        _this2.setState({
+          isCrownReady: true
+        });
+      };
+
+      chatIcon.onload = function () {
+        _this2.setState({
+          isLogoReady: true
+        });
+      };
+
+      refreshIcon.onload = function () {
+        _this2.setState({
+          isRefreshReady: true
+        });
+      };
+
+      crownIcon.src = _icons_crown_png__WEBPACK_IMPORTED_MODULE_8__["default"]; // triggers browser download of image
+
+      chatIcon.src = _icons_favicon_png__WEBPACK_IMPORTED_MODULE_9__["default"];
+      refreshIcon.src = _icons_refresh_png__WEBPACK_IMPORTED_MODULE_10__["default"];
+    }
   }, {
     key: "updateUserStatusWithTimeout",
     value: function () {
@@ -4961,7 +4977,7 @@ var Home = /*#__PURE__*/function (_React$Component) {
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_11__.updateUserStatus)(user);
+                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_12__.updateUserStatus)(user);
 
               case 3:
                 this.setState({
@@ -5005,7 +5021,7 @@ var Home = /*#__PURE__*/function (_React$Component) {
               case 0:
                 _context3.prev = 0;
                 _context3.next = 3;
-                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_11__.updateUserStatus)(user, typeObject);
+                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_12__.updateUserStatus)(user, typeObject);
 
               case 3:
                 this.setState({
@@ -5042,19 +5058,6 @@ var Home = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
-    key: "deployStrikeMessage",
-    value: function deployStrikeMessage() {
-      var strikes = this.state.strikes;
-
-      if (strikes < 2) {
-        return "There's really nothing to see here ;). Adios!";
-      } else if (strikes >= 2 && strikes < 5) {
-        return 'Seriously dude. Nothing to see here :).';
-      } else if (strikes >= 5) {
-        return "You're starting to really get on my nerves here. Keep it up and I'll kick your ass out";
-      }
-    }
-  }, {
     key: "render",
     value: function render() {
       var _this4 = this;
@@ -5064,19 +5067,24 @@ var Home = /*#__PURE__*/function (_React$Component) {
           canChangeUserStatusAgain = _this$state.canChangeUserStatusAgain,
           isUserOnline = _this$state.isUserOnline,
           roomError = _this$state.roomError;
+      var _this$state2 = this.state,
+          isLoaded = _this$state2.isLoaded,
+          isLogoReady = _this$state2.isLogoReady,
+          isCrownReady = _this$state2.isCrownReady,
+          isRefreshReady = _this$state2.isRefreshReady;
 
       if (!this.state.isLoggedIn || this.state.invalidToken) {
         window.localStorage.clear();
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Redirect, {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Redirect, {
           to: "/"
         });
       }
 
-      if (!this.state.isLoaded || !this.state.isLogoReady || !this.state.isCrownReady) {
+      if (!isLoaded || !isLogoReady || !isCrownReady || !isRefreshReady) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
           id: "vertical-container",
           className: "center-content"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(react_loader_spinner__WEBPACK_IMPORTED_MODULE_10__["default"], {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(react_loader_spinner__WEBPACK_IMPORTED_MODULE_11__["default"], {
           type: "ThreeDots",
           color: "#d5a26c"
         }), ";");
@@ -5114,7 +5122,7 @@ var Home = /*#__PURE__*/function (_React$Component) {
       }, "Logout")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "ui-sandbox"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
-        className: "ui-sandbox-top"
+        className: "ui-sandbox-top ".concat(this.props.openRoomListTab ? '' : 'full-sandbox')
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "chatterly-logo-wrapper"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("img", {
@@ -5137,9 +5145,9 @@ var Home = /*#__PURE__*/function (_React$Component) {
         className: "ui bottom warning message"
       }, "Don't forget to enter the room name."))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: 'ui-sandbox-bottom'
-      }, this.props.openRoomListTab ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(_RoomList__WEBPACK_IMPORTED_MODULE_14__["default"], null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
-        className: "bold"
-      }, this.deployStrikeMessage())))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
+      }, this.props.openRoomListTab && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement(_RoomList__WEBPACK_IMPORTED_MODULE_15__["default"], {
+        refreshIcon: _icons_refresh_png__WEBPACK_IMPORTED_MODULE_10__["default"]
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "logged-in-username-footer"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7__.createElement("div", {
         className: "username-wrapper"
@@ -5170,12 +5178,12 @@ var mapStateToProps = function mapStateToProps(state) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     updateComponent: function updateComponent(type, status) {
-      return dispatch((0,_store_effects_thunks__WEBPACK_IMPORTED_MODULE_13__.updateChatterlyStatus)(type, status));
+      return dispatch((0,_store_effects_thunks__WEBPACK_IMPORTED_MODULE_14__.updateChatterlyStatus)(type, status));
     }
   };
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_12__.connect)(mapStateToProps, mapDispatchToProps)(Home));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_13__.connect)(mapStateToProps, mapDispatchToProps)(Home));
 
 /***/ }),
 
@@ -6336,7 +6344,18 @@ var RoomList = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("div", {
         className: "room-list-container"
-      }, "Room List");
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("div", {
+        className: "room-header-menu"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("div", {
+        className: "room-list-title"
+      }, "Room List"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("div", {
+        className: "room-list-icon"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("button", {
+        className: "refresh-img"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("img", {
+        src: this.props.refreshIcon,
+        alt: "refresh icon"
+      })))));
     }
   }]);
 
@@ -13171,7 +13190,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n.ui-sandbox-top {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-evenly;\n\theight: 50%;\n}\n\n.ui-sandbox-bottom {\n\theight: 50%;\n\twidth: 100%;\n}\n\nform.ui {\n\tpadding: 1rem;\n}\n\n.room-list-container {\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-top: 2px solid black;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n", "",{"version":3,"sources":["webpack://./client/styles/css/home-styles.css"],"names":[],"mappings":"AAAA;CACC,YAAY;CACZ,WAAW;CACX,uBAAuB;AACxB;;AAEA;CACC,oBAAoB;CACpB,WAAW;CACX,eAAe;CACf,8BAA8B;CAC9B,eAAe;AAChB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,6BAA6B;CAC7B,mBAAmB;CACnB,UAAU;CACV,YAAY;CACZ,mCAAmC;CACnC,6BAA6B;AAC9B;;AAEA;CACC,aAAa;CACb,UAAU;AACX;;AAEA;CACC,aAAa;CACb,WAAW;CACX,UAAU,EAAE,6EAA6E;CACzF,gBAAgB;CAChB,8BAA8B;CAC9B,mBAAmB;CACnB,eAAe;AAChB;;AAEA;CACC,oBAAoB;CACpB,mBAAmB;CACnB,uBAAuB;CACvB,cAAc;CACd,gBAAgB;CAChB,kBAAkB;AACnB;;AAEA;CACC,WAAW;CACX,YAAY;CACZ,mBAAmB;AACpB;;AAEA;CACC,gBAAgB;AACjB;;AAEA;CACC,eAAe;AAChB;;AAEA;CACC,uBAAuB;AACxB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,uBAAuB;CACvB,mBAAmB;AACpB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,6BAA6B;CAC7B,WAAW;AACZ;;AAEA;CACC,WAAW;CACX,WAAW;AACZ;;AAEA;CACC,aAAa;AACd;;AAEA;CACC,YAAY;CACZ,mCAAmC;CACnC,2BAA2B;AAC5B;;AAEA;;;CAGC,iBAAiB;AAClB;;AAEA;CACC;EACC,eAAe;CAChB;CACA;EACC,WAAW;EACX,YAAY;EACZ,kBAAkB;CACnB;AACD","sourcesContent":[".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n.ui-sandbox-top {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-evenly;\n\theight: 50%;\n}\n\n.ui-sandbox-bottom {\n\theight: 50%;\n\twidth: 100%;\n}\n\nform.ui {\n\tpadding: 1rem;\n}\n\n.room-list-container {\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-top: 2px solid black;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.refresh-img {\n\tbackground-color: transparent;\n\tborder: none;\n\tcursor: pointer;\n\toutline: none;\n}\n\n.refresh-img > img {\n\twidth: 20px;\n\theight: 20px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n.ui-sandbox-top {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-evenly;\n\theight: 50%;\n\twidth: 70%;\n}\n\n.full-sandbox {\n\theight: 100%;\n\twidth: 100%;\n}\n.ui-sandbox-bottom {\n\theight: 50%;\n\twidth: 100%;\n}\n\nform.ui {\n\tpadding: 1rem;\n}\n\n.room-list-container {\n\twidth: 100%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-top: 2px solid black;\n}\n\n.room-list-title {\n\tmargin-left: 16px;\n}\n\n.room-list-icon {\n\tmargin-right: 16px;\n}\n\n.room-header-menu {\n\tdisplay: flex;\n\twidth: 100%;\n\tjustify-content: space-between;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n", "",{"version":3,"sources":["webpack://./client/styles/css/home-styles.css"],"names":[],"mappings":"AAAA;CACC,YAAY;CACZ,WAAW;CACX,uBAAuB;AACxB;;AAEA;CACC,oBAAoB;CACpB,WAAW;CACX,eAAe;CACf,8BAA8B;CAC9B,eAAe;AAChB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,6BAA6B;CAC7B,mBAAmB;CACnB,UAAU;CACV,YAAY;CACZ,mCAAmC;CACnC,6BAA6B;AAC9B;;AAEA;CACC,aAAa;CACb,UAAU;AACX;;AAEA;CACC,aAAa;CACb,WAAW;CACX,UAAU,EAAE,6EAA6E;CACzF,gBAAgB;CAChB,8BAA8B;CAC9B,mBAAmB;CACnB,eAAe;AAChB;;AAEA;CACC,oBAAoB;CACpB,mBAAmB;CACnB,uBAAuB;CACvB,cAAc;CACd,gBAAgB;CAChB,kBAAkB;AACnB;;AAEA;CACC,WAAW;CACX,YAAY;CACZ,mBAAmB;AACpB;;AAEA;CACC,6BAA6B;CAC7B,YAAY;CACZ,eAAe;CACf,aAAa;AACd;;AAEA;CACC,WAAW;CACX,YAAY;AACb;;AAEA;CACC,gBAAgB;AACjB;;AAEA;CACC,eAAe;AAChB;;AAEA;CACC,uBAAuB;AACxB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,uBAAuB;CACvB,mBAAmB;AACpB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,6BAA6B;CAC7B,WAAW;CACX,UAAU;AACX;;AAEA;CACC,YAAY;CACZ,WAAW;AACZ;AACA;CACC,WAAW;CACX,WAAW;AACZ;;AAEA;CACC,aAAa;AACd;;AAEA;CACC,WAAW;CACX,YAAY;CACZ,mCAAmC;CACnC,2BAA2B;AAC5B;;AAEA;CACC,iBAAiB;AAClB;;AAEA;CACC,kBAAkB;AACnB;;AAEA;CACC,aAAa;CACb,WAAW;CACX,8BAA8B;AAC/B;;AAEA;;;CAGC,iBAAiB;AAClB;;AAEA;CACC;EACC,eAAe;CAChB;CACA;EACC,WAAW;EACX,YAAY;EACZ,kBAAkB;CACnB;AACD","sourcesContent":[".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.refresh-img {\n\tbackground-color: transparent;\n\tborder: none;\n\tcursor: pointer;\n\toutline: none;\n}\n\n.refresh-img > img {\n\twidth: 20px;\n\theight: 20px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n.ui-sandbox-top {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-evenly;\n\theight: 50%;\n\twidth: 70%;\n}\n\n.full-sandbox {\n\theight: 100%;\n\twidth: 100%;\n}\n.ui-sandbox-bottom {\n\theight: 50%;\n\twidth: 100%;\n}\n\nform.ui {\n\tpadding: 1rem;\n}\n\n.room-list-container {\n\twidth: 100%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-top: 2px solid black;\n}\n\n.room-list-title {\n\tmargin-left: 16px;\n}\n\n.room-list-icon {\n\tmargin-right: 16px;\n}\n\n.room-header-menu {\n\tdisplay: flex;\n\twidth: 100%;\n\tjustify-content: space-between;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -13522,6 +13541,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "bc5d20a721287a0cfc002c69207396a4.png");
+
+/***/ }),
+
+/***/ "./client/icons/refresh.png":
+/*!**********************************!*\
+  !*** ./client/icons/refresh.png ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "f441a0886e386949139825a64d99b480.png");
 
 /***/ }),
 
