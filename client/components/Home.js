@@ -160,7 +160,7 @@ class Home extends React.Component {
 													</button>
 												</form>
 												{roomError && (
-													<div className="ui bottom warning message">{"Don't forget to enter the room name."}</div>
+													<div className="ui bottom warning message home">{"Don't forget to enter a room name."}</div>
 												)}
 											</div>
 										</div>

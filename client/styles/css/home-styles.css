@@ -90,6 +90,9 @@
 	height: 50%;
 	width: 70%;
 }
+.chatterly-home-form {
+	width: 100%;
+}
 
 .ui-sandbox-bottom {
 	height: 50%;
@@ -119,6 +122,10 @@ form.ui {
 	display: flex;
 	width: 100%;
 	justify-content: space-between;
+}
+
+.ui.message.home {
+	padding: 0.5em 0.5em;
 }
 
 div.basic:nth-child(1),
