@@ -48,7 +48,6 @@ class Chat extends React.Component {
 		try {
 			const user = JSON.parse(loggedInUser);
 			const dbUser = await getUser(user.id);
-
 			if (!dbUser) {
 				// send user back to home if local storage user cannot match with database user
 				this.setState({ noUser: true });
@@ -101,7 +100,9 @@ class Chat extends React.Component {
 	}
 
 	async componentWillUnmount() {
-		await updateUserStatus(this.state.user);
+		if (this.state.user.isGuest) {
+			await updateUserStatus(this.state.user);
+		}
 		this.state.clientSocket.disconnect();
 		this.state.clientSocket.off();
 	}

@@ -26,6 +26,15 @@ export const toggleParticipantsReducer = (state = false, action) => {
 	}
 };
 
+export const toggleRoomListReducer = (state = true, action) => {
+	switch (action.type) {
+		case types.TOGGLE_ROOM_LIST_IN_HOME_PAGE:
+			return action.status;
+		default:
+			return state;
+	}
+};
+
 export const saveIntervalIdStatusToState = (state = {}, action) => {
 	switch (action.type) {
 		case types.SAVE_INTERVAL_FOR_USER_COUNT:

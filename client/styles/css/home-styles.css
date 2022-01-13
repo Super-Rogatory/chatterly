@@ -53,6 +53,18 @@
 	margin-right: -10px;
 }
 
+.refresh-img {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	outline: none;
+}
+
+.refresh-img > img {
+	width: 20px;
+	height: 20px;
+}
+
 .username-wrapper-name {
 	font-weight: 800;
 }
@@ -63,6 +75,54 @@
 
 .status-icon-center {
 	justify-content: center;
+}
+
+.ui-sandbox {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.ui-sandbox-top {
+	display: flex;
+	flex-direction: column;
+	height: 50%;
+	width: 70%;
+}
+
+.chatterly-home-form {
+	width: 100%;
+}
+
+.ui-sandbox-bottom {
+	height: 50%;
+	width: 100%;
+}
+
+.room-list-container {
+	width: 100%;
+	height: 100%;
+	background-color: rgb(121, 108, 89);
+	border-top: 2px solid black;
+}
+
+.room-list-title {
+	margin-left: 16px;
+}
+
+.room-list-icon {
+	margin-right: 16px;
+}
+
+.room-header-menu {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}
+
+.ui.message.home {
+	padding: 0.5em 0.5em;
 }
 
 div.basic:nth-child(1),
