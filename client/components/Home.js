@@ -79,8 +79,6 @@ class Home extends React.Component {
 		const user = await updateRegisteredUserRoom(this.state.user.id, this.state.room);
 		window.localStorage.setItem('user', JSON.stringify(user));
 		this.setState({ redirectToChat: true });
-
-		// const user = { ...this.state.user, room: this.state.room };
 	}
 
 	handleChange(e) {

@@ -11,6 +11,7 @@ class ChatHeader extends React.Component {
 		super(props);
 		this.state = {
 			redirectToHome: false,
+			redirectToHomeForRegisteredUser: false,
 		};
 		this.handleHeaderRoomName = this.handleHeaderRoomName.bind(this);
 		this.handleRedirect = this.handleRedirect.bind(this);
@@ -29,12 +30,16 @@ class ChatHeader extends React.Component {
 	}
 
 	async handleRedirect() {
-		await disassociateUserAndRoom(this.props.user);
-		this.props.updateComponent('toggleGuestWarningPopup', false);
+		if (this.props.user.isGuest) {
+			await disassociateUserAndRoom(this.props.user);
+			this.props.updateComponent('toggleGuestWarningPopup', false);
+			this.setState({ redirectToHome: true });
+		} else {
+			this.setState({ redirectToHomeForRegisteredUser: true });
+		}
 		this.props.socket.emit('sendDisconnectMessage', this.props.user);
 		this.props.socket.disconnect();
 		this.props.socket.off();
-		this.setState({ redirectToHome: true });
 	}
 
 	render() {
@@ -42,6 +47,9 @@ class ChatHeader extends React.Component {
 		if (this.state.redirectToHome) {
 			window.localStorage.clear();
 			return <Redirect to="/" />;
+		}
+		if (this.state.redirectToHomeForRegisteredUser) {
+			return <Redirect to="/home" />;
 		}
 		return (
 			<div className="chat-header-wrapper">

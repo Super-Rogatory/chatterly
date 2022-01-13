@@ -3906,10 +3906,9 @@ var Chat = /*#__PURE__*/function (_React$Component) {
 
               case 9:
                 dbUser = _context4.sent;
-                console.log(dbUser);
 
                 if (dbUser) {
-                  _context4.next = 14;
+                  _context4.next = 13;
                   break;
                 }
 
@@ -3919,17 +3918,17 @@ var Chat = /*#__PURE__*/function (_React$Component) {
                 });
                 throw new Error('failed to fetch user information.');
 
-              case 14:
+              case 13:
                 // if everything went well, set state with user info.
                 this.setState({
                   user: dbUser
                 }); // room will always have access to its chatbot. there is only one chatbot PER ROOM. if room is already open, that room is returned
 
                 _context4.t0 = this;
-                _context4.next = 18;
+                _context4.next = 17;
                 return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_15__.openRoom)(this.state.user.room);
 
-              case 18:
+              case 17:
                 _context4.t1 = _context4.sent;
                 _context4.t2 = {
                   room: _context4.t1
@@ -3937,21 +3936,21 @@ var Chat = /*#__PURE__*/function (_React$Component) {
 
                 _context4.t0.setState.call(_context4.t0, _context4.t2);
 
-                _context4.next = 23;
+                _context4.next = 22;
                 return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_15__.associateUserAndRoom)(this.state.user);
 
-              case 23:
+              case 22:
                 // initialize chatbot and officially join room after user is created.
                 this.state.clientSocket.emit('join', this.state.user);
-                _context4.next = 29;
+                _context4.next = 28;
                 break;
 
-              case 26:
-                _context4.prev = 26;
+              case 25:
+                _context4.prev = 25;
                 _context4.t3 = _context4["catch"](5);
                 console.log(_context4.t3);
 
-              case 29:
+              case 28:
                 // initialize chatbot to start! - on connect -
                 this.state.clientSocket.on('initializeChatbot', /*#__PURE__*/function () {
                   var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_7___default().mark(function _callee(_ref) {
@@ -4058,12 +4057,12 @@ var Chat = /*#__PURE__*/function (_React$Component) {
                   isLoaded: true
                 });
 
-              case 34:
+              case 33:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4, this, [[5, 26]]);
+        }, _callee4, this, [[5, 25]]);
       }));
 
       function componentDidMount() {
@@ -4080,14 +4079,19 @@ var Chat = /*#__PURE__*/function (_React$Component) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                _context5.next = 2;
+                if (!this.state.user.isGuest) {
+                  _context5.next = 3;
+                  break;
+                }
+
+                _context5.next = 3;
                 return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_15__.updateUserStatus)(this.state.user);
 
-              case 2:
+              case 3:
                 this.state.clientSocket.disconnect();
                 this.state.clientSocket.off();
 
-              case 4:
+              case 5:
               case "end":
                 return _context5.stop();
             }
@@ -4247,7 +4251,8 @@ var ChatHeader = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      redirectToHome: false
+      redirectToHome: false,
+      redirectToHomeForRegisteredUser: false
     };
     _this.handleHeaderRoomName = _this.handleHeaderRoomName.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
     _this.handleRedirect = _this.handleRedirect.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
@@ -4277,19 +4282,33 @@ var ChatHeader = /*#__PURE__*/function (_React$Component) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                if (!this.props.user.isGuest) {
+                  _context.next = 7;
+                  break;
+                }
+
+                _context.next = 3;
                 return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_13__.disassociateUserAndRoom)(this.props.user);
 
-              case 2:
+              case 3:
                 this.props.updateComponent('toggleGuestWarningPopup', false);
-                this.props.socket.emit('sendDisconnectMessage', this.props.user);
-                this.props.socket.disconnect();
-                this.props.socket.off();
                 this.setState({
                   redirectToHome: true
                 });
+                _context.next = 8;
+                break;
 
               case 7:
+                this.setState({
+                  redirectToHomeForRegisteredUser: true
+                });
+
+              case 8:
+                this.props.socket.emit('sendDisconnectMessage', this.props.user);
+                this.props.socket.disconnect();
+                this.props.socket.off();
+
+              case 11:
               case "end":
                 return _context.stop();
             }
@@ -4311,6 +4330,12 @@ var ChatHeader = /*#__PURE__*/function (_React$Component) {
         window.localStorage.clear();
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Redirect, {
           to: "/"
+        });
+      }
+
+      if (this.state.redirectToHomeForRegisteredUser) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Redirect, {
+          to: "/home"
         });
       }
 
@@ -5004,7 +5029,7 @@ var Home = /*#__PURE__*/function (_React$Component) {
                 window.localStorage.setItem('user', JSON.stringify(user));
                 this.setState({
                   redirectToChat: true
-                }); // const user = { ...this.state.user, room: this.state.room };
+                });
 
               case 9:
               case "end":
