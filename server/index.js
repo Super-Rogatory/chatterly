@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5000;
 require('dotenv').config();
 
 // syncing the db
-db.sync({ force: true })
+db.sync()
 	.then(() => console.log('Database is synced'))
 	.catch((err) => console.log('Error syncing the db', err));
 
