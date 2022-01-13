@@ -4,7 +4,7 @@ import chatterlylogo from '../icons/favicon.png';
 import refreshlogo from '../icons/refresh.png';
 import { Redirect } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
-import { getUserByName, isTokenValid, updateUserStatus } from '../store/effects/utils';
+import { getUserByName, isTokenValid, updateRegisteredUserRoom, updateUserStatus } from '../store/effects/utils';
 import { connect } from 'react-redux';
 import { updateChatterlyStatus } from '../store/effects/thunks';
 import RoomList from './RoomList';
@@ -26,6 +26,7 @@ class Home extends React.Component {
 			statusTimerId: null,
 			roomError: false,
 			strikes: 0,
+			redirectToChat: false,
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -68,12 +69,18 @@ class Home extends React.Component {
 		refreshIcon.src = refreshlogo;
 	}
 
-	handleSubmit(e) {
+	async handleSubmit(e) {
 		e.preventDefault();
 		if (!this.state.room) {
 			this.setState({ roomError: true });
 			return;
 		}
+		// async update operation to tie user and room.
+		const user = await updateRegisteredUserRoom(this.state.user.id, this.state.room);
+		window.localStorage.setItem('user', JSON.stringify(user));
+		this.setState({ redirectToChat: true });
+
+		// const user = { ...this.state.user, room: this.state.room };
 	}
 
 	handleChange(e) {
@@ -112,6 +119,9 @@ class Home extends React.Component {
 		if (!this.state.isLoggedIn || this.state.invalidToken) {
 			window.localStorage.clear();
 			return <Redirect to="/" />;
+		}
+		if (this.state.redirectToChat) {
+			return <Redirect to="/chat" />;
 		}
 		if (!isLoaded || !isLogoReady || !isCrownReady || !isRefreshReady) {
 			return (

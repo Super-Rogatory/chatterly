@@ -79,6 +79,20 @@ router.post('/misc/testingValidToken', authMiddleware, (req, res, next) => {
 	res.send({ status: true });
 });
 
+router.put('/misc/updateRegisteredUserRoom', async (req, res, next) => {
+	const user = await User.findOne({ where: { id: req.body.id }, attributes: ['id', 'name', 'room', 'active'] });
+	try {
+		if (!user) {
+			res.status(404).send('failed to find user');
+		}
+		user.room = req.body.room;
+		await user.save();
+		res.send(user);
+	} catch (err) {
+		console.error(err);
+	}
+});
+
 router.post('/', async (req, res, next) => {
 	try {
 		const user = await User.create({ name: req.body.name, room: req.body.room });

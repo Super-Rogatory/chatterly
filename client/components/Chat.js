@@ -48,7 +48,7 @@ class Chat extends React.Component {
 		try {
 			const user = JSON.parse(loggedInUser);
 			const dbUser = await getUser(user.id);
-
+			console.log(dbUser);
 			if (!dbUser) {
 				// send user back to home if local storage user cannot match with database user
 				this.setState({ noUser: true });

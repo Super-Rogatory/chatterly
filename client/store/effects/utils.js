@@ -87,6 +87,14 @@ export const updateUserStatus = async (user, typeObject = null) => {
 	return status;
 };
 
+export const updateRegisteredUserRoom = async (id, room) => {
+	const { data: user } = await axios.put(`${url}/api/users/misc/updateRegisteredUserRoom`, {
+		id,
+		room,
+	});
+	return user;
+};
+
 export const registerUser = async (username, password) => {
 	const { data: user } = await axios.post(`${url}/api/users/register`, { username, password });
 	return user;

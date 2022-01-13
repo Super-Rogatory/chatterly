@@ -3906,9 +3906,10 @@ var Chat = /*#__PURE__*/function (_React$Component) {
 
               case 9:
                 dbUser = _context4.sent;
+                console.log(dbUser);
 
                 if (dbUser) {
-                  _context4.next = 13;
+                  _context4.next = 14;
                   break;
                 }
 
@@ -3918,17 +3919,17 @@ var Chat = /*#__PURE__*/function (_React$Component) {
                 });
                 throw new Error('failed to fetch user information.');
 
-              case 13:
+              case 14:
                 // if everything went well, set state with user info.
                 this.setState({
                   user: dbUser
                 }); // room will always have access to its chatbot. there is only one chatbot PER ROOM. if room is already open, that room is returned
 
                 _context4.t0 = this;
-                _context4.next = 17;
+                _context4.next = 18;
                 return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_15__.openRoom)(this.state.user.room);
 
-              case 17:
+              case 18:
                 _context4.t1 = _context4.sent;
                 _context4.t2 = {
                   room: _context4.t1
@@ -3936,21 +3937,21 @@ var Chat = /*#__PURE__*/function (_React$Component) {
 
                 _context4.t0.setState.call(_context4.t0, _context4.t2);
 
-                _context4.next = 22;
+                _context4.next = 23;
                 return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_15__.associateUserAndRoom)(this.state.user);
 
-              case 22:
+              case 23:
                 // initialize chatbot and officially join room after user is created.
                 this.state.clientSocket.emit('join', this.state.user);
-                _context4.next = 28;
+                _context4.next = 29;
                 break;
 
-              case 25:
-                _context4.prev = 25;
+              case 26:
+                _context4.prev = 26;
                 _context4.t3 = _context4["catch"](5);
                 console.log(_context4.t3);
 
-              case 28:
+              case 29:
                 // initialize chatbot to start! - on connect -
                 this.state.clientSocket.on('initializeChatbot', /*#__PURE__*/function () {
                   var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_7___default().mark(function _callee(_ref) {
@@ -4057,12 +4058,12 @@ var Chat = /*#__PURE__*/function (_React$Component) {
                   isLoaded: true
                 });
 
-              case 33:
+              case 34:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4, this, [[5, 25]]);
+        }, _callee4, this, [[5, 26]]);
       }));
 
       function componentDidMount() {
@@ -4864,7 +4865,8 @@ var Home = /*#__PURE__*/function (_React$Component) {
       canChangeUserStatusAgain: true,
       statusTimerId: null,
       roomError: false,
-      strikes: 0
+      strikes: 0,
+      redirectToChat: false
     };
     _this.handleChange = _this.handleChange.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__["default"])(_this));
     _this.handleSubmit = _this.handleSubmit.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__["default"])(_this));
@@ -4974,16 +4976,50 @@ var Home = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "handleSubmit",
-    value: function handleSubmit(e) {
-      e.preventDefault();
+    value: function () {
+      var _handleSubmit = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().mark(function _callee2(e) {
+        var user;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                e.preventDefault();
 
-      if (!this.state.room) {
-        this.setState({
-          roomError: true
-        });
-        return;
+                if (this.state.room) {
+                  _context2.next = 4;
+                  break;
+                }
+
+                this.setState({
+                  roomError: true
+                });
+                return _context2.abrupt("return");
+
+              case 4:
+                _context2.next = 6;
+                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_14__.updateRegisteredUserRoom)(this.state.user.id, this.state.room);
+
+              case 6:
+                user = _context2.sent;
+                window.localStorage.setItem('user', JSON.stringify(user));
+                this.setState({
+                  redirectToChat: true
+                }); // const user = { ...this.state.user, room: this.state.room };
+
+              case 9:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function handleSubmit(_x) {
+        return _handleSubmit.apply(this, arguments);
       }
-    }
+
+      return handleSubmit;
+    }()
   }, {
     key: "handleChange",
     value: function handleChange(e) {
@@ -4992,15 +5028,15 @@ var Home = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "updateUserStatusWithTimeout",
     value: function () {
-      var _updateUserStatusWithTimeout = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().mark(function _callee2(user) {
+      var _updateUserStatusWithTimeout = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().mark(function _callee3(user) {
         var _this3 = this;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                _context2.prev = 0;
-                _context2.next = 3;
+                _context3.prev = 0;
+                _context3.next = 3;
                 return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_14__.updateUserStatus)(user);
 
               case 3:
@@ -5013,23 +5049,23 @@ var Home = /*#__PURE__*/function (_React$Component) {
                     canChangeUserStatusAgain: true
                   });
                 }, 3000);
-                _context2.next = 10;
+                _context3.next = 10;
                 break;
 
               case 7:
-                _context2.prev = 7;
-                _context2.t0 = _context2["catch"](0);
-                console.error(_context2.t0);
+                _context3.prev = 7;
+                _context3.t0 = _context3["catch"](0);
+                console.error(_context3.t0);
 
               case 10:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this, [[0, 7]]);
+        }, _callee3, this, [[0, 7]]);
       }));
 
-      function updateUserStatusWithTimeout(_x) {
+      function updateUserStatusWithTimeout(_x2) {
         return _updateUserStatusWithTimeout.apply(this, arguments);
       }
 
@@ -5038,36 +5074,36 @@ var Home = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "updateUserStatusAndLogout",
     value: function () {
-      var _updateUserStatusAndLogout = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().mark(function _callee3(user, typeObject) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().wrap(function _callee3$(_context3) {
+      var _updateUserStatusAndLogout = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().mark(function _callee4(user, typeObject) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _context3.prev = 0;
-                _context3.next = 3;
+                _context4.prev = 0;
+                _context4.next = 3;
                 return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_14__.updateUserStatus)(user, typeObject);
 
               case 3:
                 this.setState({
                   isLoggedIn: false
                 });
-                _context3.next = 9;
+                _context4.next = 9;
                 break;
 
               case 6:
-                _context3.prev = 6;
-                _context3.t0 = _context3["catch"](0);
-                console.error(_context3.t0);
+                _context4.prev = 6;
+                _context4.t0 = _context4["catch"](0);
+                console.error(_context4.t0);
 
               case 9:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this, [[0, 6]]);
+        }, _callee4, this, [[0, 6]]);
       }));
 
-      function updateUserStatusAndLogout(_x2, _x3) {
+      function updateUserStatusAndLogout(_x3, _x4) {
         return _updateUserStatusAndLogout.apply(this, arguments);
       }
 
@@ -5101,6 +5137,12 @@ var Home = /*#__PURE__*/function (_React$Component) {
         window.localStorage.clear();
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_18__.Redirect, {
           to: "/"
+        });
+      }
+
+      if (this.state.redirectToChat) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_18__.Redirect, {
+          to: "/chat"
         });
       }
 
@@ -7031,6 +7073,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "disassociateUserAndRoom": () => (/* binding */ disassociateUserAndRoom),
 /* harmony export */   "getActiveUsers": () => (/* binding */ getActiveUsers),
 /* harmony export */   "updateUserStatus": () => (/* binding */ updateUserStatus),
+/* harmony export */   "updateRegisteredUserRoom": () => (/* binding */ updateRegisteredUserRoom),
 /* harmony export */   "registerUser": () => (/* binding */ registerUser),
 /* harmony export */   "validateUser": () => (/* binding */ validateUser),
 /* harmony export */   "isTokenValid": () => (/* binding */ isTokenValid),
@@ -7455,23 +7498,23 @@ var updateUserStatus = /*#__PURE__*/function () {
     return _ref13.apply(this, arguments);
   };
 }();
-var registerUser = /*#__PURE__*/function () {
-  var _ref14 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee14(username, password) {
-    var _yield$axios$post5, user;
+var updateRegisteredUserRoom = /*#__PURE__*/function () {
+  var _ref14 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee14(id, room) {
+    var _yield$axios$put, user;
 
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee14$(_context14) {
       while (1) {
         switch (_context14.prev = _context14.next) {
           case 0:
             _context14.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_4___default().post("".concat(url, "/api/users/register"), {
-              username: username,
-              password: password
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().put("".concat(url, "/api/users/misc/updateRegisteredUserRoom"), {
+              id: id,
+              room: room
             });
 
           case 2:
-            _yield$axios$post5 = _context14.sent;
-            user = _yield$axios$post5.data;
+            _yield$axios$put = _context14.sent;
+            user = _yield$axios$put.data;
             return _context14.abrupt("return", user);
 
           case 5:
@@ -7482,28 +7525,28 @@ var registerUser = /*#__PURE__*/function () {
     }, _callee14);
   }));
 
-  return function registerUser(_x15, _x16) {
+  return function updateRegisteredUserRoom(_x15, _x16) {
     return _ref14.apply(this, arguments);
   };
 }();
-var validateUser = /*#__PURE__*/function () {
+var registerUser = /*#__PURE__*/function () {
   var _ref15 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee15(username, password) {
-    var _yield$axios$post6, data;
+    var _yield$axios$post5, user;
 
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee15$(_context15) {
       while (1) {
         switch (_context15.prev = _context15.next) {
           case 0:
             _context15.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_4___default().post("".concat(url, "/api/users/login"), {
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().post("".concat(url, "/api/users/register"), {
               username: username,
               password: password
             });
 
           case 2:
-            _yield$axios$post6 = _context15.sent;
-            data = _yield$axios$post6.data;
-            return _context15.abrupt("return", data);
+            _yield$axios$post5 = _context15.sent;
+            user = _yield$axios$post5.data;
+            return _context15.abrupt("return", user);
 
           case 5:
           case "end":
@@ -7513,29 +7556,28 @@ var validateUser = /*#__PURE__*/function () {
     }, _callee15);
   }));
 
-  return function validateUser(_x17, _x18) {
+  return function registerUser(_x17, _x18) {
     return _ref15.apply(this, arguments);
   };
 }();
-var isTokenValid = /*#__PURE__*/function () {
-  var _ref16 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee16(token) {
-    var _yield$axios$post7, status;
+var validateUser = /*#__PURE__*/function () {
+  var _ref16 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee16(username, password) {
+    var _yield$axios$post6, data;
 
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee16$(_context16) {
       while (1) {
         switch (_context16.prev = _context16.next) {
           case 0:
             _context16.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_4___default().post("".concat(url, "/api/users/misc/testingValidToken"), token, {
-              headers: {
-                Authorization: token
-              }
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().post("".concat(url, "/api/users/login"), {
+              username: username,
+              password: password
             });
 
           case 2:
-            _yield$axios$post7 = _context16.sent;
-            status = _yield$axios$post7.data;
-            return _context16.abrupt("return", status);
+            _yield$axios$post6 = _context16.sent;
+            data = _yield$axios$post6.data;
+            return _context16.abrupt("return", data);
 
           case 5:
           case "end":
@@ -7545,8 +7587,40 @@ var isTokenValid = /*#__PURE__*/function () {
     }, _callee16);
   }));
 
-  return function isTokenValid(_x19) {
+  return function validateUser(_x19, _x20) {
     return _ref16.apply(this, arguments);
+  };
+}();
+var isTokenValid = /*#__PURE__*/function () {
+  var _ref17 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee17(token) {
+    var _yield$axios$post7, status;
+
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee17$(_context17) {
+      while (1) {
+        switch (_context17.prev = _context17.next) {
+          case 0:
+            _context17.next = 2;
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().post("".concat(url, "/api/users/misc/testingValidToken"), token, {
+              headers: {
+                Authorization: token
+              }
+            });
+
+          case 2:
+            _yield$axios$post7 = _context17.sent;
+            status = _yield$axios$post7.data;
+            return _context17.abrupt("return", status);
+
+          case 5:
+          case "end":
+            return _context17.stop();
+        }
+      }
+    }, _callee17);
+  }));
+
+  return function isTokenValid(_x21) {
+    return _ref17.apply(this, arguments);
   };
 }(); //  -------------------------------------------------------------------------------------------------------
 
@@ -7655,36 +7729,36 @@ var ErrorHandlerForSignIns = /*#__PURE__*/function () {
   }, {
     key: "isNameFaulty",
     value: function () {
-      var _isNameFaulty = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee17(name) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee17$(_context17) {
+      var _isNameFaulty = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee18(name) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee18$(_context18) {
           while (1) {
-            switch (_context17.prev = _context17.next) {
+            switch (_context18.prev = _context18.next) {
               case 0:
-                _context17.next = 2;
+                _context18.next = 2;
                 return doesUserExist(name);
 
               case 2:
-                _context17.t0 = _context17.sent;
+                _context18.t0 = _context18.sent;
 
-                if (_context17.t0) {
-                  _context17.next = 5;
+                if (_context18.t0) {
+                  _context18.next = 5;
                   break;
                 }
 
-                _context17.t0 = name.toLowerCase() === 'chatbot';
+                _context18.t0 = name.toLowerCase() === 'chatbot';
 
               case 5:
-                return _context17.abrupt("return", _context17.t0);
+                return _context18.abrupt("return", _context18.t0);
 
               case 6:
               case "end":
-                return _context17.stop();
+                return _context18.stop();
             }
           }
-        }, _callee17);
+        }, _callee18);
       }));
 
-      function isNameFaulty(_x20) {
+      function isNameFaulty(_x22) {
         return _isNameFaulty.apply(this, arguments);
       }
 
@@ -13216,7 +13290,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.refresh-img {\n\tbackground-color: transparent;\n\tborder: none;\n\tcursor: pointer;\n\toutline: none;\n}\n\n.refresh-img > img {\n\twidth: 20px;\n\theight: 20px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n.ui-sandbox-top {\n\tdisplay: flex;\n\tflex-direction: column;\n\theight: 50%;\n\twidth: 70%;\n}\n.chatterly-home-form {\n\twidth: 100%;\n}\n\n.ui-sandbox-bottom {\n\theight: 50%;\n\twidth: 100%;\n}\n\nform.ui {\n\tpadding: 1rem;\n}\n\n.room-list-container {\n\twidth: 100%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-top: 2px solid black;\n}\n\n.room-list-title {\n\tmargin-left: 16px;\n}\n\n.room-list-icon {\n\tmargin-right: 16px;\n}\n\n.room-header-menu {\n\tdisplay: flex;\n\twidth: 100%;\n\tjustify-content: space-between;\n}\n\n.ui.message.home {\n\tpadding: 0.5em 0.5em;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n", "",{"version":3,"sources":["webpack://./client/styles/css/home-styles.css"],"names":[],"mappings":"AAAA;CACC,YAAY;CACZ,WAAW;CACX,uBAAuB;AACxB;;AAEA;CACC,oBAAoB;CACpB,WAAW;CACX,eAAe;CACf,8BAA8B;CAC9B,eAAe;AAChB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,6BAA6B;CAC7B,mBAAmB;CACnB,UAAU;CACV,YAAY;CACZ,mCAAmC;CACnC,6BAA6B;AAC9B;;AAEA;CACC,aAAa;CACb,UAAU;AACX;;AAEA;CACC,aAAa;CACb,WAAW;CACX,UAAU,EAAE,6EAA6E;CACzF,gBAAgB;CAChB,8BAA8B;CAC9B,mBAAmB;CACnB,eAAe;AAChB;;AAEA;CACC,oBAAoB;CACpB,mBAAmB;CACnB,uBAAuB;CACvB,cAAc;CACd,gBAAgB;CAChB,kBAAkB;AACnB;;AAEA;CACC,WAAW;CACX,YAAY;CACZ,mBAAmB;AACpB;;AAEA;CACC,6BAA6B;CAC7B,YAAY;CACZ,eAAe;CACf,aAAa;AACd;;AAEA;CACC,WAAW;CACX,YAAY;AACb;;AAEA;CACC,gBAAgB;AACjB;;AAEA;CACC,eAAe;AAChB;;AAEA;CACC,uBAAuB;AACxB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,uBAAuB;CACvB,mBAAmB;AACpB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,WAAW;CACX,UAAU;AACX;AACA;CACC,WAAW;AACZ;;AAEA;CACC,WAAW;CACX,WAAW;AACZ;;AAEA;CACC,aAAa;AACd;;AAEA;CACC,WAAW;CACX,YAAY;CACZ,mCAAmC;CACnC,2BAA2B;AAC5B;;AAEA;CACC,iBAAiB;AAClB;;AAEA;CACC,kBAAkB;AACnB;;AAEA;CACC,aAAa;CACb,WAAW;CACX,8BAA8B;AAC/B;;AAEA;CACC,oBAAoB;AACrB;;AAEA;;;CAGC,iBAAiB;AAClB;;AAEA;CACC;EACC,eAAe;CAChB;CACA;EACC,WAAW;EACX,YAAY;EACZ,kBAAkB;CACnB;AACD","sourcesContent":[".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.refresh-img {\n\tbackground-color: transparent;\n\tborder: none;\n\tcursor: pointer;\n\toutline: none;\n}\n\n.refresh-img > img {\n\twidth: 20px;\n\theight: 20px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n.ui-sandbox-top {\n\tdisplay: flex;\n\tflex-direction: column;\n\theight: 50%;\n\twidth: 70%;\n}\n.chatterly-home-form {\n\twidth: 100%;\n}\n\n.ui-sandbox-bottom {\n\theight: 50%;\n\twidth: 100%;\n}\n\nform.ui {\n\tpadding: 1rem;\n}\n\n.room-list-container {\n\twidth: 100%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-top: 2px solid black;\n}\n\n.room-list-title {\n\tmargin-left: 16px;\n}\n\n.room-list-icon {\n\tmargin-right: 16px;\n}\n\n.room-header-menu {\n\tdisplay: flex;\n\twidth: 100%;\n\tjustify-content: space-between;\n}\n\n.ui.message.home {\n\tpadding: 0.5em 0.5em;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.refresh-img {\n\tbackground-color: transparent;\n\tborder: none;\n\tcursor: pointer;\n\toutline: none;\n}\n\n.refresh-img > img {\n\twidth: 20px;\n\theight: 20px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n.ui-sandbox-top {\n\tdisplay: flex;\n\tflex-direction: column;\n\theight: 50%;\n\twidth: 70%;\n}\n\n.chatterly-home-form {\n\twidth: 100%;\n}\n\n.ui-sandbox-bottom {\n\theight: 50%;\n\twidth: 100%;\n}\n\nform.ui {\n\tpadding: 1rem;\n}\n\n.room-list-container {\n\twidth: 100%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-top: 2px solid black;\n}\n\n.room-list-title {\n\tmargin-left: 16px;\n}\n\n.room-list-icon {\n\tmargin-right: 16px;\n}\n\n.room-header-menu {\n\tdisplay: flex;\n\twidth: 100%;\n\tjustify-content: space-between;\n}\n\n.ui.message.home {\n\tpadding: 0.5em 0.5em;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n", "",{"version":3,"sources":["webpack://./client/styles/css/home-styles.css"],"names":[],"mappings":"AAAA;CACC,YAAY;CACZ,WAAW;CACX,uBAAuB;AACxB;;AAEA;CACC,oBAAoB;CACpB,WAAW;CACX,eAAe;CACf,8BAA8B;CAC9B,eAAe;AAChB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,6BAA6B;CAC7B,mBAAmB;CACnB,UAAU;CACV,YAAY;CACZ,mCAAmC;CACnC,6BAA6B;AAC9B;;AAEA;CACC,aAAa;CACb,UAAU;AACX;;AAEA;CACC,aAAa;CACb,WAAW;CACX,UAAU,EAAE,6EAA6E;CACzF,gBAAgB;CAChB,8BAA8B;CAC9B,mBAAmB;CACnB,eAAe;AAChB;;AAEA;CACC,oBAAoB;CACpB,mBAAmB;CACnB,uBAAuB;CACvB,cAAc;CACd,gBAAgB;CAChB,kBAAkB;AACnB;;AAEA;CACC,WAAW;CACX,YAAY;CACZ,mBAAmB;AACpB;;AAEA;CACC,6BAA6B;CAC7B,YAAY;CACZ,eAAe;CACf,aAAa;AACd;;AAEA;CACC,WAAW;CACX,YAAY;AACb;;AAEA;CACC,gBAAgB;AACjB;;AAEA;CACC,eAAe;AAChB;;AAEA;CACC,uBAAuB;AACxB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,uBAAuB;CACvB,mBAAmB;AACpB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,WAAW;CACX,UAAU;AACX;;AAEA;CACC,WAAW;AACZ;;AAEA;CACC,WAAW;CACX,WAAW;AACZ;;AAEA;CACC,aAAa;AACd;;AAEA;CACC,WAAW;CACX,YAAY;CACZ,mCAAmC;CACnC,2BAA2B;AAC5B;;AAEA;CACC,iBAAiB;AAClB;;AAEA;CACC,kBAAkB;AACnB;;AAEA;CACC,aAAa;CACb,WAAW;CACX,8BAA8B;AAC/B;;AAEA;CACC,oBAAoB;AACrB;;AAEA;;;CAGC,iBAAiB;AAClB;;AAEA;CACC;EACC,eAAe;CAChB;CACA;EACC,WAAW;EACX,YAAY;EACZ,kBAAkB;CACnB;AACD","sourcesContent":[".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.refresh-img {\n\tbackground-color: transparent;\n\tborder: none;\n\tcursor: pointer;\n\toutline: none;\n}\n\n.refresh-img > img {\n\twidth: 20px;\n\theight: 20px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n.ui-sandbox-top {\n\tdisplay: flex;\n\tflex-direction: column;\n\theight: 50%;\n\twidth: 70%;\n}\n\n.chatterly-home-form {\n\twidth: 100%;\n}\n\n.ui-sandbox-bottom {\n\theight: 50%;\n\twidth: 100%;\n}\n\nform.ui {\n\tpadding: 1rem;\n}\n\n.room-list-container {\n\twidth: 100%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-top: 2px solid black;\n}\n\n.room-list-title {\n\tmargin-left: 16px;\n}\n\n.room-list-icon {\n\tmargin-right: 16px;\n}\n\n.room-header-menu {\n\tdisplay: flex;\n\twidth: 100%;\n\tjustify-content: space-between;\n}\n\n.ui.message.home {\n\tpadding: 0.5em 0.5em;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
