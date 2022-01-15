@@ -27,6 +27,7 @@ class ChatHeader extends React.Component {
 
 	openParticipantsPanel() {
 		this.props.updateComponent('openParticipantsTab', !this.props.openParticipantsTab);
+		this.props.socket.emit('refreshOnlineUsers', this.props.user);
 	}
 
 	async handleRedirect() {
@@ -34,12 +35,12 @@ class ChatHeader extends React.Component {
 			await disassociateUserAndRoom(this.props.user);
 			this.props.updateComponent('toggleGuestWarningPopup', false);
 			this.setState({ redirectToHome: true });
+			this.props.socket.disconnect();
+			this.props.socket.off();
 		} else {
 			this.setState({ redirectToHomeForRegisteredUser: true });
 		}
 		this.props.socket.emit('sendDisconnectMessage', this.props.user);
-		this.props.socket.disconnect();
-		this.props.socket.off();
 	}
 
 	render() {
