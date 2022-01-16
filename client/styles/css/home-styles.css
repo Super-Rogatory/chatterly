@@ -117,8 +117,17 @@
 
 .room-header-menu {
 	display: flex;
+	height: 15%;
 	width: 100%;
 	justify-content: space-between;
+}
+
+.room-main-content {
+	height: 85%;
+}
+
+.rooms {
+	height: 100%;
 }
 
 .ui.message.home {

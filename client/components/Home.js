@@ -4,7 +4,13 @@ import chatterlylogo from '../icons/favicon.png';
 import refreshlogo from '../icons/refresh.png';
 import { Redirect } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
-import { getUserByName, isTokenValid, updateRegisteredUserRoom, updateUserStatus } from '../store/effects/utils';
+import {
+	getAllRoomsForUser,
+	getUserByName,
+	isTokenValid,
+	updateRegisteredUserRoom,
+	updateUserStatus,
+} from '../store/effects/utils';
 import { connect } from 'react-redux';
 import { updateChatterlyStatus } from '../store/effects/thunks';
 import RoomList from './RoomList';
@@ -25,8 +31,9 @@ class Home extends React.Component {
 			canChangeUserStatusAgain: true,
 			statusTimerId: null,
 			roomError: false,
-			strikes: 0,
 			redirectToChat: false,
+			jwt: null,
+			roomsArray: [],
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -42,9 +49,9 @@ class Home extends React.Component {
 			await isTokenValid(token); // isTokenValid is a function that returns an object with the status property, if there is an error we can catch it and then redirect to home.
 			const user = await getUserByName(localStorageName);
 			if (!user) throw new Error('failed to find user');
-			else this.setState({ user, isUserOnline: user.active });
 			this.loadImages();
-			this.setState({ isLoaded: true });
+			await this.setRoomsOnState(token, user);
+			this.setState({ isLoaded: true, jwt: token, user, isUserOnline: user.active });
 		} catch (err) {
 			this.setState({ invalidToken: true });
 		}
@@ -67,6 +74,11 @@ class Home extends React.Component {
 		crownIcon.src = crownlogo; // triggers browser download of image
 		chatIcon.src = chatterlylogo;
 		refreshIcon.src = refreshlogo;
+	}
+
+	async setRoomsOnState(jwt, user) {
+		const rooms = await getAllRoomsForUser(jwt, user.id);
+		this.setState({ roomsArray: rooms });
 	}
 
 	async handleSubmit(e) {
@@ -106,14 +118,21 @@ class Home extends React.Component {
 		}
 	}
 
-	openRoomListInHomePage() {
+	async openRoomListInHomePage() {
+		const { jwt, user } = this.state;
 		this.props.updateComponent('openRoomListInHomePage', !this.props.openRoomListTab);
-		this.setState({ strikes: this.state.strikes + 0.5 });
+		if (!this.props.openRoomListTab) {
+			try {
+				await this.setRoomsOnState(jwt, user);
+			} catch (err) {
+				console.error(err);
+			}
+		}
 	}
 
 	render() {
 		const { user, canChangeUserStatusAgain, isUserOnline, roomError } = this.state;
-		const { isLoaded, isLogoReady, isCrownReady, isRefreshReady } = this.state;
+		const { isLoaded, isLogoReady, isCrownReady, isRefreshReady, roomsArray } = this.state;
 		if (!this.state.isLoggedIn || this.state.invalidToken) {
 			window.localStorage.clear();
 			return <Redirect to="/" />;
@@ -174,7 +193,7 @@ class Home extends React.Component {
 										</div>
 										{/* will render out the roomlist when the room list button is toggled */}
 										<div className={this.props.openRoomListTab ? 'ui-sandbox-bottom' : ''}>
-											{this.props.openRoomListTab && <RoomList refreshIcon={refreshlogo} />}
+											{this.props.openRoomListTab && <RoomList refreshIcon={refreshlogo} rooms={roomsArray} />}
 										</div>
 									</div>
 								</div>
