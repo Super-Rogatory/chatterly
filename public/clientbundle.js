@@ -4271,9 +4271,9 @@ var ChatHeader = /*#__PURE__*/function (_React$Component) {
                 return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_13__.disassociateUserAndRoom)(this.props.user);
 
               case 6:
-                this.props.updateComponent('toggleGuestWarningPopup', false);
                 this.props.socket.disconnect();
                 this.props.socket.off();
+                this.props.updateComponent('toggleGuestWarningPopup', false);
                 this.setState({
                   redirectToHome: true
                 });
@@ -5116,31 +5116,40 @@ var Home = /*#__PURE__*/function (_React$Component) {
     key: "openRoomListInHomePage",
     value: function () {
       var _openRoomListInHomePage = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().mark(function _callee5() {
-        var jwt;
+        var _this$state, jwt, user, rooms;
+
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                jwt = this.state.jwt;
-                _context5.prev = 1;
-                _context5.next = 4;
-                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_14__.isTokenValid)(jwt);
-
-              case 4:
+                _this$state = this.state, jwt = _this$state.jwt, user = _this$state.user;
                 this.props.updateComponent('openRoomListInHomePage', !this.props.openRoomListTab);
-                _context5.next = 9;
+
+                if (this.props.openRoomListTab) {
+                  _context5.next = 12;
+                  break;
+                }
+
+                _context5.prev = 3;
+                _context5.next = 6;
+                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_14__.getAllRoomsForUser)(jwt, user.id);
+
+              case 6:
+                rooms = _context5.sent;
+                console.log(rooms);
+                _context5.next = 12;
                 break;
 
-              case 7:
-                _context5.prev = 7;
-                _context5.t0 = _context5["catch"](1);
+              case 10:
+                _context5.prev = 10;
+                _context5.t0 = _context5["catch"](3);
 
-              case 9:
+              case 12:
               case "end":
                 return _context5.stop();
             }
           }
-        }, _callee5, this, [[1, 7]]);
+        }, _callee5, this, [[3, 10]]);
       }));
 
       function openRoomListInHomePage() {
@@ -5154,16 +5163,16 @@ var Home = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this4 = this;
 
-      var _this$state = this.state,
-          user = _this$state.user,
-          canChangeUserStatusAgain = _this$state.canChangeUserStatusAgain,
-          isUserOnline = _this$state.isUserOnline,
-          roomError = _this$state.roomError;
       var _this$state2 = this.state,
-          isLoaded = _this$state2.isLoaded,
-          isLogoReady = _this$state2.isLogoReady,
-          isCrownReady = _this$state2.isCrownReady,
-          isRefreshReady = _this$state2.isRefreshReady;
+          user = _this$state2.user,
+          canChangeUserStatusAgain = _this$state2.canChangeUserStatusAgain,
+          isUserOnline = _this$state2.isUserOnline,
+          roomError = _this$state2.roomError;
+      var _this$state3 = this.state,
+          isLoaded = _this$state3.isLoaded,
+          isLogoReady = _this$state3.isLogoReady,
+          isCrownReady = _this$state3.isCrownReady,
+          isRefreshReady = _this$state3.isRefreshReady;
 
       if (!this.state.isLoggedIn || this.state.invalidToken) {
         window.localStorage.clear();
@@ -7101,6 +7110,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "openRoom": () => (/* binding */ openRoom),
 /* harmony export */   "doesUserExist": () => (/* binding */ doesUserExist),
 /* harmony export */   "getRoom": () => (/* binding */ getRoom),
+/* harmony export */   "getAllRoomsForUser": () => (/* binding */ getAllRoomsForUser),
 /* harmony export */   "associateUserAndRoom": () => (/* binding */ associateUserAndRoom),
 /* harmony export */   "disassociateUserAndRoom": () => (/* binding */ disassociateUserAndRoom),
 /* harmony export */   "getActiveUsers": () => (/* binding */ getActiveUsers),
@@ -7419,19 +7429,27 @@ var getRoom = /*#__PURE__*/function () {
     return _ref9.apply(this, arguments);
   };
 }();
-var associateUserAndRoom = /*#__PURE__*/function () {
-  var _ref10 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee10(user) {
+var getAllRoomsForUser = /*#__PURE__*/function () {
+  var _ref10 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee10(token, userId) {
+    var _yield$axios$get7, rooms;
+
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee10$(_context10) {
       while (1) {
         switch (_context10.prev = _context10.next) {
           case 0:
             _context10.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_4___default().put("".concat(url, "/api/rooms"), {
-              user: user,
-              type: 'associate'
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().get("".concat(url, "/api/rooms/all/").concat(userId), {
+              headers: {
+                Authorization: token
+              }
             });
 
           case 2:
+            _yield$axios$get7 = _context10.sent;
+            rooms = _yield$axios$get7.data;
+            return _context10.abrupt("return", rooms);
+
+          case 5:
           case "end":
             return _context10.stop();
         }
@@ -7439,11 +7457,11 @@ var associateUserAndRoom = /*#__PURE__*/function () {
     }, _callee10);
   }));
 
-  return function associateUserAndRoom(_x12) {
+  return function getAllRoomsForUser(_x12, _x13) {
     return _ref10.apply(this, arguments);
   };
 }();
-var disassociateUserAndRoom = /*#__PURE__*/function () {
+var associateUserAndRoom = /*#__PURE__*/function () {
   var _ref11 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee11(user) {
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee11$(_context11) {
       while (1) {
@@ -7452,7 +7470,7 @@ var disassociateUserAndRoom = /*#__PURE__*/function () {
             _context11.next = 2;
             return axios__WEBPACK_IMPORTED_MODULE_4___default().put("".concat(url, "/api/rooms"), {
               user: user,
-              type: 'disassociate'
+              type: 'associate'
             });
 
           case 2:
@@ -7463,27 +7481,23 @@ var disassociateUserAndRoom = /*#__PURE__*/function () {
     }, _callee11);
   }));
 
-  return function disassociateUserAndRoom(_x13) {
+  return function associateUserAndRoom(_x14) {
     return _ref11.apply(this, arguments);
   };
 }();
-var getActiveUsers = /*#__PURE__*/function () {
-  var _ref12 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee12() {
-    var _yield$axios$get7, count;
-
+var disassociateUserAndRoom = /*#__PURE__*/function () {
+  var _ref12 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee12(user) {
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee12$(_context12) {
       while (1) {
         switch (_context12.prev = _context12.next) {
           case 0:
             _context12.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_4___default().get("".concat(url, "/api/users/misc/getUserCount"));
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().put("".concat(url, "/api/rooms"), {
+              user: user,
+              type: 'disassociate'
+            });
 
           case 2:
-            _yield$axios$get7 = _context12.sent;
-            count = _yield$axios$get7.data;
-            return _context12.abrupt("return", count);
-
-          case 5:
           case "end":
             return _context12.stop();
         }
@@ -7491,34 +7505,27 @@ var getActiveUsers = /*#__PURE__*/function () {
     }, _callee12);
   }));
 
-  return function getActiveUsers() {
+  return function disassociateUserAndRoom(_x15) {
     return _ref12.apply(this, arguments);
   };
 }();
-var updateUserStatus = /*#__PURE__*/function () {
-  var _ref13 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee13(user) {
-    var typeObject,
-        _yield$axios$post4,
-        status,
-        _args13 = arguments;
+var getActiveUsers = /*#__PURE__*/function () {
+  var _ref13 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee13() {
+    var _yield$axios$get8, count;
 
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee13$(_context13) {
       while (1) {
         switch (_context13.prev = _context13.next) {
           case 0:
-            typeObject = _args13.length > 1 && _args13[1] !== undefined ? _args13[1] : null;
-            _context13.next = 3;
-            return axios__WEBPACK_IMPORTED_MODULE_4___default().post("".concat(url, "/api/users/misc/updateUserStatus"), {
-              name: user.name,
-              type: typeObject ? typeObject.type : typeObject
-            });
+            _context13.next = 2;
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().get("".concat(url, "/api/users/misc/getUserCount"));
 
-          case 3:
-            _yield$axios$post4 = _context13.sent;
-            status = _yield$axios$post4.data;
-            return _context13.abrupt("return", status);
+          case 2:
+            _yield$axios$get8 = _context13.sent;
+            count = _yield$axios$get8.data;
+            return _context13.abrupt("return", count);
 
-          case 6:
+          case 5:
           case "end":
             return _context13.stop();
         }
@@ -7526,30 +7533,34 @@ var updateUserStatus = /*#__PURE__*/function () {
     }, _callee13);
   }));
 
-  return function updateUserStatus(_x14) {
+  return function getActiveUsers() {
     return _ref13.apply(this, arguments);
   };
 }();
-var updateRegisteredUserRoom = /*#__PURE__*/function () {
-  var _ref14 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee14(id, room) {
-    var _yield$axios$put, user;
+var updateUserStatus = /*#__PURE__*/function () {
+  var _ref14 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee14(user) {
+    var typeObject,
+        _yield$axios$post4,
+        status,
+        _args14 = arguments;
 
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee14$(_context14) {
       while (1) {
         switch (_context14.prev = _context14.next) {
           case 0:
-            _context14.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_4___default().put("".concat(url, "/api/users/misc/updateRegisteredUserRoom"), {
-              id: id,
-              room: room
+            typeObject = _args14.length > 1 && _args14[1] !== undefined ? _args14[1] : null;
+            _context14.next = 3;
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().post("".concat(url, "/api/users/misc/updateUserStatus"), {
+              name: user.name,
+              type: typeObject ? typeObject.type : typeObject
             });
 
-          case 2:
-            _yield$axios$put = _context14.sent;
-            user = _yield$axios$put.data;
-            return _context14.abrupt("return", user);
+          case 3:
+            _yield$axios$post4 = _context14.sent;
+            status = _yield$axios$post4.data;
+            return _context14.abrupt("return", status);
 
-          case 5:
+          case 6:
           case "end":
             return _context14.stop();
         }
@@ -7557,27 +7568,27 @@ var updateRegisteredUserRoom = /*#__PURE__*/function () {
     }, _callee14);
   }));
 
-  return function updateRegisteredUserRoom(_x15, _x16) {
+  return function updateUserStatus(_x16) {
     return _ref14.apply(this, arguments);
   };
 }();
-var registerUser = /*#__PURE__*/function () {
-  var _ref15 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee15(username, password) {
-    var _yield$axios$post5, user;
+var updateRegisteredUserRoom = /*#__PURE__*/function () {
+  var _ref15 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee15(id, room) {
+    var _yield$axios$put, user;
 
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee15$(_context15) {
       while (1) {
         switch (_context15.prev = _context15.next) {
           case 0:
             _context15.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_4___default().post("".concat(url, "/api/users/register"), {
-              username: username,
-              password: password
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().put("".concat(url, "/api/users/misc/updateRegisteredUserRoom"), {
+              id: id,
+              room: room
             });
 
           case 2:
-            _yield$axios$post5 = _context15.sent;
-            user = _yield$axios$post5.data;
+            _yield$axios$put = _context15.sent;
+            user = _yield$axios$put.data;
             return _context15.abrupt("return", user);
 
           case 5:
@@ -7588,28 +7599,28 @@ var registerUser = /*#__PURE__*/function () {
     }, _callee15);
   }));
 
-  return function registerUser(_x17, _x18) {
+  return function updateRegisteredUserRoom(_x17, _x18) {
     return _ref15.apply(this, arguments);
   };
 }();
-var validateUser = /*#__PURE__*/function () {
+var registerUser = /*#__PURE__*/function () {
   var _ref16 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee16(username, password) {
-    var _yield$axios$post6, data;
+    var _yield$axios$post5, user;
 
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee16$(_context16) {
       while (1) {
         switch (_context16.prev = _context16.next) {
           case 0:
             _context16.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_4___default().post("".concat(url, "/api/users/login"), {
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().post("".concat(url, "/api/users/register"), {
               username: username,
               password: password
             });
 
           case 2:
-            _yield$axios$post6 = _context16.sent;
-            data = _yield$axios$post6.data;
-            return _context16.abrupt("return", data);
+            _yield$axios$post5 = _context16.sent;
+            user = _yield$axios$post5.data;
+            return _context16.abrupt("return", user);
 
           case 5:
           case "end":
@@ -7619,29 +7630,28 @@ var validateUser = /*#__PURE__*/function () {
     }, _callee16);
   }));
 
-  return function validateUser(_x19, _x20) {
+  return function registerUser(_x19, _x20) {
     return _ref16.apply(this, arguments);
   };
 }();
-var isTokenValid = /*#__PURE__*/function () {
-  var _ref17 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee17(token) {
-    var _yield$axios$post7, status;
+var validateUser = /*#__PURE__*/function () {
+  var _ref17 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee17(username, password) {
+    var _yield$axios$post6, data;
 
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee17$(_context17) {
       while (1) {
         switch (_context17.prev = _context17.next) {
           case 0:
             _context17.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_4___default().post("".concat(url, "/api/users/misc/testingValidToken"), token, {
-              headers: {
-                Authorization: token
-              }
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().post("".concat(url, "/api/users/login"), {
+              username: username,
+              password: password
             });
 
           case 2:
-            _yield$axios$post7 = _context17.sent;
-            status = _yield$axios$post7.data;
-            return _context17.abrupt("return", status);
+            _yield$axios$post6 = _context17.sent;
+            data = _yield$axios$post6.data;
+            return _context17.abrupt("return", data);
 
           case 5:
           case "end":
@@ -7651,8 +7661,40 @@ var isTokenValid = /*#__PURE__*/function () {
     }, _callee17);
   }));
 
-  return function isTokenValid(_x21) {
+  return function validateUser(_x21, _x22) {
     return _ref17.apply(this, arguments);
+  };
+}();
+var isTokenValid = /*#__PURE__*/function () {
+  var _ref18 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee18(token) {
+    var _yield$axios$post7, status;
+
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee18$(_context18) {
+      while (1) {
+        switch (_context18.prev = _context18.next) {
+          case 0:
+            _context18.next = 2;
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().post("".concat(url, "/api/users/misc/testingValidToken"), token, {
+              headers: {
+                Authorization: token
+              }
+            });
+
+          case 2:
+            _yield$axios$post7 = _context18.sent;
+            status = _yield$axios$post7.data;
+            return _context18.abrupt("return", status);
+
+          case 5:
+          case "end":
+            return _context18.stop();
+        }
+      }
+    }, _callee18);
+  }));
+
+  return function isTokenValid(_x23) {
+    return _ref18.apply(this, arguments);
   };
 }(); //  -------------------------------------------------------------------------------------------------------
 
@@ -7761,36 +7803,36 @@ var ErrorHandlerForSignIns = /*#__PURE__*/function () {
   }, {
     key: "isNameFaulty",
     value: function () {
-      var _isNameFaulty = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee18(name) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee18$(_context18) {
+      var _isNameFaulty = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee19(name) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee19$(_context19) {
           while (1) {
-            switch (_context18.prev = _context18.next) {
+            switch (_context19.prev = _context19.next) {
               case 0:
-                _context18.next = 2;
+                _context19.next = 2;
                 return doesUserExist(name);
 
               case 2:
-                _context18.t0 = _context18.sent;
+                _context19.t0 = _context19.sent;
 
-                if (_context18.t0) {
-                  _context18.next = 5;
+                if (_context19.t0) {
+                  _context19.next = 5;
                   break;
                 }
 
-                _context18.t0 = name.toLowerCase() === 'chatbot';
+                _context19.t0 = name.toLowerCase() === 'chatbot';
 
               case 5:
-                return _context18.abrupt("return", _context18.t0);
+                return _context19.abrupt("return", _context19.t0);
 
               case 6:
               case "end":
-                return _context18.stop();
+                return _context19.stop();
             }
           }
-        }, _callee18);
+        }, _callee19);
       }));
 
-      function isNameFaulty(_x22) {
+      function isNameFaulty(_x24) {
         return _isNameFaulty.apply(this, arguments);
       }
 
@@ -7893,7 +7935,7 @@ var toggleParticipantsReducer = function toggleParticipantsReducer() {
   }
 };
 var toggleRoomListReducer = function toggleRoomListReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {

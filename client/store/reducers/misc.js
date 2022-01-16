@@ -26,7 +26,7 @@ export const toggleParticipantsReducer = (state = false, action) => {
 	}
 };
 
-export const toggleRoomListReducer = (state = true, action) => {
+export const toggleRoomListReducer = (state = false, action) => {
 	switch (action.type) {
 		case types.TOGGLE_ROOM_LIST_IN_HOME_PAGE:
 			return action.status;

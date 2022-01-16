@@ -66,6 +66,15 @@ export const getRoom = async (id) => {
 	return room;
 };
 
+export const getAllRoomsForUser = async (token, userId) => {
+	const { data: rooms } = await axios.get(`${url}/api/rooms/all/${userId}`, {
+		headers: {
+			Authorization: token,
+		},
+	});
+	return rooms;
+};
+
 export const associateUserAndRoom = async (user) => {
 	await axios.put(`${url}/api/rooms`, { user, type: 'associate' });
 };

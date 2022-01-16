@@ -1,4 +1,5 @@
 const express = require('express');
+const { authMiddleware } = require('../auth/utils');
 const router = express.Router();
 const Room = require('../db/models/Rooms');
 const User = require('../db/models/Users');
@@ -8,6 +9,17 @@ router.get('/:id', async (req, res, next) => {
 		const room = await Room.findOne({ where: { id: req.params.id } });
 		if (!room) res.status(404).send('could not find room');
 		else res.send(room);
+	} catch (err) {
+		next(err);
+	}
+});
+
+router.get('/all/:id', authMiddleware, async (req, res, next) => {
+	try {
+		const user = await User.findByPk(req.params.id);
+		const rooms = await user.getRooms();
+		const names = rooms.map((room) => room.name);
+		res.send(names);
 	} catch (err) {
 		next(err);
 	}

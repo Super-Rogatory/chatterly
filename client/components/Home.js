@@ -4,7 +4,13 @@ import chatterlylogo from '../icons/favicon.png';
 import refreshlogo from '../icons/refresh.png';
 import { Redirect } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
-import { getUserByName, isTokenValid, updateRegisteredUserRoom, updateUserStatus } from '../store/effects/utils';
+import {
+	getAllRoomsForUser,
+	getUserByName,
+	isTokenValid,
+	updateRegisteredUserRoom,
+	updateUserStatus,
+} from '../store/effects/utils';
 import { connect } from 'react-redux';
 import { updateChatterlyStatus } from '../store/effects/thunks';
 import RoomList from './RoomList';
@@ -107,11 +113,14 @@ class Home extends React.Component {
 	}
 
 	async openRoomListInHomePage() {
-		const { jwt } = this.state;
-		try {
-			await isTokenValid(jwt);
-			this.props.updateComponent('openRoomListInHomePage', !this.props.openRoomListTab);
-		} catch (err) {}
+		const { jwt, user } = this.state;
+		this.props.updateComponent('openRoomListInHomePage', !this.props.openRoomListTab);
+		if (!this.props.openRoomListTab) {
+			try {
+				const rooms = await getAllRoomsForUser(jwt, user.id);
+				console.log(rooms);
+			} catch (err) {}
+		}
 	}
 
 	render() {
