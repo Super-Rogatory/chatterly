@@ -48,10 +48,10 @@ class Home extends React.Component {
 			/* ensure that the jwt from local storage is valid, then get user */
 			await isTokenValid(token); // isTokenValid is a function that returns an object with the status property, if there is an error we can catch it and then redirect to home.
 			const user = await getUserByName(localStorageName);
-			const rooms = await getAllRoomsForUser(token, user.id);
 			if (!user) throw new Error('failed to find user');
 			this.loadImages();
-			this.setState({ isLoaded: true, jwt: token, roomsArray: rooms, user, isUserOnline: user.active });
+			await this.setRoomsOnState(token, user);
+			this.setState({ isLoaded: true, jwt: token, user, isUserOnline: user.active });
 		} catch (err) {
 			this.setState({ invalidToken: true });
 		}
@@ -74,6 +74,11 @@ class Home extends React.Component {
 		crownIcon.src = crownlogo; // triggers browser download of image
 		chatIcon.src = chatterlylogo;
 		refreshIcon.src = refreshlogo;
+	}
+
+	async setRoomsOnState(jwt, user) {
+		const rooms = await getAllRoomsForUser(jwt, user.id);
+		this.setState({ roomsArray: rooms });
 	}
 
 	async handleSubmit(e) {
@@ -118,9 +123,10 @@ class Home extends React.Component {
 		this.props.updateComponent('openRoomListInHomePage', !this.props.openRoomListTab);
 		if (!this.props.openRoomListTab) {
 			try {
-				const rooms = await getAllRoomsForUser(jwt, user.id);
-				this.setState({ roomsArray: rooms });
-			} catch (err) {}
+				await this.setRoomsOnState(jwt, user);
+			} catch (err) {
+				console.error(err);
+			}
 		}
 	}
 

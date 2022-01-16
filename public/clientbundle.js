@@ -4880,7 +4880,7 @@ var Home = /*#__PURE__*/function (_React$Component) {
     key: "componentDidMount",
     value: function () {
       var _componentDidMount = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().mark(function _callee() {
-        var localStorageName, localStorageToken, _JSON$parse, token, user, rooms;
+        var localStorageName, localStorageToken, _JSON$parse, token, user;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().wrap(function _callee$(_context) {
           while (1) {
@@ -4901,44 +4901,42 @@ var Home = /*#__PURE__*/function (_React$Component) {
 
               case 8:
                 user = _context.sent;
-                _context.next = 11;
-                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_14__.getAllRoomsForUser)(token, user.id);
-
-              case 11:
-                rooms = _context.sent;
 
                 if (user) {
-                  _context.next = 14;
+                  _context.next = 11;
                   break;
                 }
 
                 throw new Error('failed to find user');
 
-              case 14:
+              case 11:
                 this.loadImages();
+                _context.next = 14;
+                return this.setRoomsOnState(token, user);
+
+              case 14:
                 this.setState({
                   isLoaded: true,
                   jwt: token,
-                  roomsArray: rooms,
                   user: user,
                   isUserOnline: user.active
                 });
-                _context.next = 21;
+                _context.next = 20;
                 break;
 
-              case 18:
-                _context.prev = 18;
+              case 17:
+                _context.prev = 17;
                 _context.t0 = _context["catch"](3);
                 this.setState({
                   invalidToken: true
                 });
 
-              case 21:
+              case 20:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[3, 18]]);
+        }, _callee, this, [[3, 17]]);
       }));
 
       function componentDidMount() {
@@ -4981,38 +4979,24 @@ var Home = /*#__PURE__*/function (_React$Component) {
       refreshIcon.src = _icons_refresh_png__WEBPACK_IMPORTED_MODULE_12__["default"];
     }
   }, {
-    key: "handleSubmit",
+    key: "setRoomsOnState",
     value: function () {
-      var _handleSubmit = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().mark(function _callee2(e) {
-        var user;
+      var _setRoomsOnState = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().mark(function _callee2(jwt, user) {
+        var rooms;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                e.preventDefault();
+                _context2.next = 2;
+                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_14__.getAllRoomsForUser)(jwt, user.id);
 
-                if (this.state.room) {
-                  _context2.next = 4;
-                  break;
-                }
-
+              case 2:
+                rooms = _context2.sent;
                 this.setState({
-                  roomError: true
+                  roomsArray: rooms
                 });
-                return _context2.abrupt("return");
 
               case 4:
-                _context2.next = 6;
-                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_14__.updateRegisteredUserRoom)(this.state.user.id, this.state.room);
-
-              case 6:
-                user = _context2.sent;
-                window.localStorage.setItem('user', JSON.stringify(user));
-                this.setState({
-                  redirectToChat: true
-                });
-
-              case 9:
               case "end":
                 return _context2.stop();
             }
@@ -5020,7 +5004,53 @@ var Home = /*#__PURE__*/function (_React$Component) {
         }, _callee2, this);
       }));
 
-      function handleSubmit(_x) {
+      function setRoomsOnState(_x, _x2) {
+        return _setRoomsOnState.apply(this, arguments);
+      }
+
+      return setRoomsOnState;
+    }()
+  }, {
+    key: "handleSubmit",
+    value: function () {
+      var _handleSubmit = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().mark(function _callee3(e) {
+        var user;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                e.preventDefault();
+
+                if (this.state.room) {
+                  _context3.next = 4;
+                  break;
+                }
+
+                this.setState({
+                  roomError: true
+                });
+                return _context3.abrupt("return");
+
+              case 4:
+                _context3.next = 6;
+                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_14__.updateRegisteredUserRoom)(this.state.user.id, this.state.room);
+
+              case 6:
+                user = _context3.sent;
+                window.localStorage.setItem('user', JSON.stringify(user));
+                this.setState({
+                  redirectToChat: true
+                });
+
+              case 9:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function handleSubmit(_x3) {
         return _handleSubmit.apply(this, arguments);
       }
 
@@ -5034,15 +5064,15 @@ var Home = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "updateUserStatusWithTimeout",
     value: function () {
-      var _updateUserStatusWithTimeout = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().mark(function _callee3(user) {
+      var _updateUserStatusWithTimeout = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().mark(function _callee4(user) {
         var _this3 = this;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _context3.prev = 0;
-                _context3.next = 3;
+                _context4.prev = 0;
+                _context4.next = 3;
                 return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_14__.updateUserStatus)(user);
 
               case 3:
@@ -5055,23 +5085,23 @@ var Home = /*#__PURE__*/function (_React$Component) {
                     canChangeUserStatusAgain: true
                   });
                 }, 3000);
-                _context3.next = 10;
+                _context4.next = 10;
                 break;
 
               case 7:
-                _context3.prev = 7;
-                _context3.t0 = _context3["catch"](0);
-                console.error(_context3.t0);
+                _context4.prev = 7;
+                _context4.t0 = _context4["catch"](0);
+                console.error(_context4.t0);
 
               case 10:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this, [[0, 7]]);
+        }, _callee4, this, [[0, 7]]);
       }));
 
-      function updateUserStatusWithTimeout(_x2) {
+      function updateUserStatusWithTimeout(_x4) {
         return _updateUserStatusWithTimeout.apply(this, arguments);
       }
 
@@ -5080,36 +5110,36 @@ var Home = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "updateUserStatusAndLogout",
     value: function () {
-      var _updateUserStatusAndLogout = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().mark(function _callee4(user, typeObject) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().wrap(function _callee4$(_context4) {
+      var _updateUserStatusAndLogout = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().mark(function _callee5(user, typeObject) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
-                _context4.prev = 0;
-                _context4.next = 3;
+                _context5.prev = 0;
+                _context5.next = 3;
                 return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_14__.updateUserStatus)(user, typeObject);
 
               case 3:
                 this.setState({
                   isLoggedIn: false
                 });
-                _context4.next = 9;
+                _context5.next = 9;
                 break;
 
               case 6:
-                _context4.prev = 6;
-                _context4.t0 = _context4["catch"](0);
-                console.error(_context4.t0);
+                _context5.prev = 6;
+                _context5.t0 = _context5["catch"](0);
+                console.error(_context5.t0);
 
               case 9:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this, [[0, 6]]);
+        }, _callee5, this, [[0, 6]]);
       }));
 
-      function updateUserStatusAndLogout(_x3, _x4) {
+      function updateUserStatusAndLogout(_x5, _x6) {
         return _updateUserStatusAndLogout.apply(this, arguments);
       }
 
@@ -5118,43 +5148,40 @@ var Home = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "openRoomListInHomePage",
     value: function () {
-      var _openRoomListInHomePage = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().mark(function _callee5() {
-        var _this$state, jwt, user, rooms;
+      var _openRoomListInHomePage = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().mark(function _callee6() {
+        var _this$state, jwt, user;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().wrap(function _callee5$(_context5) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
                 _this$state = this.state, jwt = _this$state.jwt, user = _this$state.user;
                 this.props.updateComponent('openRoomListInHomePage', !this.props.openRoomListTab);
 
                 if (this.props.openRoomListTab) {
-                  _context5.next = 12;
+                  _context6.next = 11;
                   break;
                 }
 
-                _context5.prev = 3;
-                _context5.next = 6;
-                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_14__.getAllRoomsForUser)(jwt, user.id);
+                _context6.prev = 3;
+                _context6.next = 6;
+                return this.setRoomsOnState(jwt, user);
 
               case 6:
-                rooms = _context5.sent;
-                this.setState({
-                  roomsArray: rooms
-                });
-                _context5.next = 12;
+                _context6.next = 11;
                 break;
 
-              case 10:
-                _context5.prev = 10;
-                _context5.t0 = _context5["catch"](3);
+              case 8:
+                _context6.prev = 8;
+                _context6.t0 = _context6["catch"](3);
+                console.error(_context6.t0);
 
-              case 12:
+              case 11:
               case "end":
-                return _context5.stop();
+                return _context6.stop();
             }
           }
-        }, _callee5, this, [[3, 10]]);
+        }, _callee6, this, [[3, 8]]);
       }));
 
       function openRoomListInHomePage() {
@@ -13380,7 +13407,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.refresh-img {\n\tbackground-color: transparent;\n\tborder: none;\n\tcursor: pointer;\n\toutline: none;\n}\n\n.refresh-img > img {\n\twidth: 20px;\n\theight: 20px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n.ui-sandbox-top {\n\tdisplay: flex;\n\tflex-direction: column;\n\theight: 50%;\n\twidth: 70%;\n}\n\n.chatterly-home-form {\n\twidth: 100%;\n}\n\n.ui-sandbox-bottom {\n\theight: 50%;\n\twidth: 100%;\n}\n\n.room-list-container {\n\twidth: 100%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-top: 2px solid black;\n}\n\n.room-list-title {\n\tmargin-left: 16px;\n}\n\n.room-list-icon {\n\tmargin-right: 16px;\n}\n\n.room-header-menu {\n\tdisplay: flex;\n\theight: 15%;\n\twidth: 100%;\n\tjustify-content: space-between;\n}\n.room-main-content {\n\theight: 85%;\n}\n.ui.message.home {\n\tpadding: 0.5em 0.5em;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n", "",{"version":3,"sources":["webpack://./client/styles/css/home-styles.css"],"names":[],"mappings":"AAAA;CACC,YAAY;CACZ,WAAW;CACX,uBAAuB;AACxB;;AAEA;CACC,oBAAoB;CACpB,WAAW;CACX,eAAe;CACf,8BAA8B;CAC9B,eAAe;AAChB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,6BAA6B;CAC7B,mBAAmB;CACnB,UAAU;CACV,YAAY;CACZ,mCAAmC;CACnC,6BAA6B;AAC9B;;AAEA;CACC,aAAa;CACb,UAAU;AACX;;AAEA;CACC,aAAa;CACb,WAAW;CACX,UAAU,EAAE,6EAA6E;CACzF,gBAAgB;CAChB,8BAA8B;CAC9B,mBAAmB;CACnB,eAAe;AAChB;;AAEA;CACC,oBAAoB;CACpB,mBAAmB;CACnB,uBAAuB;CACvB,cAAc;CACd,gBAAgB;CAChB,kBAAkB;AACnB;;AAEA;CACC,WAAW;CACX,YAAY;CACZ,mBAAmB;AACpB;;AAEA;CACC,6BAA6B;CAC7B,YAAY;CACZ,eAAe;CACf,aAAa;AACd;;AAEA;CACC,WAAW;CACX,YAAY;AACb;;AAEA;CACC,gBAAgB;AACjB;;AAEA;CACC,eAAe;AAChB;;AAEA;CACC,uBAAuB;AACxB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,uBAAuB;CACvB,mBAAmB;AACpB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,WAAW;CACX,UAAU;AACX;;AAEA;CACC,WAAW;AACZ;;AAEA;CACC,WAAW;CACX,WAAW;AACZ;;AAEA;CACC,WAAW;CACX,YAAY;CACZ,mCAAmC;CACnC,2BAA2B;AAC5B;;AAEA;CACC,iBAAiB;AAClB;;AAEA;CACC,kBAAkB;AACnB;;AAEA;CACC,aAAa;CACb,WAAW;CACX,WAAW;CACX,8BAA8B;AAC/B;AACA;CACC,WAAW;AACZ;AACA;CACC,oBAAoB;AACrB;;AAEA;;;CAGC,iBAAiB;AAClB;;AAEA;CACC;EACC,eAAe;CAChB;CACA;EACC,WAAW;EACX,YAAY;EACZ,kBAAkB;CACnB;AACD","sourcesContent":[".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.refresh-img {\n\tbackground-color: transparent;\n\tborder: none;\n\tcursor: pointer;\n\toutline: none;\n}\n\n.refresh-img > img {\n\twidth: 20px;\n\theight: 20px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n.ui-sandbox-top {\n\tdisplay: flex;\n\tflex-direction: column;\n\theight: 50%;\n\twidth: 70%;\n}\n\n.chatterly-home-form {\n\twidth: 100%;\n}\n\n.ui-sandbox-bottom {\n\theight: 50%;\n\twidth: 100%;\n}\n\n.room-list-container {\n\twidth: 100%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-top: 2px solid black;\n}\n\n.room-list-title {\n\tmargin-left: 16px;\n}\n\n.room-list-icon {\n\tmargin-right: 16px;\n}\n\n.room-header-menu {\n\tdisplay: flex;\n\theight: 15%;\n\twidth: 100%;\n\tjustify-content: space-between;\n}\n.room-main-content {\n\theight: 85%;\n}\n.ui.message.home {\n\tpadding: 0.5em 0.5em;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.refresh-img {\n\tbackground-color: transparent;\n\tborder: none;\n\tcursor: pointer;\n\toutline: none;\n}\n\n.refresh-img > img {\n\twidth: 20px;\n\theight: 20px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n.ui-sandbox-top {\n\tdisplay: flex;\n\tflex-direction: column;\n\theight: 50%;\n\twidth: 70%;\n}\n\n.chatterly-home-form {\n\twidth: 100%;\n}\n\n.ui-sandbox-bottom {\n\theight: 50%;\n\twidth: 100%;\n}\n\n.room-list-container {\n\twidth: 100%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-top: 2px solid black;\n}\n\n.room-list-title {\n\tmargin-left: 16px;\n}\n\n.room-list-icon {\n\tmargin-right: 16px;\n}\n\n.room-header-menu {\n\tdisplay: flex;\n\theight: 15%;\n\twidth: 100%;\n\tjustify-content: space-between;\n}\n\n.room-main-content {\n\theight: 85%;\n}\n\n.rooms {\n\theight: 100%;\n}\n\n.ui.message.home {\n\tpadding: 0.5em 0.5em;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n", "",{"version":3,"sources":["webpack://./client/styles/css/home-styles.css"],"names":[],"mappings":"AAAA;CACC,YAAY;CACZ,WAAW;CACX,uBAAuB;AACxB;;AAEA;CACC,oBAAoB;CACpB,WAAW;CACX,eAAe;CACf,8BAA8B;CAC9B,eAAe;AAChB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,6BAA6B;CAC7B,mBAAmB;CACnB,UAAU;CACV,YAAY;CACZ,mCAAmC;CACnC,6BAA6B;AAC9B;;AAEA;CACC,aAAa;CACb,UAAU;AACX;;AAEA;CACC,aAAa;CACb,WAAW;CACX,UAAU,EAAE,6EAA6E;CACzF,gBAAgB;CAChB,8BAA8B;CAC9B,mBAAmB;CACnB,eAAe;AAChB;;AAEA;CACC,oBAAoB;CACpB,mBAAmB;CACnB,uBAAuB;CACvB,cAAc;CACd,gBAAgB;CAChB,kBAAkB;AACnB;;AAEA;CACC,WAAW;CACX,YAAY;CACZ,mBAAmB;AACpB;;AAEA;CACC,6BAA6B;CAC7B,YAAY;CACZ,eAAe;CACf,aAAa;AACd;;AAEA;CACC,WAAW;CACX,YAAY;AACb;;AAEA;CACC,gBAAgB;AACjB;;AAEA;CACC,eAAe;AAChB;;AAEA;CACC,uBAAuB;AACxB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,uBAAuB;CACvB,mBAAmB;AACpB;;AAEA;CACC,aAAa;CACb,sBAAsB;CACtB,WAAW;CACX,UAAU;AACX;;AAEA;CACC,WAAW;AACZ;;AAEA;CACC,WAAW;CACX,WAAW;AACZ;;AAEA;CACC,WAAW;CACX,YAAY;CACZ,mCAAmC;CACnC,2BAA2B;AAC5B;;AAEA;CACC,iBAAiB;AAClB;;AAEA;CACC,kBAAkB;AACnB;;AAEA;CACC,aAAa;CACb,WAAW;CACX,WAAW;CACX,8BAA8B;AAC/B;;AAEA;CACC,WAAW;AACZ;;AAEA;CACC,YAAY;AACb;;AAEA;CACC,oBAAoB;AACrB;;AAEA;;;CAGC,iBAAiB;AAClB;;AAEA;CACC;EACC,eAAe;CAChB;CACA;EACC,WAAW;EACX,YAAY;EACZ,kBAAkB;CACnB;AACD","sourcesContent":[".home-user-interface-container {\n\theight: 50px;\n\twidth: 100%;\n\tbackground-color: white;\n}\n\n.inline-flexed-content-container {\n\tdisplay: inline-flex;\n\theight: 95%;\n\tmax-width: 100%;\n\tborder-bottom: 2px solid black;\n\tfont-size: 18px;\n}\n\n.vertical-static-menu {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\talign-items: center;\n\twidth: 20%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-right: 2px solid black;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\twidth: 80%;\n}\n\n.logged-in-username-footer {\n\tdisplay: flex;\n\twidth: 100%;\n\theight: 5%; /* goes in conjunction with the inline-flexed-container to combine for 100% */\n\tmin-height: 30px;\n\tjustify-content: space-between;\n\talign-items: center;\n\tfont-size: 24px;\n}\n\n.username-wrapper {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tmax-width: 50%;\n\tmax-height: 100%;\n\tpadding-left: 18px;\n}\n\n.username-wrapper-img > img {\n\twidth: 45px;\n\theight: 45px;\n\tmargin-right: -10px;\n}\n\n.refresh-img {\n\tbackground-color: transparent;\n\tborder: none;\n\tcursor: pointer;\n\toutline: none;\n}\n\n.refresh-img > img {\n\twidth: 20px;\n\theight: 20px;\n}\n\n.username-wrapper-name {\n\tfont-weight: 800;\n}\n\n.rmv-margin {\n\tmargin-right: 0;\n}\n\n.status-icon-center {\n\tjustify-content: center;\n}\n\n.ui-sandbox {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n.ui-sandbox-top {\n\tdisplay: flex;\n\tflex-direction: column;\n\theight: 50%;\n\twidth: 70%;\n}\n\n.chatterly-home-form {\n\twidth: 100%;\n}\n\n.ui-sandbox-bottom {\n\theight: 50%;\n\twidth: 100%;\n}\n\n.room-list-container {\n\twidth: 100%;\n\theight: 100%;\n\tbackground-color: rgb(121, 108, 89);\n\tborder-top: 2px solid black;\n}\n\n.room-list-title {\n\tmargin-left: 16px;\n}\n\n.room-list-icon {\n\tmargin-right: 16px;\n}\n\n.room-header-menu {\n\tdisplay: flex;\n\theight: 15%;\n\twidth: 100%;\n\tjustify-content: space-between;\n}\n\n.room-main-content {\n\theight: 85%;\n}\n\n.rooms {\n\theight: 100%;\n}\n\n.ui.message.home {\n\tpadding: 0.5em 0.5em;\n}\n\ndiv.basic:nth-child(1),\ndiv.basic:nth-child(2),\ndiv.basic:nth-child(3) {\n\tmargin-right: 0px;\n}\n\n@media only screen and (max-height: 745px) {\n\t.logged-in-username-footer {\n\t\tfont-size: 16px;\n\t}\n\t.username-wrapper-img > img {\n\t\twidth: 30px;\n\t\theight: 30px;\n\t\tmargin-right: -7px;\n\t}\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

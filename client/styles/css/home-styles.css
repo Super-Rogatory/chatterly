@@ -121,9 +121,15 @@
 	width: 100%;
 	justify-content: space-between;
 }
+
 .room-main-content {
 	height: 85%;
 }
+
+.rooms {
+	height: 100%;
+}
+
 .ui.message.home {
 	padding: 0.5em 0.5em;
 }
