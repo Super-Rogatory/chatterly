@@ -14,7 +14,7 @@ class RoomList extends React.Component {
 					</div>
 				</div>
 				<div className="room-main-content">
-					<ScrollToBottom>
+					<ScrollToBottom className="rooms">
 						{this.props.rooms.map((name, index) => (
 							<li key={index} className="">
 								{name}
