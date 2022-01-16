@@ -31,6 +31,7 @@ class ChatHeader extends React.Component {
 	}
 
 	async handleRedirect() {
+		this.props.socket.emit('sendDisconnectMessage', this.props.user);
 		if (this.props.user.isGuest) {
 			await disassociateUserAndRoom(this.props.user);
 			this.props.updateComponent('toggleGuestWarningPopup', false);
@@ -40,7 +41,6 @@ class ChatHeader extends React.Component {
 		} else {
 			this.setState({ redirectToHomeForRegisteredUser: true });
 		}
-		this.props.socket.emit('sendDisconnectMessage', this.props.user);
 	}
 
 	render() {

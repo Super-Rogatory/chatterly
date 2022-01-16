@@ -3951,8 +3951,8 @@ var Chat = /*#__PURE__*/function (_React$Component) {
                 console.log(_context4.t3);
 
               case 28:
-                // initialize chatbot to start! - on connect -
-                this.state.clientSocket.on('initializeChatbot', /*#__PURE__*/function () {
+                // initialize chatbot to start! disables duplicate messages. only listens once
+                this.state.clientSocket.once('initializeChatbot', /*#__PURE__*/function () {
                   var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_7___default().mark(function _callee(_ref) {
                     var message;
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_7___default().wrap(function _callee$(_context) {
@@ -4022,7 +4022,7 @@ var Chat = /*#__PURE__*/function (_React$Component) {
                   };
                 }()); // handles display of disconnect message - on disconnect -
 
-                this.state.clientSocket.on('disconnectMessage', /*#__PURE__*/function () {
+                this.state.clientSocket.once('disconnectMessage', /*#__PURE__*/function () {
                   var _ref5 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_7___default().mark(function _callee3(_ref4) {
                     var text;
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_7___default().wrap(function _callee3$(_context3) {
@@ -4283,31 +4283,30 @@ var ChatHeader = /*#__PURE__*/function (_React$Component) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                this.props.socket.emit('sendDisconnectMessage', this.props.user);
+
                 if (!this.props.user.isGuest) {
-                  _context.next = 9;
+                  _context.next = 10;
                   break;
                 }
 
-                _context.next = 3;
+                _context.next = 4;
                 return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_13__.disassociateUserAndRoom)(this.props.user);
 
-              case 3:
+              case 4:
                 this.props.updateComponent('toggleGuestWarningPopup', false);
                 this.setState({
                   redirectToHome: true
                 });
                 this.props.socket.disconnect();
                 this.props.socket.off();
-                _context.next = 10;
+                _context.next = 11;
                 break;
 
-              case 9:
+              case 10:
                 this.setState({
                   redirectToHomeForRegisteredUser: true
                 });
-
-              case 10:
-                this.props.socket.emit('sendDisconnectMessage', this.props.user);
 
               case 11:
               case "end":

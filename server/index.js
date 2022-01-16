@@ -64,12 +64,9 @@ io.on('connection', (socket) => {
 		// a valid id, name, and room indicates successful creation of a user in the front-end.
 		console.log(id, name, room);
 
-		// emitting an event from the back-end to the front-end
-		socket.emit('initializeChatbot', { text: `${name}, welcome to the room ${room}` });
-
 		socket.join(room);
 		// emitting to all clients in the room except the user.
-		socket.to(room).emit('initializeChatbot', { text: `${name}, has joined the chat!` });
+		io.in(room).emit('initializeChatbot', { text: `${name}, has joined the chat!` });
 	});
 
 	// waiting for an emitted event from the front-end

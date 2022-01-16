@@ -66,8 +66,8 @@ class Chat extends React.Component {
 			console.log(err);
 		}
 
-		// initialize chatbot to start! - on connect -
-		this.state.clientSocket.on('initializeChatbot', async ({ text: message }) => {
+		// initialize chatbot to start! disables duplicate messages. only listens once
+		this.state.clientSocket.once('initializeChatbot', async ({ text: message }) => {
 			// we want to open room once. If we handled a persistent user, don't open room again. This is handled in openRoom definition
 			try {
 				// after opening room, save message in db.
@@ -88,11 +88,12 @@ class Chat extends React.Component {
 		});
 
 		// handles display of disconnect message - on disconnect -
-		this.state.clientSocket.on('disconnectMessage', async ({ text }) => {
+		this.state.clientSocket.once('disconnectMessage', async ({ text }) => {
 			await addMessage(text, this.state.room.chatBot);
 			this.state.clientSocket.emit('addedMessage', this.state.room.chatBot);
 			this.state.clientSocket.emit('refreshOnlineUsers', this.state.user);
 		});
+
 		// fetch the active users in room (via a thunk perhaps). this will change the users property on the state to make sure that usersInRoom is ready to display it without making
 		// the AJAX request there
 		this.props.fetchUsers(this.state.user.room);
