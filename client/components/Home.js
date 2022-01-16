@@ -33,6 +33,7 @@ class Home extends React.Component {
 			roomError: false,
 			redirectToChat: false,
 			jwt: null,
+			roomsArray: [],
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -47,10 +48,10 @@ class Home extends React.Component {
 			/* ensure that the jwt from local storage is valid, then get user */
 			await isTokenValid(token); // isTokenValid is a function that returns an object with the status property, if there is an error we can catch it and then redirect to home.
 			const user = await getUserByName(localStorageName);
+			const rooms = await getAllRoomsForUser(token, user.id);
 			if (!user) throw new Error('failed to find user');
-			else this.setState({ user, isUserOnline: user.active });
 			this.loadImages();
-			this.setState({ isLoaded: true, jwt: token });
+			this.setState({ isLoaded: true, jwt: token, roomsArray: rooms, user, isUserOnline: user.active });
 		} catch (err) {
 			this.setState({ invalidToken: true });
 		}
@@ -118,14 +119,14 @@ class Home extends React.Component {
 		if (!this.props.openRoomListTab) {
 			try {
 				const rooms = await getAllRoomsForUser(jwt, user.id);
-				console.log(rooms);
+				this.setState({ roomsArray: rooms });
 			} catch (err) {}
 		}
 	}
 
 	render() {
 		const { user, canChangeUserStatusAgain, isUserOnline, roomError } = this.state;
-		const { isLoaded, isLogoReady, isCrownReady, isRefreshReady } = this.state;
+		const { isLoaded, isLogoReady, isCrownReady, isRefreshReady, roomsArray } = this.state;
 		if (!this.state.isLoggedIn || this.state.invalidToken) {
 			window.localStorage.clear();
 			return <Redirect to="/" />;
@@ -186,7 +187,7 @@ class Home extends React.Component {
 										</div>
 										{/* will render out the roomlist when the room list button is toggled */}
 										<div className={this.props.openRoomListTab ? 'ui-sandbox-bottom' : ''}>
-											{this.props.openRoomListTab && <RoomList refreshIcon={refreshlogo} />}
+											{this.props.openRoomListTab && <RoomList refreshIcon={refreshlogo} rooms={roomsArray} />}
 										</div>
 									</div>
 								</div>

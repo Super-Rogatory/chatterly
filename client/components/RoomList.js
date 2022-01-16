@@ -1,4 +1,5 @@
 import React from 'react';
+import ScrollToBottom from 'react-scroll-to-bottom';
 
 class RoomList extends React.Component {
 	render() {
@@ -11,6 +12,15 @@ class RoomList extends React.Component {
 							<img src={this.props.refreshIcon} alt="refresh icon" />
 						</button>
 					</div>
+				</div>
+				<div className="room-main-content">
+					<ScrollToBottom>
+						{this.props.rooms.map((name, index) => (
+							<li key={index} className="">
+								{name}
+							</li>
+						))}
+					</ScrollToBottom>
 				</div>
 			</div>
 		);
