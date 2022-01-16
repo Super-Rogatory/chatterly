@@ -88,8 +88,7 @@ class Chat extends React.Component {
 		});
 
 		// handles display of disconnect message - on disconnect -
-		this.state.clientSocket.once('disconnectMessage', async ({ text }) => {
-			await addMessage(text, this.state.room.chatBot);
+		this.state.clientSocket.on('disconnectMessage', () => {
 			this.state.clientSocket.emit('addedMessage', this.state.room.chatBot);
 			this.state.clientSocket.emit('refreshOnlineUsers', this.state.user);
 		});
@@ -104,8 +103,6 @@ class Chat extends React.Component {
 		if (this.state.user.isGuest) {
 			await updateUserStatus(this.state.user);
 		}
-		this.state.clientSocket.disconnect();
-		this.state.clientSocket.off();
 	}
 
 	getUserRoom() {
@@ -140,6 +137,7 @@ class Chat extends React.Component {
 									socket={this.state.clientSocket}
 									roomName={this.state.user.room || this.getUserRoom()}
 									user={this.state.user}
+									chatBot={this.state.room.chatBot}
 								/>
 								<MessageList
 									socket={this.state.clientSocket}

@@ -79,8 +79,9 @@ io.on('connection', (socket) => {
 	socket.on('refreshOnlineUsers', (user) => {
 		io.in(user.room).emit('refreshUserList', user);
 	});
+
 	socket.on('sendDisconnectMessage', (user) => {
-		io.in(user.room).emit('disconnectMessage', { text: `${user.name} has left.` });
+		io.in(user.room).emit('disconnectMessage');
 	});
 
 	socket.on('disconnect', () => {

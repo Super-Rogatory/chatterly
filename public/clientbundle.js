@@ -3872,13 +3872,13 @@ var Chat = /*#__PURE__*/function (_React$Component) {
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__["default"])(Chat, [{
     key: "componentDidMount",
     value: function () {
-      var _componentDidMount = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_7___default().mark(function _callee4() {
+      var _componentDidMount = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_7___default().mark(function _callee3() {
         var _this2 = this;
 
         var loggedInUser, user, dbUser;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_7___default().wrap(function _callee4$(_context4) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_7___default().wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 // if for some reason the interval is STILL running, stop it here.
                 if (!this.props.intervalId.isClear) {
@@ -3889,26 +3889,26 @@ var Chat = /*#__PURE__*/function (_React$Component) {
                 loggedInUser = window.localStorage.getItem('user'); // assuming someone deletes from localstorage, then on refresh we can return to home.
 
                 if (loggedInUser) {
-                  _context4.next = 5;
+                  _context3.next = 5;
                   break;
                 }
 
                 this.setState({
                   noUser: true
                 });
-                return _context4.abrupt("return");
+                return _context3.abrupt("return");
 
               case 5:
-                _context4.prev = 5;
+                _context3.prev = 5;
                 user = JSON.parse(loggedInUser);
-                _context4.next = 9;
+                _context3.next = 9;
                 return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_15__.getUser)(user.id);
 
               case 9:
-                dbUser = _context4.sent;
+                dbUser = _context3.sent;
 
                 if (dbUser) {
-                  _context4.next = 13;
+                  _context3.next = 13;
                   break;
                 }
 
@@ -3924,31 +3924,31 @@ var Chat = /*#__PURE__*/function (_React$Component) {
                   user: dbUser
                 }); // room will always have access to its chatbot. there is only one chatbot PER ROOM. if room is already open, that room is returned
 
-                _context4.t0 = this;
-                _context4.next = 17;
+                _context3.t0 = this;
+                _context3.next = 17;
                 return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_15__.openRoom)(this.state.user.room);
 
               case 17:
-                _context4.t1 = _context4.sent;
-                _context4.t2 = {
-                  room: _context4.t1
+                _context3.t1 = _context3.sent;
+                _context3.t2 = {
+                  room: _context3.t1
                 };
 
-                _context4.t0.setState.call(_context4.t0, _context4.t2);
+                _context3.t0.setState.call(_context3.t0, _context3.t2);
 
-                _context4.next = 22;
+                _context3.next = 22;
                 return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_15__.associateUserAndRoom)(this.state.user);
 
               case 22:
                 // initialize chatbot and officially join room after user is created.
                 this.state.clientSocket.emit('join', this.state.user);
-                _context4.next = 28;
+                _context3.next = 28;
                 break;
 
               case 25:
-                _context4.prev = 25;
-                _context4.t3 = _context4["catch"](5);
-                console.log(_context4.t3);
+                _context3.prev = 25;
+                _context3.t3 = _context3["catch"](5);
+                console.log(_context3.t3);
 
               case 28:
                 // initialize chatbot to start! disables duplicate messages. only listens once
@@ -4022,34 +4022,11 @@ var Chat = /*#__PURE__*/function (_React$Component) {
                   };
                 }()); // handles display of disconnect message - on disconnect -
 
-                this.state.clientSocket.once('disconnectMessage', /*#__PURE__*/function () {
-                  var _ref5 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_7___default().mark(function _callee3(_ref4) {
-                    var text;
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_7___default().wrap(function _callee3$(_context3) {
-                      while (1) {
-                        switch (_context3.prev = _context3.next) {
-                          case 0:
-                            text = _ref4.text;
-                            _context3.next = 3;
-                            return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_15__.addMessage)(text, _this2.state.room.chatBot);
+                this.state.clientSocket.on('disconnectMessage', function () {
+                  _this2.state.clientSocket.emit('addedMessage', _this2.state.room.chatBot);
 
-                          case 3:
-                            _this2.state.clientSocket.emit('addedMessage', _this2.state.room.chatBot);
-
-                            _this2.state.clientSocket.emit('refreshOnlineUsers', _this2.state.user);
-
-                          case 5:
-                          case "end":
-                            return _context3.stop();
-                        }
-                      }
-                    }, _callee3);
-                  }));
-
-                  return function (_x3) {
-                    return _ref5.apply(this, arguments);
-                  };
-                }()); // fetch the active users in room (via a thunk perhaps). this will change the users property on the state to make sure that usersInRoom is ready to display it without making
+                  _this2.state.clientSocket.emit('refreshOnlineUsers', _this2.state.user);
+                }); // fetch the active users in room (via a thunk perhaps). this will change the users property on the state to make sure that usersInRoom is ready to display it without making
                 // the AJAX request there
 
                 this.props.fetchUsers(this.state.user.room);
@@ -4059,10 +4036,10 @@ var Chat = /*#__PURE__*/function (_React$Component) {
 
               case 33:
               case "end":
-                return _context4.stop();
+                return _context3.stop();
             }
           }
-        }, _callee4, this, [[5, 25]]);
+        }, _callee3, this, [[5, 25]]);
       }));
 
       function componentDidMount() {
@@ -4074,29 +4051,25 @@ var Chat = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentWillUnmount",
     value: function () {
-      var _componentWillUnmount = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_7___default().mark(function _callee5() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_7___default().wrap(function _callee5$(_context5) {
+      var _componentWillUnmount = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_7___default().mark(function _callee4() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_7___default().wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 if (!this.state.user.isGuest) {
-                  _context5.next = 3;
+                  _context4.next = 3;
                   break;
                 }
 
-                _context5.next = 3;
+                _context4.next = 3;
                 return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_15__.updateUserStatus)(this.state.user);
 
               case 3:
-                this.state.clientSocket.disconnect();
-                this.state.clientSocket.off();
-
-              case 5:
               case "end":
-                return _context5.stop();
+                return _context4.stop();
             }
           }
-        }, _callee5, this);
+        }, _callee4, this);
       }));
 
       function componentWillUnmount() {
@@ -4149,7 +4122,8 @@ var Chat = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8__.createElement(_ChatHeader__WEBPACK_IMPORTED_MODULE_12__["default"], {
           socket: this.state.clientSocket,
           roomName: this.state.user.room || this.getUserRoom(),
-          user: this.state.user
+          user: this.state.user,
+          chatBot: this.state.room.chatBot
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8__.createElement(_MessageList__WEBPACK_IMPORTED_MODULE_14__["default"], {
           socket: this.state.clientSocket,
           user: this.state.user,
@@ -4283,32 +4257,35 @@ var ChatHeader = /*#__PURE__*/function (_React$Component) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                this.props.socket.emit('sendDisconnectMessage', this.props.user);
-
                 if (!this.props.user.isGuest) {
-                  _context.next = 10;
+                  _context.next = 12;
                   break;
                 }
 
-                _context.next = 4;
+                _context.next = 3;
+                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_13__.addMessage)("".concat(this.props.user.name, " has left."), this.props.chatBot);
+
+              case 3:
+                this.props.socket.emit('sendDisconnectMessage', this.props.user);
+                _context.next = 6;
                 return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_13__.disassociateUserAndRoom)(this.props.user);
 
-              case 4:
+              case 6:
                 this.props.updateComponent('toggleGuestWarningPopup', false);
+                this.props.socket.disconnect();
+                this.props.socket.off();
                 this.setState({
                   redirectToHome: true
                 });
-                this.props.socket.disconnect();
-                this.props.socket.off();
-                _context.next = 11;
+                _context.next = 13;
                 break;
 
-              case 10:
+              case 12:
                 this.setState({
                   redirectToHomeForRegisteredUser: true
                 });
 
-              case 11:
+              case 13:
               case "end":
                 return _context.stop();
             }
@@ -4890,8 +4867,8 @@ var Home = /*#__PURE__*/function (_React$Component) {
       canChangeUserStatusAgain: true,
       statusTimerId: null,
       roomError: false,
-      strikes: 0,
-      redirectToChat: false
+      redirectToChat: false,
+      jwt: null
     };
     _this.handleChange = _this.handleChange.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__["default"])(_this));
     _this.handleSubmit = _this.handleSubmit.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__["default"])(_this));
@@ -4940,7 +4917,8 @@ var Home = /*#__PURE__*/function (_React$Component) {
               case 14:
                 this.loadImages();
                 this.setState({
-                  isLoaded: true
+                  isLoaded: true,
+                  jwt: token
                 });
                 _context.next = 21;
                 break;
@@ -5136,12 +5114,41 @@ var Home = /*#__PURE__*/function (_React$Component) {
     }()
   }, {
     key: "openRoomListInHomePage",
-    value: function openRoomListInHomePage() {
-      this.props.updateComponent('openRoomListInHomePage', !this.props.openRoomListTab);
-      this.setState({
-        strikes: this.state.strikes + 0.5
-      });
-    }
+    value: function () {
+      var _openRoomListInHomePage = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().mark(function _callee5() {
+        var jwt;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_8___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                jwt = this.state.jwt;
+                _context5.prev = 1;
+                _context5.next = 4;
+                return (0,_store_effects_utils__WEBPACK_IMPORTED_MODULE_14__.isTokenValid)(jwt);
+
+              case 4:
+                this.props.updateComponent('openRoomListInHomePage', !this.props.openRoomListTab);
+                _context5.next = 9;
+                break;
+
+              case 7:
+                _context5.prev = 7;
+                _context5.t0 = _context5["catch"](1);
+
+              case 9:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, this, [[1, 7]]);
+      }));
+
+      function openRoomListInHomePage() {
+        return _openRoomListInHomePage.apply(this, arguments);
+      }
+
+      return openRoomListInHomePage;
+    }()
   }, {
     key: "render",
     value: function render() {

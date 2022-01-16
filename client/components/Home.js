@@ -25,8 +25,8 @@ class Home extends React.Component {
 			canChangeUserStatusAgain: true,
 			statusTimerId: null,
 			roomError: false,
-			strikes: 0,
 			redirectToChat: false,
+			jwt: null,
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -44,7 +44,7 @@ class Home extends React.Component {
 			if (!user) throw new Error('failed to find user');
 			else this.setState({ user, isUserOnline: user.active });
 			this.loadImages();
-			this.setState({ isLoaded: true });
+			this.setState({ isLoaded: true, jwt: token });
 		} catch (err) {
 			this.setState({ invalidToken: true });
 		}
@@ -106,9 +106,12 @@ class Home extends React.Component {
 		}
 	}
 
-	openRoomListInHomePage() {
-		this.props.updateComponent('openRoomListInHomePage', !this.props.openRoomListTab);
-		this.setState({ strikes: this.state.strikes + 0.5 });
+	async openRoomListInHomePage() {
+		const { jwt } = this.state;
+		try {
+			await isTokenValid(jwt);
+			this.props.updateComponent('openRoomListInHomePage', !this.props.openRoomListTab);
+		} catch (err) {}
 	}
 
 	render() {
