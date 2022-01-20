@@ -144,6 +144,16 @@ div.basic:nth-child(3) {
 	margin-right: 0px;
 }
 
+@media only screen and (max-height: 1200px) {
+	.room-header-menu {
+		min-width: none;
+		height: 25%;
+	}
+	.room-main-content {
+		height: 75%;
+	}
+}
+
 @media only screen and (max-height: 745px) {
 	.logged-in-username-footer {
 		font-size: 16px;
