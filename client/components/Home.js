@@ -37,6 +37,7 @@ class Home extends React.Component {
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.setRoomsOnState = this.setRoomsOnState.bind(this); // ensures that child component has access to the this context of the parent component
 	}
 
 	async componentDidMount() {
@@ -132,21 +133,25 @@ class Home extends React.Component {
 
 	render() {
 		const { user, canChangeUserStatusAgain, isUserOnline, roomError } = this.state;
+		const { isLoggedIn, invalidToken, redirectToChat } = this.state;
 		const { isLoaded, isLogoReady, isCrownReady, isRefreshReady, roomsArray } = this.state;
-		if (!this.state.isLoggedIn || this.state.invalidToken) {
+
+		if (!isLoggedIn || invalidToken) {
 			window.localStorage.clear();
 			return <Redirect to="/" />;
 		}
-		if (this.state.redirectToChat) {
+
+		if (redirectToChat) {
 			return <Redirect to="/chat" />;
 		}
+
 		if (!isLoaded || !isLogoReady || !isCrownReady || !isRefreshReady) {
 			return (
 				<div id="vertical-container" className="center-content">
 					<Loader type="ThreeDots" color="#d5a26c" />;
 				</div>
 			);
-		} else
+		} else {
 			return (
 				<div id="vertical-container" className="center-content">
 					<div className="chatroom-wrapper" align="middle">
@@ -193,7 +198,15 @@ class Home extends React.Component {
 										</div>
 										{/* will render out the roomlist when the room list button is toggled */}
 										<div className={this.props.openRoomListTab ? 'ui-sandbox-bottom' : ''}>
-											{this.props.openRoomListTab && <RoomList refreshIcon={refreshlogo} rooms={roomsArray} />}
+											{this.props.openRoomListTab && (
+												<RoomList
+													refreshIcon={refreshlogo}
+													rooms={roomsArray}
+													refreshFunction={this.setRoomsOnState}
+													jwt={this.state.jwt}
+													user={this.state.user}
+												/>
+											)}
 										</div>
 									</div>
 								</div>
@@ -214,6 +227,7 @@ class Home extends React.Component {
 					</div>
 				</div>
 			);
+		}
 	}
 }
 

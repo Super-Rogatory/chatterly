@@ -109,6 +109,8 @@
 
 .room-list-title {
 	margin-left: 16px;
+	font-size: 24px;
+	font-weight: 900;
 }
 
 .room-list-icon {
@@ -117,8 +119,10 @@
 
 .room-header-menu {
 	display: flex;
+	min-height: 50px;
 	height: 15%;
 	width: 100%;
+	align-items: center;
 	justify-content: space-between;
 }
 
