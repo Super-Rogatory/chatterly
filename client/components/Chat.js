@@ -103,6 +103,7 @@ class Chat extends React.Component {
 		if (this.state.user.isGuest) {
 			await updateUserStatus(this.state.user);
 		}
+		this.state.clientSocket.emit('refreshOnlineUsers', this.state.user);
 	}
 
 	getUserRoom() {

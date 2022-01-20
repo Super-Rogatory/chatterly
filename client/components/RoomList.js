@@ -26,9 +26,12 @@ class RoomList extends React.Component {
 				<div className="room-header-menu">
 					<div className="room-list-title">Room List</div>
 					<div className="room-list-icon">
-						<div className={`circular ui icon basic ${disabledButton ? 'disabled' : ' '} button removed-border`}>
+						<div
+							className={`circular ui icon basic ${disabledButton ? 'disabled' : ' '} button removed-border`}
+							onClick={() => this.refreshRoomListAndDisable()}
+						>
 							<button className={'refresh-img'}>
-								<img src={this.props.refreshIcon} alt="refresh icon" onClick={() => this.refreshRoomListAndDisable()} />
+								<img src={this.props.refreshIcon} alt="refresh icon" />
 							</button>
 						</div>
 					</div>
