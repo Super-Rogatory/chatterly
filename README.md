@@ -9,9 +9,9 @@
 
 **_Chatterly_** is a web socket based online chat room application where you can join and talk to your friends! You can sign in as a guest and send a quick message or sign up as a member and be granted with awesome user-specific privileges. The world is in the palm of your hand adventurer, now chat away!
 
-### Checkout the Deployed Game: https://wechatterly.herokuapp.com/
+### Checkout the Deployed App: https://wechatterly.herokuapp.com/
 
-## Libraries / Services Used in This Game
+## Libraries / Services Used in WeChatterly
 - [React JS](https://reactjs.org/) (v.17.0.2)
 - [Socket.IO](https://socket.io/) (v.4.1.3)
 - [Express](https://expressjs.com/) (v.4.17.1)
