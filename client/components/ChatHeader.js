@@ -33,7 +33,7 @@ class ChatHeader extends React.Component {
 	async handleRedirect() {
 		if (this.props.user.isGuest) {
 			await addMessage(`${this.props.user.name} has left.`, this.props.chatBot);
-			this.props.socket.emit('refreshOnlineUsers', this.state.user);
+			this.props.socket.emit('refreshOnlineUsers', this.props.user);
 			this.props.socket.emit('sendDisconnectMessage', this.props.user);
 			await disassociateUserAndRoom(this.props.user);
 			this.props.socket.disconnect();
