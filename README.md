@@ -18,7 +18,7 @@
 - [Sequelize](https://sequelize.org/) (v.6.6.5)
 - More in the package.json file.
 
-## How to Run the Game Locally
+## How to Run the App Locally
 1. Fork and clone this repo.
 2. Install the dependencies with: `npm install`.
 3. Start the build process and the application with: `npm run test`. 
