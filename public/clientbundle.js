@@ -3842,7 +3842,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 
 
-var PORT = "MISSING_ENV_VAR".PORT || 5000;
+var PORT = "5000" || 0;
 var url =  false ? 0 : "http://localhost:".concat(PORT);
 
 var Chat = /*#__PURE__*/function (_React$Component) {
@@ -7112,7 +7112,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var PORT = "MISSING_ENV_VAR".PORT || 5000;
+var PORT = "5000" || 0;
 var url =  false ? 0 : "http://localhost:".concat(PORT); // transformed from our utils file.
 
 var fetchUsersInRoom = function fetchUsersInRoom(room) {
@@ -7253,7 +7253,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var PORT = "MISSING_ENV_VAR".PORT || 5000;
+var PORT = "5000" || 0;
 var url =  false ? 0 : "http://localhost:".concat(PORT);
 var createUser = /*#__PURE__*/function () {
   var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee(name, room) {

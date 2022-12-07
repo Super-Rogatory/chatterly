@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 const User = require('../db/models/Users');
 const bcrypt = require('bcrypt');
+const path = require('path');
 const { check, validationResult } = require('express-validator');
 const { issueJWT, authMiddleware } = require('../auth/utils');
-require('dotenv').config();
+require('dotenv').config({ path: path.resolve(process.cwd(), '.env')});
+const SALT_ROUNDS = Number(process.env.SALT_ROUNDS);
 
 router.get('/', async (req, res, next) => {
 	try {
@@ -114,7 +116,7 @@ router.post(
 			if (!errors.isEmpty() || userFromDb || !req.body.username || !req.body.password) {
 				return res.status(404).send('something went wrong');
 			}
-			const salt = await bcrypt.genSalt(process.env.SALT_ROUNDS);
+			const salt = await bcrypt.genSalt(SALT_ROUNDS);
 			const hash = await bcrypt.hash(req.body.password, salt);
 			const user = await User.create({ name: req.body.username, isGuest: false, active: false, salt, hash });
 			res.send(user);

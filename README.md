@@ -33,6 +33,6 @@
     SALT_ROUNDS=10
     DATABASE_URL=postgres://[name_of_user]:[password_of_user]@localhost:5432/chatterly
     ```
-9. Start the build process and the application with: `npm run test`. 
+9. Start the build process and the application with: `npm run test`. Make sure to run from root directory.
 10. Navigate to [localhost:5000](http://localhost:5000) to see the site in the browser.
 
