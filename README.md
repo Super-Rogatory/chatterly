@@ -21,9 +21,9 @@
 ## How to Run the App Locally (Linux)
 1. Fork and clone this repo.
 2. Install the dependencies with: `npm install`.
-3. Create public and private key pair. `node generateKeys`
-4. Install postgres if you don't have it already (`psql --version`) to check, then create chatterly db for postgres (`createdb chatterly`). 
-5. Create new user with respect to current logged-in user. `sudo -u postgres createuser --superuser $USER`
+3. Create public and private key pair. `node generateKeys`.
+4. Install postgres if you don't have it already (`psql --version`) to check.
+5. Create new user with respect to current logged-in user. `sudo -u postgres createuser --superuser $USER`. Create user db `createdb` then create chatterly db for postgres (`createdb chatterly`). 
 6. Switch to newly created user, `sudo -i -u [name_of_user]`.
 7. Open psql console (`psql`), run `\password [name_of_user]` and change the password. Remember this password!
 8. Create .env file
