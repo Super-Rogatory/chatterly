@@ -21,6 +21,7 @@
 ## How to Run the App Locally
 1. Fork and clone this repo.
 2. Install the dependencies with: `npm install`.
+3. Create public and private key pair. `node generateKeys`
 3. Start the build process and the application with: `npm run test`. 
 4. Navigate to [localhost:5000](http://localhost:5000) to see the site in the browser.
 
