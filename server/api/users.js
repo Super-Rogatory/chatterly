@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const path = require('path');
 const { check, validationResult } = require('express-validator');
 const { issueJWT, authMiddleware } = require('../auth/utils');
-require('dotenv').config({ path: path.resolve(process.cwd(), '.env')});
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env')});
 const SALT_ROUNDS = Number(process.env.SALT_ROUNDS);
 
 router.get('/', async (req, res, next) => {
