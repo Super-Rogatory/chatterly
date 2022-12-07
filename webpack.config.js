@@ -43,10 +43,10 @@ const browserConfig = {
 			},
 		],
 	},
-	
 	plugins: [
 		new Dotenv()
-	]
+	],
+	mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
 };
 
 module.exports = browserConfig;
