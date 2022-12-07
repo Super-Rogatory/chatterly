@@ -1,6 +1,7 @@
+const path = require('path');
+require('dotenv').config({ path: path.resolve(process.cwd(), '../.env')});
 const Sequelize = require('sequelize');
-const DB_STRING = process.env.DATABASE_URL || 'postgres://super-rogatory@localhost:5432/chatterly';
-
+const DB_STRING = process.env.DATABASE_URL;
 const config = {
 	logging: false,
 };

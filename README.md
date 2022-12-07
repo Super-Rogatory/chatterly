@@ -18,10 +18,21 @@
 - [Sequelize](https://sequelize.org/) (v.6.6.5)
 - More in the package.json file.
 
-## How to Run the App Locally
+## How to Run the App Locally (Linux)
 1. Fork and clone this repo.
 2. Install the dependencies with: `npm install`.
 3. Create public and private key pair. `node generateKeys`
-3. Start the build process and the application with: `npm run test`. 
-4. Navigate to [localhost:5000](http://localhost:5000) to see the site in the browser.
+4. Create chatterly db for postgres (`createdb chatterly`).
+5. Create new user with respect to current logged-in user. `sudo -u postgres createuser --superuser $USER`
+6. Switch to newly created user, `sudo -i -u [name_of_user]`.
+7. Open psql console (`psql`), run `\password [name_of_user]` and change the password. Remember this password!
+8. Create .env file
+    ```
+    PORT=5000
+    NODE_ENV=production
+    SALT_ROUNDS=10
+    DATABASE_URL=postgres://[name_of_user]:[password_of_user]@localhost:5432/chatterly
+    ```
+9. Start the build process and the application with: `npm run test`. 
+10. Navigate to [localhost:5000](http://localhost:5000) to see the site in the browser.
 
