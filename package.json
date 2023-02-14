@@ -39,8 +39,8 @@
 		"node": "10.x"
 	},
 	"scripts": {
-		"start": "NODE_ENV=production npm run build & node server",
-		"test": "webpack -w & node server",
+		"start": "npm run build & node server",
+		"test": "webpack --mode development & node server",
 		"build": "webpack --mode production"
 	},
 	"cacheDirectories": [
