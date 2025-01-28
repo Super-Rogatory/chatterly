@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const PORT = process.env.PORT || 5000;
-const url = process.env.NODE_ENV === 'production' ? 'https://wechatterly.com' : `http://localhost:${PORT}`;
+const url = process.env.NODE_ENV === 'production' ? 'https://wechatterly.org' : `http://localhost:${PORT}`;
 
 export const createUser = async (name, room) => {
 	name = name.trim().toLowerCase();

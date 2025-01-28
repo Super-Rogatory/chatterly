@@ -11,7 +11,7 @@ import {
 import axios from 'axios';
 
 const PORT = process.env.PORT || 5000;
-const url = process.env.NODE_ENV === 'production' ? 'https://wechatterly.com' : `http://localhost:${PORT}`;
+const url = process.env.NODE_ENV === 'production' ? 'https://wechatterly.org' : `http://localhost:${PORT}`;
 
 // transformed from our utils file.
 export const fetchUsersInRoom = (room) => {
