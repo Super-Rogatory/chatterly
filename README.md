@@ -9,7 +9,7 @@
 
 **_Chatterly_** is a web socket based online chat room application where you can join and talk to your friends! You can sign in as a guest and send a quick message or sign up as a member and be granted with awesome user-specific privileges. The world is in the palm of your hand adventurer, now chat away!
 
-### Checkout the Deployed App: https://wechatterly.com
+### Checkout the Deployed App: https://wechatterly.org
 
 ## Libraries / Services Used in WeChatterly
 - [React JS](https://reactjs.org/) (v.17.0.2)
